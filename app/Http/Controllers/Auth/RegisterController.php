@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use App\Rules\comprobarContrasenya;
+use App\Rules\esMayorDeEdad;
+use App\Rules\verificarNieNif;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
@@ -50,13 +52,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:50', 'min:3'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'primerApellido' => ['required'],
-            'segundoApellido' => ['required'],
-            'sexo' => ['required'],
-            'fechaNacimiento' => ['required'],
+            'password' => ['required', new comprobarContrasenya, 'confirmed'],
+            'primerApellido' => ['required', 'string', 'max:50', 'min:3'],
+            'segundoApellido' => ['required','string', 'max:50', 'min:3'],
+            'sexo' => ['in:hombre,mujer','required'],
+            'fechaNacimiento' => ['required', new esMayorDeEdad],
+            'nif_nie' => ['required', new verificarNieNif, 'unique:users'],
             'rol' => ['required'],
         ]);
     }
@@ -70,13 +73,14 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'nombre_usuario' => $data['name'],
+            'nombre' => $data['name'],
             'sexo' => $data['sexo'],
             'primer_apellido' => $data['primerApellido'],
             'segundo_apellido' => $data['segundoApellido'],
             'rol' => $data['rol'],
             'fecha_nacimiento' => $data['fechaNacimiento'],
             'email' => $data['email'],
+            'nif_nie' => $data['dniONie'],
             'password' => Hash::make($data['password']),
         ]);
     }

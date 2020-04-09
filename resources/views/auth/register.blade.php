@@ -13,7 +13,6 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -24,25 +23,58 @@
                         <div class="form-group row">
                             <label for="primerApellido" class="col-md-4 col-form-label text-md-right">{{ __('Primer Apellido') }}</label>
                             <div class="col-md-6">
-                                <input id="primerApellido" type="text" class="form-control" name="primerApellido" required autocomplete="primerApellido">
+                                <input id="primerApellido" type="text" class="form-control @error('primerApellido') is-invalid @enderror" name="primerApellido" value="{{ old('primerApellido') }}" required autocomplete="primerApellido">
+                                @error('primerApellido')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="segundoApellido" class="col-md-4 col-form-label text-md-right">{{ __('Segundo Apellido') }}</label>
                             <div class="col-md-6">
-                                <input id="segundoApellido" type="text" class="form-control" name="segundoApellido" required autocomplete="segundoApellido">
+                                <input id="segundoApellido" type="text" class="form-control @error('primerApellido') is-invalid @enderror" name="segundoApellido" value="{{ old('segundoApellido') }}" required autocomplete="segundoApellido">
+                                @error('segundoApellido')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="nif_nie" class="col-md-4 col-form-label text-md-right">{{ __('DNI o NIE') }}</label>
+                            <div class="col-md-6">
+                                <input id="nif_nie" type="text" class="form-control @error('nif_nie') is-invalid @enderror" name="nif_nie" value="{{ old('nif_nie') }}" required autocomplete="nif_nie">
+                                @error('nif_nie')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="sexo" class="col-md-4 col-form-label text-md-right">{{ __('Sexo') }}</label>
-                            <div class="col-md-6">
-                                <input id="sexo" type="text" class="form-control" name="sexo" required autocomplete="sexo">
+                            <div class="col-md-6 checkbox">
+                                <input class="@error('sexo') is-invalid @enderror" name="sexo" value="hombre" type="radio">Hombre
+                                <input class="@error('sexo') is-invalid @enderror" name="sexo" value="mujer" type="radio">Mujer
+                                @error('sexo')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="fechaNacimiento" class="col-md-4 col-form-label text-md-right">{{ __('Fecha de Nacimiento') }}</label>
                             <div class="col-md-6">
-                                <input id="fechaNacimiento" type="date" class="form-control" name="fechaNacimiento" required autocomplete="fechaNacimiento">
+                                <input id="fechaNacimiento" type="date" class="form-control @error('fechaNacimiento') is-invalid @enderror" name="fechaNacimiento" value="{{ old('fechaNacimiento') }}" required autocomplete="fechaNacimiento">
+
+                                @error('fechaNacimiento')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -75,9 +107,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="rol" class="col-md-4 col-form-label text-md-right">{{ __('Rol') }}</label>
                             <div class="col-md-6">
-                                <input id="rol" type="text" class="form-control" name="rol" required autocomplete="rol">
+                                <input id="rol" type="hidden" class="form-control" name="rol" value="user" required autocomplete="rol">
                             </div>
                         </div>
                         <div class="form-group row mb-0">
