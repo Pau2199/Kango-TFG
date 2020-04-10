@@ -3,12 +3,9 @@
     height: 120px;
 }
 #colorCabecera{
-    background-color: #FFC15A;
+    background-color: #F4B69E;
 }
-#svgTamanyo{
-    width: 40px;
-    height: 40px;
-}
-aside{
-    border: 1px solid black;
+.svgTamanyo{
+    width: 35px;
+    height: 35px;
 }
