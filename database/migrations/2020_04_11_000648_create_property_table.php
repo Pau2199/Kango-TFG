@@ -23,7 +23,7 @@ class CreatePropertyTable extends Migration
             $table->string('codigo_postal');
             $table->bigInteger('precio');
             $table->string('tipo_de_vivienda');
-            $table->string('descripcion');
+            $table->string('descripcion')->nullable;
             $table->boolean('piscina');
             $table->boolean('ascensor');
             $table->boolean('garaje');
