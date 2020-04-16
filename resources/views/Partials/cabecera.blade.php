@@ -6,20 +6,20 @@
         <div class="col-md-6 d-none d-md-block search mt-4">
             <form class="form-inline">
                 <input class="form-control mr-2 w-75" type="text" placeholder="Buscar Inmueble" aria-label="Buscar">
-                <button class="btn btn-outline-success my-2" type="submit">Buscar</button>
+                <button class="btn btn-warning my-2" type="submit">Buscar</button>
             </form>
         </div>
         <div class="col-md-3 col-8 my-5 my-md-4 text-center">
             <div class="btn-group mr-5 mr-md-4">
-                <a href="#" data-toggle="dropdown"><img class="svgTamanyo" class="mt-4" src="{{asset('img/user.svg')}}" alt="Usuario"></a>
+                <a href="#" data-toggle="dropdown"><img id="login" class="svgTamanyo" class="mt-4" src="{{asset('img/user.svg')}}" alt="Usuario"></a>
                 @if(!Auth::user())
                 <div class="container dropdown-menu dropdown-menu-right">
                     <div class="row justify-content-center">
-                        <div class="col-md-12">
+                        <div class="col-md-12 text-center">
                             <form class="px-4 py-3" method="POST" action="{{ route('login') }}">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="email" class="col-form-label text-md-right">{{ __('Correo Electronico') }}</label>
+                                    <label for="email" class="font-weight-bold col-form-label text-md-right">{{ __('Correo Electronico') }}</label>
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -28,7 +28,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="password" class="col-form-label text-md-right">{{ __('Contraseña') }}</label>
+                                    <label for="password" class="font-weight-bold col-form-label text-md-right">{{ __('Contraseña') }}</label>
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -93,7 +93,7 @@
         </div>
     </div>
 </header>
-<nav class="navbar navbar-expand filtro">
+<nav id="navbar" class="navbar navbar-expand filtro">
     <div class="collapse navbar-collapse" id="navbarNav">
         <img id="imagenFiltros" class="svgTamanyo m-2 d-md-block d-lg-none" src="{{asset('img/filtro.svg')}}" alt="">
         <div class="ml-auto d-sm-block d-md-none search mt-1">

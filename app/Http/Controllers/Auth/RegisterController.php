@@ -60,6 +60,7 @@ class RegisterController extends Controller
             'sexo' => ['in:hombre,mujer','required'],
             'fechaNacimiento' => ['required', new esMayorDeEdad],
             'nif_nie' => ['required', new verificarNieNif, 'unique:users'],
+            'terminosYCondiciones' => ['required'],
             'rol' => ['required'],
         ]);
     }
@@ -80,7 +81,7 @@ class RegisterController extends Controller
             'rol' => $data['rol'],
             'fecha_nacimiento' => $data['fechaNacimiento'],
             'email' => $data['email'],
-            'nif_nie' => $data['dniONie'],
+            'nif_nie' => $data['nif_nie'],
             'password' => Hash::make($data['password']),
         ]);
     }

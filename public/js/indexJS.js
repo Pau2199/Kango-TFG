@@ -1,6 +1,18 @@
 $(function(){
     $('#eleccionTipoBusqueda').hide();
     $('#opcionesAlquiler').hide();
+
+    if(document.referrer){
+        var url = document.referrer;
+        url = url.split('8000/');
+        console.log(url);
+        if(url[1] == 'register'){
+            console.log('entra')
+            $('#login').trigger('click');
+        }
+    }
+
+
     $('.tipoBusqueda').click(function(){
         $('#opcionesAlquiler').hide();
         $('#eleccionTipoBusqueda').show();
@@ -19,7 +31,7 @@ $(function(){
 
         }else{
             $('#panelFiltros').fadeOut('slow');
-             $('#panelFiltros').addClass('d-none')
+            $('#panelFiltros').addClass('d-none')
         }
     })
     $('.btn-light').click(function(){
@@ -28,5 +40,5 @@ $(function(){
         }
         $(this).addClass('botonPulsado');
     })
-    
+
 })

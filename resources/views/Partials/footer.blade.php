@@ -1,4 +1,4 @@
-<footer class="page-footer font-small unique-color-dark footerGrande">
+<footer class="page-footer font-small unique-color-dark footerGrande mt-2">
     <div class="footerPequeño">
         <div class="container">
             <div class="row py-4 d-flex align-items-center">
@@ -60,7 +60,7 @@
             </div>
         </div>
     </div>
-    <div class="footer-copyright text-center py-3 footerPequeño">
+    <div class="footer-copyright text-center py-3">
     © 2020 Copyright: Kangoo Home
     </div>
 </footer>

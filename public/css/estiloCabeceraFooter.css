@@ -9,3 +9,18 @@
     width: 35px;
     height: 35px;
 }
+
+.footerGrande{
+    background-color: #F4B69E;
+}
+
+.footerPequeño{
+    background-color: #DAEAF7;
+}
+
+.dropdown-menu{
+    width: 300px !important;
+}
+.colorBoton{
+    background-color: #FFC15A;
+}
