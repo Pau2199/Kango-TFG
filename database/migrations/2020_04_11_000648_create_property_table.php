@@ -15,18 +15,19 @@ class CreatePropertyTable extends Migration
     {
         Schema::create('property', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('metros_cuadrdados');
-            $table->string('localidad');
-            $table->string('provincia');
-            $table->string('tipo_de_via');
-            $table->string('nombre_de_la_direccion');
-            $table->string('codigo_postal');
+            $table->bigInteger('metros_cuadrados');
             $table->bigInteger('precio');
             $table->string('tipo_de_vivienda');
-            $table->string('descripcion')->nullable;
+            $table->string('descripcion')->nullable();
             $table->boolean('piscina');
             $table->boolean('ascensor');
-            $table->boolean('garaje');
+            $table->boolean('garage');
+            $table->boolean('internet')->nullable();
+            $table->boolean('animales')->nullable();
+            $table->boolean('reformas')->nullable();
+            $table->boolean('calefaccion')->nullable();
+            $table->boolean('aireAcondicionado')->nullable();
+            $table->bigInteger('fianza')->nullable();
             $table->bigInteger('n_habitaciones');
             $table->bigInteger('n_cuartos_de_banyo');
             $table->bigInteger('idUsuario')->unsigned();

@@ -20,3 +20,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('inmuebles/publicarNuevo', 'publicarNuevoInmuebleController@index');
+Route::post('inmuebles/agregarInmueble', 'publicarNuevoInmuebleController@store');
+
+
+Route::get('inmuebles/anunciosActivos', function(){
+    return view('index');
+});
