@@ -39,6 +39,24 @@ class publicarNuevoInmuebleController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->validate($request,[
+            'nMetrosCuadrados' => 'required',
+            'precio' => 'required',
+            'tipoInmueble' => 'required',
+            'nHabitaciones' => 'required',
+            'nCuartosBanyo' => 'required',
+            //            'fianza' => 'required',
+            'tipoVia' => 'required',
+            'localidad' => 'required',
+            'provincia' => 'required',
+            'nombreDir' => 'required',
+            'nPuerta' => 'required',
+            'nPatio' => 'required',
+            'nPiso' => 'required',
+            'perfil' => 'required',
+        ]);
+
         $inmueble = new Property;
         $inmueble->idUsuario = $request->usuario;
         $inmueble->metros_cuadrados = $request->nMetrosCuadrados;
@@ -75,6 +93,12 @@ class publicarNuevoInmuebleController extends Controller
 
         //Si el inmueble se alquila
         if($request->tipoCompra == 'A' || $request->tipoCompra == 'AQ'){
+
+            $this->validate($request,[
+                'fianza' => 'required',
+
+            ]);
+
             $inmueble->fianza = $request->fianza;
 
             /*INICIO COMPROBAR EXTRAS ALQUILER*/
