@@ -19,7 +19,6 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/inmuebles/vistaInmueble/{id}', 'inmueblesPublicados@index');
-Route::get('/inmuebles/vistaInmueble/{id}', 'inmueblesPublicados@show');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('inmuebles/publicarNuevo', 'publicarNuevoInmuebleController@index');
 Route::post('inmuebles/agregarInmueble', 'publicarNuevoInmuebleController@store');

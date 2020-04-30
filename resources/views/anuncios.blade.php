@@ -17,8 +17,7 @@
                 @foreach($alquilados as $key => $valor)
                 <div class="col-md-6 col-sm-12">
                     <div class="card mb-4 alturaFija">
-                        <?php $imagen = $valor->img[0]->nombre ?>
-                        <img class="card-img-top img-fluid imgPerfil" src='{{asset("uploads/$imagen")}}' alt="imagen">
+                        <img class="card-img-top img-fluid imgPerfil" src='{{asset("uploads/perfil15.jpg")}}' alt="imagen">
                         <div class="card-body">
                             <p class="font-weight-bold card-text">Dirección</p>
                             <p class="card-text">

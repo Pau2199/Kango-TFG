@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Intervention\Image\ImageManagerStatic as Imagen;
 use Illuminate\Http\Request;
 use App\Property;
 use App\Image;
@@ -211,9 +212,14 @@ class publicarNuevoInmuebleController extends Controller
         $direccion->save();
 
         //Agregamos a la base de datos las imagenes y las guardamos en una carpeta
-
         $imagen = $request->file('perfil');
-        $imagen->move('uploads', 'perfil'.$inmueble->id.'.'.$imagen->getClientOriginalExtension());
+        $image_resize = Imagen::make($imagen->getRealPath()); 
+        $image_resize->resize(1920 , 1080);
+        $image_resize->save('uploads/perfil'.$inmueble->id.'.'.$imagen->getClientOriginalExtension());
+
+
+        //        $imagen = imagescale($imagen, 1440);
+        //        $imagen->move('uploads', 'perfil'.$inmueble->id.'.'.$imagen->getClientOriginalExtension());
 
         $img = new Image;
         $img->nombre = 'perfil'.$inmueble->id.'.'.$imagen->getClientOriginalExtension();
