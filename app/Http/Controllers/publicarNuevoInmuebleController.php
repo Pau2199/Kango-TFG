@@ -232,23 +232,35 @@ class publicarNuevoInmuebleController extends Controller
             foreach($imagen as $key => $valor){
                 if($key == 0){
                     $aux = new Image;
-                    $valor->move('uploads', $img->id.'.'.$valor->getClientOriginalExtension());
+                    $image_resize =  Imagen::make($valor->getRealPath());
+                    $image_resize->resize(1920 , 1080);
+                    $image_resize->save('uploads/'.$img->id.'.'.$valor->getClientOriginalExtension());
                     $aux->nombre = $img->id.'.'.$valor->getClientOriginalExtension();
                     $aux->idInmueble = $inmueble->id;
                     $aux->save();
-                }else{
+                }else if($key == 1){
                     $aux2 = new Image;
-                    $valor->move('uploads', $aux->id.'.'.$valor->getClientOriginalExtension());
+                    $image_resize =  Imagen::make($valor->getRealPath());
+                    $image_resize->resize(1920 , 1080);
+                    $image_resize->save('uploads/'.$aux->id.'.'.$valor->getClientOriginalExtension());
                     $aux2->nombre = $aux->id.'.'.$valor->getClientOriginalExtension();
                     $aux2->idInmueble = $inmueble->id;
                     $aux2->save();
+                }else{
+                    $aux3 = new Image;
+                    $image_resize =  Imagen::make($valor->getRealPath());
+                    $image_resize->resize(1920 , 1080);
+                    $image_resize->save('uploads/'.$aux2->id.'.'.$valor->getClientOriginalExtension());
+                    $aux3->nombre = $aux2->id.'.'.$valor->getClientOriginalExtension();
+                    $aux3->idInmueble = $inmueble->id;
+                    $aux3->save();
                 }
             }
         }
 
 
-
-
+        return redirect('inmuebles/anunciosActivos');
+        
 
     }
 

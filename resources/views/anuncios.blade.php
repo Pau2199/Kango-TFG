@@ -15,9 +15,10 @@
             <p class="text-center font-weight-bold titulo">Propiedas en Alquiler</p>
             <div class="row padre">
                 @foreach($alquilados as $key => $valor)
+                <?php $imagen = $valor->img[0]->nombre ?>
                 <div class="col-md-6 col-sm-12">
                     <div class="card mb-4 alturaFija">
-                        <img class="card-img-top img-fluid imgPerfil" src='{{asset("uploads/perfil15.jpg")}}' alt="imagen">
+                        <img class="card-img-top img-fluid imgPerfil" src='{{asset("uploads/$imagen")}}' alt="imagen">
                         <div class="card-body">
                             <p class="font-weight-bold card-text">Dirección</p>
                             <p class="card-text">
@@ -47,7 +48,7 @@
                             </div>
                             <div id="A{{$valor->id}}" class="row text-center my-3">
                                 <div class="col-6">
-                                    <a href="/inmuebles/vistaInmueble/A{{$valor->id}}"><span class="detalles btn btn-info">Detalles</span></a>                                </div>
+                                    <a href="/inmuebles/vistaInmueble/A-{{$valor->id}}"><span class="detalles btn btn-info">Detalles</span></a>                                </div>
                                 <div class="col-6">
                                     <span class="btn btn-info">Desactivar</span>
                                 </div>
@@ -90,7 +91,7 @@
                             </div>
                             <div id="V{{$value->id}}" class="row text-center my-3">
                                 <div class="col-6">
-                                    <a href="/inmuebles/vistaInmueble/V{{$value->id}}"><span class="detalles btn btn-info">Detalles</span></a>
+                                    <a href="/inmuebles/vistaInmueble/A-{{$value->id}}"><span class="detalles btn btn-info">Detalles</span></a>
                                 </div>
                                 <div class="col-6">
                                     <span class="btn btn-info">Desactivar</span>

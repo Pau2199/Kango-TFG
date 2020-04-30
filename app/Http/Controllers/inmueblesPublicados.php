@@ -4,6 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Property;
+use App\Image;
+use App\Address;
+use App\Rental;
+use App\Sale;
+use Auth;
+use App\User;
+use DB;
 
 class inmueblesPublicados extends Controller
 {
@@ -14,9 +22,29 @@ class inmueblesPublicados extends Controller
      */
     public function index($id)
     {
-        return view('vistaInmueble', [
-            'id' => $id
-        ]);  
+        
+        $id = explode('-', $id);
+        $datos;
+        
+        if($id[0] == 'A'){
+            $datos=User::select('property.*','address.tipo_de_via','address.localidad','address.provincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio','rental.internet', 'rental.animales', 'rental.reformas', 'rental.calefaccion', 'rental.aireAcondicionado', 'rental.fianza')
+                ->join('property', 'users.id', '=', 'property.idUsuario')
+                ->join('address', 'property.id', '=', 'address.idInmueble')
+                ->join('rental', 'property.id', '=', 'rental.idInmueble')
+                ->where('property.idUsuario', Auth::user()->id)
+                ->where('property.id', $id[1])
+                ->get();
+
+            for($i = 0 ; $i<count($datos) ; $i++){
+                $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $datos[$i]->id .'"');
+                $datos[$i]->img = $imagenes;
+            }
+            $datos->alquier = true;
+        }
+
+
+
+        return view('vistaInmueble')->with('datos', $datos);
     }
 
     /**
