@@ -15,9 +15,11 @@ class CreateRentalTable extends Migration
     {
         Schema::create('rental', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('internet');
             $table->boolean('animales');
             $table->boolean('reformas');
-            $table->boolean('internet');
+            $table->boolean('calefaccion');
+            $table->boolean('aireAcondicionado');
             $table->bigInteger('fianza');
             $table->bigInteger('idInmueble')->unsigned();
             $table->timestamps();

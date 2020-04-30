@@ -1,16 +1,21 @@
 $(function(){
-//    $('#fianza').hide();
-//    $('#extraAlquiler').hide();
+    $('#fianza').hide();
+    $('#extraAlquiler').hide();
 
-    //    $('.mensajeprovincia')[0].show();
+    $('#perfil').change(function(){
+        $('#labelImagenPefil').html($(this).val().split('\\')[2]);
+    })
+    $('#masImagenes').change(function(){
+        $('#labelmasImagenes').html($('#masImagenes')[0].files.length + ' Elementos Selecionados'); 
+    })
 
-    //    $('strong').append('Prueba de input')
-    //    $('#mensajeprovincia').append('Error en el input')
-    //    console.log($('.mensajeprovincia')[1].append('PRUEBA'));
-    $('#opcionAlquiler').change(function(){
+
+
+
+    $('#tipoCompra').change(function(){
         console.log($('#opcionAlquiler option:selected').text());
 
-        if($('#opcionAlquiler option:selected').text() == 'Alquiler' || $('#opcionAlquiler option:selected').text() == 'Alquiler Vacacional'){
+        if($('#tipoCompra').val() == 'A' || $('#tipoCompra').val() == 'AQ'){
             $('#fianza').show();
             $('#extraAlquiler').show();
         }else{
@@ -21,14 +26,13 @@ $(function(){
 
     $('input').blur(function(){
         $('#mensaje'+$(this).attr('id')).html('');
-        if($(this).val() == ""){
+        if($(this).val() == "" && $(this).attr('id') != 'nPiso'){
             $('#mensaje'+$(this).attr('id')).html('Este campo es obligatorio');
         }else{
             if($(this).attr('id') == 'provincia' || $(this).attr('id') == 'localidad' || $(this).attr('id') == 'nombreDir'){
                 validarProvinciaLocalidadNombre($(this).attr('id'), $(this).val());
             }
-
-            if($(this).attr('id') == 'nPatio' || $(this).attr('id') == 'nPiso'){
+            if($(this).attr('id') == 'nPatio'){
                 validarPatioPiso($(this).attr('id'), $(this).val());
             }
             if($(this).attr('id') == 'nHabitaciones'){
@@ -40,7 +44,11 @@ $(function(){
             if($(this).attr('id') == 'precio' || $(this).attr('id') == 'fianza'){
                 validarPrecio($(this).attr('id'), $(this).val());
             }
+            if($(this).attr('id') == 'nMetrosCuadrados'){
+                validarMetrosCuadrados($(this).attr('id'), $(this).val());
+            }
         }
+
     });
 
     $('select').blur(function(){
@@ -53,10 +61,10 @@ $(function(){
         var errorEncontrado = false;
         $('input').each(function(){
             if($(this).attr('id') == 'provincia' || $(this).attr('id') == 'localidad' || $(this).attr('id') == 'nombreDir'){
-                errorForm = validarProvinciaLocalidadNombre($(this).attr('id'), $(this).val());
+                validarProvinciaLocalidadNombre($(this).attr('id'), $(this).val());
             }
 
-            if($(this).attr('id') == 'nPatio' || $(this).attr('id') == 'nPiso'){
+            if($(this).attr('id') == 'nPatio'){
                 validarPatioPiso($(this).attr('id'), $(this).val());
             }
             if($(this).attr('id') == 'nHabitaciones'){
@@ -68,6 +76,9 @@ $(function(){
             if($(this).attr('id') == 'precio'){
                 validarPrecio($(this).attr('id'), $(this).val());
             }
+            if($(this).attr('id') == 'nMetrosCuadrados'){
+                validarMetrosCuadrados($(this).attr('id'), $(this).val());
+            }
 
 
         })
@@ -76,12 +87,10 @@ $(function(){
             validarSelect($(this).attr('id'), $(this).val());
         })
 
-        if($('#tipoCompra').val == 'A' ||  $('#tipoCompra').val == 'AQ'){
+        if($('#tipoCompra').val() == 'A' ||  $('#tipoCompra').val() == 'AQ'){
             validarFianza('fianza', $('#fianza').val());
-        }else{
-            console.log('entra');
         }
-        
+
         $('#mensajeperfil').html('');
         if($('#perfil').val == ""){
             $('#mensajeperfil').html('Este campo no puede estar vacio');
@@ -99,8 +108,9 @@ $(function(){
     })
 
     function validarProvinciaLocalidadNombre(campo, mensaje){
+        $('#mensaje'+campo).html('');
         if(campo  == 'nombreDir'){
-            if(mensaje.length < 10){
+            if(mensaje.length < 5){
                 $('#mensaje'+campo).html('Este campo debe tener como minimo 10 caracteres');
             }
             if(mensaje.length > 100){
@@ -118,6 +128,7 @@ $(function(){
     }
 
     function validarPatioPiso(campo, mensaje){
+        $('#mensaje'+campo).html('');
         var correcto = true;
         if(mensaje <= 0){
             $('#mensaje'+campo).html('Este campo no puede ser menor o igual a 0');
@@ -125,6 +136,7 @@ $(function(){
     }
 
     function validarHabitaciones(campo, mensaje){
+        $('#mensaje'+campo).html('');
         if(mensaje <= 0){
             $('#mensaje'+campo).html('El número debe ser mayor o igual a 1');
         }
@@ -155,17 +167,26 @@ $(function(){
     }
 
     function validarPrecio(campo, mensaje){
+        $('#mensaje'+campo).html('');
         if(mensaje <= 200){
             $('#mensaje'+campo).html('El número de este campo debe ser superior a 200.');
         }
     }
 
+    function validarMetrosCuadrados(campo , mensaje){
+        $('#mensaje'+campo).html('');
+        if(mensaje < 30){
+            $('#mensaje'+campo).html('El número minimo que debes poner es de 30 metros cuadrados.');
+        }
+    }
+
     function validarFianza(campo, mensaje){
+        $('#mensaje'+campo).html('');
         var minimo = $('#precio').val()*2;
         var maximo =$('#precio').val()*4;
         console.log(minimo);
         console.log(maximo);
-        if(mensaje < minimo || mensaje > maximo){
+        if(mensaje < minimo && mensaje > maximo){
             $('#mensaje'+campo).html('La fianza debe ser como mínimo 2 meses y como máximo 4 meses.');
         }
 

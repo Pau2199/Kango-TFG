@@ -18,12 +18,14 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::get('/inmuebles/vistaInmueble/{id}', 'inmueblesPublicados@index');
+Route::get('/inmuebles/vistaInmueble/{id}', 'inmueblesPublicados@show');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('inmuebles/publicarNuevo', 'publicarNuevoInmuebleController@index');
 Route::post('inmuebles/agregarInmueble', 'publicarNuevoInmuebleController@store');
+Route::post('inmuebles/mostrarInmuebles', 'publicarNuevoInmuebleController@store');
+Route::get('inmuebles/anunciosActivos', 'publicarNuevoInmuebleController@mostrarInmuebles');
 
-
-Route::get('inmuebles/anunciosActivos', function(){
+/*Route::get('inmuebles/anunciosActivos', function(){
     return view('index');
-});
+});*/

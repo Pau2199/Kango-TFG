@@ -45,7 +45,7 @@
                             <option value="B">Bajo</option>
                         </select>
                         <strong id="mensajetipoInmueble" class="comprobaciones" ></strong>
-                        @error('tipoCompra')
+                        @error('tipoInmueble')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label class="font-weight-bold" for="provincia">Provincia</label>
                         <input type="text" class="form-control  @error('provincia') is-invalid @enderror" name="provincia" id="provincia" placeholder="Provincia">
                         <strong id="mensajeprovincia" class="comprobaciones" ></strong>
@@ -63,11 +63,21 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label class="font-weight-bold" for="localidad">Localidad</label>
                         <input type="text" class="form-control  @error('localidad') is-invalid @enderror" name="localidad" id="localidad" placeholder="Localidad">
                         <strong id="mensajelocalidad" class="comprobaciones" ></strong>
                         @error('localidad')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="font-weight-bold" for="cp">Codigo Postal</label>
+                        <input type="number" class="form-control @error('cp') is-invalid @enderror" name="cp" id="cp" placeholder="Codigo Postal">
+                        <strong id="mensajencp" class="comprobaciones" ></strong>
+                        @error('cp')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -104,7 +114,7 @@
                         <label class="font-weight-bold" for="nPatio">Patio</label>
                         <input type="number" class="form-control @error('nPatio') is-invalid @enderror" name="nPatio" id="nPatio" placeholder="NºPatio">
                         <strong id="mensajenPatio" class="comprobaciones" ></strong>
-                        @error('nombreDir')
+                        @error('nPatio')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -125,12 +135,6 @@
                     <div class="form-group col-md-3">
                         <label class="font-weight-bold" for="nPiso">Piso</label>
                         <input type="number" class="form-control @error('nPuerta') is-invalid @enderror" name="nPiso" id="nPiso" placeholder="NºPiso">
-                        <strong id="mensajenPiso" class="comprobaciones" ></strong>
-                        @error('nPiso')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
                     </div>
                     <div class="form-group col-md-3">
                         <label class="font-weight-bold" for="bloque">Bloque</label>
@@ -164,7 +168,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label class="font-weight-bold" for="nMetrosCuadrados">Metros Cuadrados</label>
-                        <input type="number" class="form-control" name="nMetrosCuadrados" id="nMetrosCuadrados" placeholder="Metros Cuadrados">
+                        <input type="number" class="form-control @error('nMetrosCuadrados') is-invalid @enderror" name="nMetrosCuadrados" id="nMetrosCuadrados" placeholder="Metros Cuadrados">
                         <strong id="mensajenMetrosCuadrados" class="comprobaciones" ></strong>
                         @error('nMetrosCuadrados')
                         <span class="invalid-feedback" role="alert">
@@ -178,7 +182,7 @@
                         <div class="col-md-6">
                             <span class="font-weight-bold" >Extras del Inmueble</span>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="acensor" value="ascensor" id="ascensor">
+                                <input class="form-check-input" type="checkbox" name="ascensor" value="ascensor" id="ascensor">
                                 <label class="form-check-label" for="ascensor">Ascensor</label>
                             </div>
                             <div class="form-check">
@@ -245,7 +249,7 @@
                             <span  class="font-weight-bold">Imagén de perfil</span>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input @error('perfil') is-invalid @enderror" name="perfil" id="perfil">
-                                <label class="custom-file-label" for="perfil">Selecionar Imagen de Perfil</label>
+                                <label id="labelImagenPefil" class="custom-file-label" for="perfil">Selecionar Imagen de Perfil</label>
                                 <strong id="mensajeperfil" class="comprobaciones"></strong>
                                 @error('perfil')
                                 <span class="invalid-feedback" role="alert">
@@ -258,7 +262,7 @@
                             <span  class="font-weight-bold">Añadir más imagenes</span>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="masImagenes[]" multiple="" id="masImagenes">
-                                <label class="custom-file-label" for="masImagenes">Selecionar más Imagenes</label>
+                                <label id="labelmasImagenes" class="custom-file-label" for="masImagenes">Selecionar más Imagenes</label>
                             </div>
                         </div>
                     </div>

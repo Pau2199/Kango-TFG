@@ -18,20 +18,14 @@ class CreatePropertyTable extends Migration
             $table->bigInteger('metros_cuadrados');
             $table->bigInteger('precio');
             $table->string('tipo_de_vivienda');
-            $table->string('opcion_publicacion');
             $table->string('descripcion')->nullable();
             $table->boolean('piscina');
             $table->boolean('ascensor');
             $table->boolean('garage');
-            $table->boolean('internet')->nullable();
-            $table->boolean('animales')->nullable();
-            $table->boolean('reformas')->nullable();
-            $table->boolean('calefaccion')->nullable();
-            $table->boolean('aireAcondicionado')->nullable();
-            $table->bigInteger('fianza')->nullable();
             $table->bigInteger('n_habitaciones');
             $table->bigInteger('n_cuartos_de_banyo');
             $table->bigInteger('idUsuario')->unsigned();
+            $table->boolean('disponible');
             $table->timestamps();
         });
     }

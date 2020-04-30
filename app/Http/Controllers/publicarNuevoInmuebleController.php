@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use App\Property;
 use App\Image;
 use App\Address;
+use App\Rental;
+use App\Sale;
+use Auth;
+use App\User;
+use DB;
 
 
 class publicarNuevoInmuebleController extends Controller
@@ -19,6 +24,36 @@ class publicarNuevoInmuebleController extends Controller
     public function index()
     {
         return view('formInmuebleNuevo');
+    }
+
+    public function mostrarInmuebles(){
+        $alquilados = User::select('property.*','address.tipo_de_via','address.localidad','address.provincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio','rental.internet', 'rental.animales', 'rental.reformas', 'rental.calefaccion', 'rental.aireAcondicionado', 'rental.fianza')
+            ->join('property', 'users.id', '=', 'property.idUsuario')
+            ->join('address', 'property.id', '=', 'address.idInmueble')
+            ->join('rental', 'property.id', '=', 'rental.idInmueble')
+            ->where('property.idUsuario', Auth::user()->id)
+            ->get();
+
+        for($i = 0 ; $i<count($alquilados) ; $i++){
+            $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $alquilados[$i]->id .'"');
+            $alquilados[$i]->img = $imagenes;
+        }
+
+        $venta = User::select('property.*','address.tipo_de_via','address.localidad','address.provincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio')
+            ->join('property', 'users.id', '=', 'property.idUsuario')
+            ->join('address', 'property.id', '=', 'address.idInmueble')
+            ->join('sale', 'property.id', '=', 'sale.idInmueble')
+            ->where('property.idUsuario', Auth::user()->id)
+            ->get();
+
+        for($i = 0 ; $i<count($venta) ; $i++){
+            $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $venta[$i]->id .'"');
+            $venta[$i]->img = $imagenes;
+        }
+
+        return view('anuncios')
+            ->with('alquilados', $alquilados)
+            ->with('venta', $venta);
     }
 
     /**
@@ -44,16 +79,16 @@ class publicarNuevoInmuebleController extends Controller
             'nMetrosCuadrados' => 'required',
             'precio' => 'required',
             'tipoInmueble' => 'required',
+            'tipoCompra' => 'required',
             'nHabitaciones' => 'required',
             'nCuartosBanyo' => 'required',
-            //            'fianza' => 'required',
+            'cp' => 'required',
             'tipoVia' => 'required',
             'localidad' => 'required',
             'provincia' => 'required',
             'nombreDir' => 'required',
             'nPuerta' => 'required',
             'nPatio' => 'required',
-            'nPiso' => 'required',
             'perfil' => 'required',
         ]);
 
@@ -65,7 +100,8 @@ class publicarNuevoInmuebleController extends Controller
         $inmueble->descripcion = $request->descripcion;
         $inmueble->n_habitaciones = $request->nHabitaciones;
         $inmueble->n_cuartos_de_banyo = $request->nCuartosBanyo;
-        //$inmueble->tipo_publicacion = $request->tipoCompra;
+        $inmueble->precio = $request->precio;
+        $inmueble->disponible = true;
 
         /*INICIO COMPROBAR EXTRAS*/
         //comprobar Ascensor
@@ -90,58 +126,65 @@ class publicarNuevoInmuebleController extends Controller
         }
         /*FIN COMPROBAR EXTRAS*/
 
+        $inmueble->save();
 
         //Si el inmueble se alquila
         if($request->tipoCompra == 'A' || $request->tipoCompra == 'AQ'){
+            $alquiler = new Rental;
 
             $this->validate($request,[
                 'fianza' => 'required',
 
             ]);
 
-            $inmueble->fianza = $request->fianza;
+
+            $alquiler->fianza = $request->fianza;
+            $alquiler->idInmueble = $inmueble->id;
 
             /*INICIO COMPROBAR EXTRAS ALQUILER*/
 
             //comprobar animales
             if($request->animales != null){
-                $inmueble->animales = true;
+                $alquiler->animales = true;
             }else{
-                $inmueble->animales = false;
+                $alquiler->animales = false;
             }
 
             //comprobar reformas
             if($request->reformas != null){
-                $inmueble->reformas = true;
+                $alquiler->reformas = true;
             }else{
-                $inmueble->reformas = false;
+                $alquiler->reformas = false;
             }
 
             //comprobar internet
             if($request->internet != null){
-                $inmueble->internet = true;
+                $alquiler->internet = true;
             }else{
-                $inmueble->internet = false;
+                $alquiler->internet = false;
             }
 
             //comprobar calefaccion
             if($request->calefaccion != null){
-                $inmueble->calefaccion = true;
+                $alquiler->calefaccion = true;
             }else{
-                $inmueble->calefaccion = false;
+                $alquiler->calefaccion = false;
             }
 
             //comprobar aire acondicionado
             if($request->aire != null){
-                $inmueble->aireAcondicionado = true;
+                $alquiler->aireAcondicionado = true;
             }else{
-                $inmueble->aireAcondicionado = false;
+                $alquiler->aireAcondicionado = false;
             }
             /*FIN COMPROBAR EXTRAS ALQUILER*/
+            $alquiler->save();
+        }else{
+            $venta = new Sale;
+            $venta->idInmueble = $inmueble->id;
+            $venta->save();
+
         }
-
-        $inmueble->save();
-
         //Agregamos ahora la direccion del inmueble;
 
         $direccion = new Address;
@@ -149,7 +192,7 @@ class publicarNuevoInmuebleController extends Controller
         $direccion->localidad = $request->localidad;
         $direccion->provincia = $request->provincia;
         $direccion->nombre_de_la_direccion = $request->nombreDir;
-        $direccion->codigo_postal = 46017; //$request->cp;
+        $direccion->codigo_postal = $request->cp;
         $direccion->nPuerta = $request->nPuerta;
         $direccion->nPatio = $request->nPatio;
         $direccion->nPiso = $request->nPiso;
