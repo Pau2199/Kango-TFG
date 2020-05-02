@@ -13,13 +13,16 @@
 <script src="{{asset('js/registrarInmuebleJS.js')}}"></script>
 @stop
 @section('content')
+<?php if(!isset($pulsado)) $pulsado ='' ; $id = '' ?>
+<span>{{$pulsado}}</span>
+<span>{{$id}}</span>
 <div class="container">
     <div class="row p-5 justify-content-center">
         <div class="col-sm-12 col-md-8">
             <form action="agregarInmueble" id="formAgregarInmueble" enctype="multipart/form-data" method="post">
                 {{csrf_field()}}
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label class="font-weight-bold" for="tipoCompra">Tipo de Publicación</label>
                         <select id="tipoCompra" name="tipoCompra" class="form-control  @error('tipoCompra') is-invalid @enderror">
                             <option value="-">-</option>
@@ -34,7 +37,7 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label class="font-weight-bold" for="tipoInmueble">Tipo de Inmueble</label>
                         <select id="tipoInmueble" name="tipoInmueble" class="form-control @error('tipoInmueble') is-invalid @enderror">
                             <option value="-">-</option>
@@ -51,11 +54,21 @@
                         </span>
                         @enderror
                     </div>
+                    <div class="form-group col-md-4">
+                        <label class="font-weight-bold" for="cp">Codigo Postal</label>
+                        <input type="number" class="form-control @error('cp') is-invalid @enderror" name="cp" id="cp" placeholder="Codigo Postal">
+                        <strong id="mensajencp" class="comprobaciones" ></strong>
+                        @error('cp')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label class="font-weight-bold" for="provincia">Provincia</label>
-                        <input type="text" class="form-control  @error('provincia') is-invalid @enderror" name="provincia" id="provincia" placeholder="Provincia">
+                        <input type="text" class="form-control  @error('provincia') is-invalid @enderror" value="@if($pulsado != null && $pulsado == true) {{$prueba}} @endif"name="provincia" id="provincia" placeholder="Provincia">
                         <strong id="mensajeprovincia" class="comprobaciones" ></strong>
                         @error('provincia')
                         <span class="invalid-feedback" role="alert">
@@ -74,9 +87,9 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-4">
-                        <label class="font-weight-bold" for="cp">Codigo Postal</label>
-                        <input type="number" class="form-control @error('cp') is-invalid @enderror" name="cp" id="cp" placeholder="Codigo Postal">
-                        <strong id="mensajencp" class="comprobaciones" ></strong>
+                        <label class="font-weight-bold" for="cp">Barrio</label>
+                        <input type="text" class="form-control @error('barrio') is-invalid @enderror" name="barrio" id="barrio" placeholder="Nombre del Barrio">
+                        <strong id="mensajenbarrio" class="comprobaciones" ></strong>
                         @error('cp')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

@@ -102,6 +102,7 @@ class publicarNuevoInmuebleController extends Controller
         $inmueble->n_habitaciones = $request->nHabitaciones;
         $inmueble->n_cuartos_de_banyo = $request->nCuartosBanyo;
         $inmueble->precio = $request->precio;
+        $inmueble->precio = $request->precio;
         $inmueble->disponible = true;
 
         /*INICIO COMPROBAR EXTRAS*/
@@ -194,6 +195,7 @@ class publicarNuevoInmuebleController extends Controller
         $direccion->provincia = $request->provincia;
         $direccion->nombre_de_la_direccion = $request->nombreDir;
         $direccion->codigo_postal = $request->cp;
+        $direccion->barrio = $request->barrio;
         $direccion->nPuerta = $request->nPuerta;
         $direccion->nPatio = $request->nPatio;
         $direccion->nPiso = $request->nPiso;

@@ -22,12 +22,11 @@ class inmueblesPublicados extends Controller
      */
     public function index($id)
     {
-        
+
         $id = explode('-', $id);
         $datos;
-        
-        if($id[0] == 'A'){
-            $datos=User::select('property.*','address.tipo_de_via','address.localidad','address.provincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio','rental.internet', 'rental.animales', 'rental.reformas', 'rental.calefaccion', 'rental.aireAcondicionado', 'rental.fianza')
+
+        if($id[0] == 'A'){            $datos=User::select('property.*','address.tipo_de_via','address.barrio','address.localidad','address.provincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio','rental.internet', 'rental.animales', 'rental.reformas', 'rental.calefaccion', 'rental.aireAcondicionado', 'rental.fianza')
                 ->join('property', 'users.id', '=', 'property.idUsuario')
                 ->join('address', 'property.id', '=', 'address.idInmueble')
                 ->join('rental', 'property.id', '=', 'rental.idInmueble')
@@ -38,13 +37,21 @@ class inmueblesPublicados extends Controller
             for($i = 0 ; $i<count($datos) ; $i++){
                 $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $datos[$i]->id .'"');
                 $datos[$i]->img = $imagenes;
+                $datos[$i]->alquiler = true;
             }
-            $datos->alquier = true;
         }
 
 
 
         return view('vistaInmueble')->with('datos', $datos);
+    }
+    
+    public function modificarInmuebleVista($id, $pulsado){
+        $prueba = 'preuab de erorororororororo';
+        return view('formInmuebleNuevo')
+            ->with('id', $id)
+            ->with('pulsado', $pulsado)
+            ->with('prueba', $prueba);
     }
 
     /**
