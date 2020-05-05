@@ -13,9 +13,10 @@
 <script src="{{asset('js/registrarInmuebleJS.js')}}"></script>
 @stop
 @section('content')
-<?php if(!isset($pulsado)) $pulsado ='' ; $id = '' ?>
+<?php if(!isset($pulsado)) $pulsado ='' ; ?>
 <span>{{$pulsado}}</span>
 <span>{{$id}}</span>
+<span>{{$datos}}</span>
 <div class="container">
     <div class="row p-5 justify-content-center">
         <div class="col-sm-12 col-md-8">
@@ -68,7 +69,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label class="font-weight-bold" for="provincia">Provincia</label>
-                        <input type="text" class="form-control  @error('provincia') is-invalid @enderror" value="@if($pulsado != null && $pulsado == true) {{$prueba}} @endif"name="provincia" id="provincia" placeholder="Provincia">
+                        <input type="text" class="form-control  @error('provincia') is-invalid @enderror" value=""name="provincia" id="provincia" placeholder="Provincia">
                         <strong id="mensajeprovincia" class="comprobaciones" ></strong>
                         @error('provincia')
                         <span class="invalid-feedback" role="alert">
