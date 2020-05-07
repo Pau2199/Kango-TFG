@@ -337,11 +337,11 @@
                                 <label class="font-weight-bold" for="tipoInmueble">Tipo de Inmueble</label>
                                 <select id="tipoInmueble" name="tipoInmueble" class="form-control @error('tipoInmueble') is-invalid @enderror">
                                     <option value="-">-</option>
-                                    <option id="Pi" value="Pi">Piso</option>
-                                    <option id="Du" value="Du">Duplex</option>
-                                    <option id="Ad" value="Ad">Adosado</option>
-                                    <option id="Ch" value="Ch">Chalet</option>
-                                    <option id="Ba" value="Ba">Bajo</option>
+                                    <option id="Pi" value="P">Piso</option>
+                                    <option id="Du" value="D">Duplex</option>
+                                    <option id="Ad" value="A">Adosado</option>
+                                    <option id="Ch" value="C">Chalet</option>
+                                    <option id="Ba" value="B">Bajo</option>
                                 </select>
                                 <strong id="mensajetipoInmueble" class="comprobaciones" ></strong>
                                 @error('tipoInmueble')
@@ -535,36 +535,6 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-md-6" id="divPerfil">
-                                    <span  class="font-weight-bold">Imagén de perfil</span>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input @error('perfil') is-invalid @enderror" name="perfil" id="perfil">
-                                        <label id="labelImagenPefil" class="custom-file-label" for="perfil">Selecionar Imagen de Perfil</label>
-                                        <strong id="mensajeperfil" class="comprobaciones"></strong>
-                                        @error('perfil')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6" id="divImagenes">
-                                    <span  class="font-weight-bold">Añadir más imagenes</span>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input @error('masImagenes') is-invalid @enderror" name="masImagenes[]" multiple="" id="masImagenes">
-                                        <label id="labelmasImagenes" class="custom-file-label" for="masImagenes">Selecionar más Imagenes</label>
-                                        <strong id="mensajemasImagenes" class="comprobaciones"></strong>
-                                        @error('masImagenes')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="font-weight-bold" for="descripcion">Descripción</label>
                             <textarea id="descripcion"name="descripcion" id="descripcion" cols="90" rows="5"></textarea>
                         </div>
@@ -572,12 +542,48 @@
                             <button type="submit" id='botonRegistro' class="btn btn-primary">Guardar Modificaciones</button>
                         </div>
                     </form>
+                    <div class="mt-5" id="divForm">
+                        <form action="">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6" id="divPerfil">
+                                        <span  class="font-weight-bold">Imagén de perfil</span>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input @error('perfil') is-invalid @enderror" name="perfil" id="perfil">
+                                            <label id="labelImagenPefil" class="custom-file-label" for="perfil">Selecionar Imagen de Perfil</label>
+                                            <strong id="mensajeperfil" class="comprobaciones"></strong>
+                                            @error('perfil')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" id="divImagenes">
+                                        <span  class="font-weight-bold">Añadir más imagenes</span>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input @error('masImagenes') is-invalid @enderror" name="masImagenes[]" multiple="" id="masImagenes">
+                                            <label id="labelmasImagenes" class="custom-file-label" for="masImagenes">Selecionar más Imagenes</label>
+                                            <strong id="mensajemasImagenes" class="comprobaciones"></strong>
+                                            @error('masImagenes')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="justify-content-center">
+                                <button type="submit" id='botonRegistro' class="btn btn-primary">Guardar Imagenes</button>
+                            </div>                 
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <input id="usuarioInmId" type="hidden" value="{{$datos[0]->idUsuario}}">
 <input id="usuarioLogId" type="hidden" value="{{Auth::user()->id}}">
 

@@ -45,9 +45,9 @@ class inmueblesPublicados extends Controller
 
         return view('vistaInmueble')->with('datos', $datos);
     }
-    
+
     public function borrarImagen ($imagen){
-//        DB::table('image')->where('nombre', '=', $imagen)->delete();
+        //        DB::table('image')->where('nombre', '=', $imagen)->delete();
     }
 
     /*public function modificarInmuebleVista($id, $pulsado){
@@ -67,9 +67,9 @@ class inmueblesPublicados extends Controller
                         $datos[$i]->img = $imagenes;
                         $datos[$i]->alquiler = true;
                 }
-                          
+
             }else{
-            
+
             $datos = User::select('property.*','address.tipo_de_via','address.localidad','address.provincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio')
                 ->join('property', 'users.id', '=', 'property.idUsuario')
                 ->join('address', 'property.id', '=', 'address.idInmueble')
@@ -145,7 +145,111 @@ class inmueblesPublicados extends Controller
      */
     public function update(Request $request, $id)
     {
+        $numeroid = explode('-', $id);
+
+        $inmueble = Property::find($numeroid[1]);
+        $inmueble->metros_cuadrados = $request->nMetrosCuadrados;
+        $inmueble->precio = $request->precio;
+        $inmueble->tipo_de_vivienda = $request->tipoInmueble;
+        $inmueble->descripcion = $request->descripcion;
+        $inmueble->n_habitaciones = $request->nHabitaciones;
+        $inmueble->n_cuartos_de_banyo = $request->nCuartosBanyo;
+
+        if($request->ascensor != null){
+            $inmueble->ascensor = true;
+        }else{
+            $inmueble->ascensor = false;
+        }
+
+        //comrpobar Garage
+        if($request->garage != null){
+            $inmueble->garage = true;
+        }else{
+            $inmueble->garage = false;
+        }
+
+        //comprobar Piscina
+        if($request->piscina != null){
+            $inmueble->piscina = true;
+        }else{
+            $inmueble->piscina = false;
+        }
+        $inmueble->save();
+        $idInm = $numeroid[1];
+        $idAddress = DB::select('SELECT id FROM address WHERE idInmueble = "'. $idInm .'"');
+
+        $address = Address::find($idAddress[0]->id);
+        $address->tipo_de_via = $request->tipoVia;
+        $address->localidad = $request->localidad;
+        $address->provincia = $request->provincia;
+        $address->nombre_de_la_direccion = $request->nombreDir;
+        $address->codigo_postal = $request->cp;
+        $address->nPuerta = $request->nPuerta;
+        $address->nPatio = $request->nPatio;
+        $address->nPiso = $request->nPiso;
+        $address->barrio = $request->barrio;
+
+        if($request->escalera != null){
+            $address->escalera = $request->escalera;
+        }else{
+            $address->escalera = null;
+        }
+        $address->save();
+        if($request->bloque != null){
+            $address->bloque = $request->escalera;
+        }else{
+            $address->bloque = null;
+        }
+
+        if($numeroid[0] == 'A'){
+            $idAlquiler = DB::select('SELECT id FROM rental WHERE idInmueble = "'. $idInm .'"');
+            $alquiler = Rental::find($idAlquiler[0]->id);
+
+            $alquiler->fianza = $request->fianza;
+            /*INICIO COMPROBAR EXTRAS ALQUILER*/
+
+            //comprobar animales
+            if($request->animales != null){
+                $alquiler->animales = true;
+            }else{
+                $alquiler->animales = false;
+            }
+
+            //comprobar reformas
+            if($request->reformas != null){
+                $alquiler->reformas = true;
+            }else{
+                $alquiler->reformas = false;
+            }
+
+            //comprobar internet
+            if($request->internet != null){
+                $alquiler->internet = true;
+            }else{
+                $alquiler->internet = false;
+            }
+
+            //comprobar calefaccion
+            if($request->calefaccion != null){
+                $alquiler->calefaccion = true;
+            }else{
+                $alquiler->calefaccion = false;
+            }
+
+            //comprobar aire acondicionado
+            if($request->aire != null){
+                $alquiler->aireAcondicionado = true;
+            }else{
+                $alquiler->aireAcondicionado = false;
+            }
+            /*FIN COMPROBAR EXTRAS ALQUILER*/
+            $alquiler->save();
+
+        }
         return $request;
+
+
+
     }
 
     /**
