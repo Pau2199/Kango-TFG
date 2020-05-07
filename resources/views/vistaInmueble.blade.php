@@ -279,7 +279,7 @@
                     Nº De Habitaciones: {{$datos[0]->n_habitaciones}}
                 </div>
                 <div id="banyos" class="col-4 text-center">
-                    Nº De Cuartos de Baño: {{$datos[0]->n_habitaciones}}
+                    Nº De Cuartos de Baño: {{$datos[0]->n_cuartos_de_banyo}}
                 </div>
                 <div id="metros" class="col-4 text-center">
                     Metros Cuadrados: {{$datos[0]->metros_cuadrados}}
@@ -305,7 +305,7 @@
         <div class="col-lg-8" id="modificarInm">
             <div class="row p-5 justify-content-center">
                 <div class="col-sm-12 col-md-8">
-                    <form action="">
+                    <form action="" id="formEditar">
                         <p>Direccion</p>
                         <div class="form-row">
                             <div class="form-group-row col-md-2">
@@ -337,11 +337,11 @@
                                 <label class="font-weight-bold" for="tipoInmueble">Tipo de Inmueble</label>
                                 <select id="tipoInmueble" name="tipoInmueble" class="form-control @error('tipoInmueble') is-invalid @enderror">
                                     <option value="-">-</option>
-                                    <option value="Pi">Piso</option>
-                                    <option value="Du">Duplex</option>
-                                    <option value="Ad">Adosado</option>
-                                    <option value="Ch">Chalet</option>
-                                    <option value="Ba">Bajo</option>
+                                    <option id="Pi" value="Pi">Piso</option>
+                                    <option id="Du" value="Du">Duplex</option>
+                                    <option id="Ad" value="Ad">Adosado</option>
+                                    <option id="Ch" value="Ch">Chalet</option>
+                                    <option id="Ba" value="Ba">Bajo</option>
                                 </select>
                                 <strong id="mensajetipoInmueble" class="comprobaciones" ></strong>
                                 @error('tipoInmueble')

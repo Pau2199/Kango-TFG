@@ -23,7 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('inmuebles/publicarNuevo', 'publicarNuevoInmuebleController@index');
 Route::get('/inmuebles/modificarInmuebleVista/{id}/{pulsado}','inmueblesPublicados@modificarInmuebleVista');
 Route::get('/inmuebles/vistaInmueble/borrarImagen/{imagen}','inmueblesPublicados@borrarImagen');
-
+Route::get('/inmuebles/vistaInmueble/modificar/{id}','inmueblesPublicados@update');
 Route::post('inmuebles/agregarInmueble', 'publicarNuevoInmuebleController@store');
 Route::post('inmuebles/mostrarInmuebles', 'publicarNuevoInmuebleController@store');
 Route::get('inmuebles/anunciosActivos', 'publicarNuevoInmuebleController@mostrarInmuebles');

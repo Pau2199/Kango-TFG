@@ -52,7 +52,6 @@ $(function(){
 
                 var direccion = $('h2').html().split(' ');
                 var opcion = direccion[32].trim();
-                console.log(direccion);
                 for(var i = 0 ; i<direccion.length ; i++){
                     if(direccion[i] == 'en'){
                         var provincia = "";
@@ -72,7 +71,6 @@ $(function(){
                     }else if(direccion[i] == '-'){
                         $('#barrio').val(direccion[i+3]);
                     }else if(direccion[i] == 'de'){
-                        console.log(direccion[96].trim())
                         if(direccion[96].trim() == 'Piso'){
                             $('#Pi').attr('selected', 'true');
                         }else if(direccion[96].trim() == 'Duplex'){
@@ -86,7 +84,7 @@ $(function(){
                         }
                     }
                 }
-                console.log(opcion); $('#nHabitaciones').val(parseInt($('#habitaciones').html().split('Habitaciones:')[1]));
+                $('#nHabitaciones').val(parseInt($('#habitaciones').html().split('Habitaciones:')[1]));
                 $('#nCuartosBanyo').val(parseInt($('#banyos').html().split('Baño:')[1]));
                 $('#nMetrosCuadrados').val(parseInt($('#metros').html().split('Cuadrados:')[1]));
 
@@ -158,10 +156,9 @@ $(function(){
             if($(this).attr('id') == 'provincia' || $(this).attr('id') == 'localidad' || $(this).attr('id') == 'nombreDir'){
                 validarProvinciaLocalidadNombre($(this).attr('id'), $(this).val());
             }
-            if($(this).attr('id') == 'nPatio'){
-                console.log('entra');
-                validarPatioPiso($(this).attr('id'), $(this).val());
-            }
+            if($(this).attr('id') == 'nPatio'){;
+                                               validarPatioPiso($(this).attr('id'), $(this).val());
+                                              }
             if($(this).attr('id') == 'nHabitaciones'){
                 validarHabitaciones($(this).attr('id'), $(this).val());
             }
@@ -219,7 +216,7 @@ $(function(){
         }
 
         if($('#divPerfil').css('display') != 'none'){
-            if($('#perfil').val == ""){
+            if($('#perfil').val() == "" ){
                 $('#mensajeperfil').html('Este campo no puede estar vacio');
             }
         }
@@ -236,12 +233,9 @@ $(function(){
                     contador++;
                 }
             }
-            console.log($('#masImagenes').length + contador);
-            console.log($('#masImagenes').length);
-            console.log(contador);
-            if($('#masImagenes').length + contador > 3){
-                console.log('entra');
-                $('#mensajemasImagenes').html('Como máximo puede subir hasta 3 imagenes extras, actualmente tienes registradas ' + contador + 'imagenes en la base de datos');
+            var cont
+            if($('#masImagenes').prop('files').length + contador > 3){
+                $('#mensajemasImagenes').html('Como máximo puede subir hasta 3 imagenes extras, actualmente tienes registradas ' + contador + ' imagenes en la base de datos');
             }
         }
 
@@ -251,7 +245,15 @@ $(function(){
             }
         })
         if(errorEncontrado == false){
-            console.log('entra al if')
+            var id = window.location.href.split('/')[5];
+            $.ajax({
+                url: '/inmuebles/vistaInmueble/modificar/'+id,
+                method: 'GET',
+                data: $('#formEditar').serialize(),
+                success: function(data){
+                    console.log(data);
+                }
+            })
         }
         console.log(errorEncontrado);
     })
@@ -284,9 +286,7 @@ $(function(){
     function validarPatioPiso(campo, mensaje){
         $('#mensaje'+campo).html('');
         var correcto = true;
-        console.log('llega');
         if(mensaje <= 0){
-            console.log('entra');
             $('#mensaje'+campo).html('Este campo no puede ser menor o igual a 0');
         }
     }
@@ -316,7 +316,7 @@ $(function(){
             console.log(campo)
             $('#mensaje'+campo).html('Debes selecionar una opción');
         }else{
-            if(mensaje != 'A' && mensaje != 'AQ' && mensaje != 'C' && mensaje != 'P' && mensaje != 'D' && mensaje != 'C' && mensaje != 'B'){
+            if(mensaje != 'Ad' && mensaje != 'Pi' && mensaje != 'Du' && mensaje != 'Ch' && mensaje != 'Ba' && mensaje != 'C' && mensaje != 'A' && mensaje != 'P'){
                 $('#mensaje'+campo).html('Opción elegida incorrecta');
             }
         }
@@ -340,8 +340,6 @@ $(function(){
         $('#mensaje'+campo).html('');
         var minimo = $('#precio').val()*2;
         var maximo =$('#precio').val()*4;
-        console.log(minimo);
-        console.log(maximo);
         if(mensaje < minimo && mensaje > maximo){
             $('#mensaje'+campo).html('La fianza debe ser como mínimo 2 meses y como máximo 4 meses.');
         }
