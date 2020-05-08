@@ -13,6 +13,7 @@ $(function(){
                 $('#vistaInmueble').hide();
                 $('#modificarInm').show();
                 $('#vertical').show();
+                $('#divForm').hide();
                 $('#divPerfil').hide();
                 $('#divImagenes').hide();
 
@@ -139,10 +140,13 @@ $(function(){
             method: 'GET',
             success: function(data){
                 boton.parent().parent().remove();
+                $('#divForm').show();
+
                 if(imagen.indexOf('perfil') > -1){
                     $('#divPerfil').show();
                 }else{
                     $('#divImagenes').show();
+
                 }
             }
         })
@@ -156,9 +160,9 @@ $(function(){
             if($(this).attr('id') == 'provincia' || $(this).attr('id') == 'localidad' || $(this).attr('id') == 'nombreDir'){
                 validarProvinciaLocalidadNombre($(this).attr('id'), $(this).val());
             }
-            if($(this).attr('id') == 'nPatio'){;
-                                               validarPatioPiso($(this).attr('id'), $(this).val());
-                                              }
+            if($(this).attr('id') == 'nPatio'){
+                validarPatioPiso($(this).attr('id'), $(this).val());
+            }
             if($(this).attr('id') == 'nHabitaciones'){
                 validarHabitaciones($(this).attr('id'), $(this).val());
             }
@@ -215,7 +219,7 @@ $(function(){
             validarFianza('fianza', $('#fianza').val());
         }
 
-        if($('#divPerfil').css('display') != 'none'){
+        /*        if($('#divPerfil').css('display') != 'none'){
             if($('#perfil').val() == "" ){
                 $('#mensajeperfil').html('Este campo no puede estar vacio');
             }
@@ -237,7 +241,7 @@ $(function(){
             if($('#masImagenes').prop('files').length + contador > 3){
                 $('#mensajemasImagenes').html('Como máximo puede subir hasta 3 imagenes extras, actualmente tienes registradas ' + contador + ' imagenes en la base de datos');
             }
-        }
+        }*/
 
         $('strong').each(function(){
             if($(this).html() != ""){
@@ -316,7 +320,7 @@ $(function(){
             console.log(campo)
             $('#mensaje'+campo).html('Debes selecionar una opción');
         }else{
-            if(mensaje != 'Ad' && mensaje != 'Pi' && mensaje != 'Du' && mensaje != 'Ch' && mensaje != 'Ba' && mensaje != 'C' && mensaje != 'A' && mensaje != 'P'){
+            if(mensaje != 'A' && mensaje != 'P' && mensaje != 'D' && mensaje != 'C' && mensaje != 'B' && mensaje != 'C' && mensaje != 'A' && mensaje != 'P'){
                 $('#mensaje'+campo).html('Opción elegida incorrecta');
             }
         }
