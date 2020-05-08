@@ -17,7 +17,7 @@ class CreateIsRentedTable extends Migration
             $table->Date('fecha_inicio');
             $table->Date('fecha_final');
             $table->bigInteger('numero_de_cuenta');
-            $table->bigInteger('idUsuario')->unsigned();
+            $table->string('idUsuario');
             $table->bigInteger('idAlquiler')->unsigned();
             $table->timestamps();
         });

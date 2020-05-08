@@ -15,7 +15,7 @@ class AddForeignToIsRentedTable extends Migration
     {
         Schema::table('is_rented', function (Blueprint $table) {
             $table->foreign('idAlquiler')->references('id')->on('rental')->onDelete('cascade');
-            $table->foreign('idUsuario')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('idUsuario')->references('dni')->on('users')->onDelete('cascade');
         });
     }
 
