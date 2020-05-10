@@ -14,7 +14,7 @@ class AddForeignToNotificationTable extends Migration
     public function up()
     {
         Schema::table('notification', function (Blueprint $table) {
-            $table->foreign('idUsuario')->references('dni')->on('users')->onDelete('cascade');
+            $table->foreign('idUsuario')->references('id')->on('users')->onDelete('cascade');
 
         });
     }

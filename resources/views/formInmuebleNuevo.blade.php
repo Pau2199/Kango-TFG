@@ -14,9 +14,6 @@
 @stop
 @section('content')
 <?php if(!isset($pulsado)) $pulsado ='' ; ?>
-<span>{{$pulsado}}</span>
-<span>{{$id}}</span>
-<span>{{$datos}}</span>
 <div class="container">
     <div class="row p-5 justify-content-center">
         <div class="col-sm-12 col-md-8">

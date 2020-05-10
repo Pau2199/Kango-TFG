@@ -18,7 +18,7 @@ class CreateVisitingHoursTable extends Migration
             $table->string('hora_final',100);
             $table->string('hora_inicio',100);
             $table->string('dia',100);
-            $table->string('idUsuario');
+            $table->bigInteger('idUsuario')->unsigned();
             $table->timestamps();
         });
     }

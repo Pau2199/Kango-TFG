@@ -23,7 +23,7 @@ class CreateAddressTable extends Migration
             $table->integer('nPuerta');
             $table->integer('nPatio');
             $table->string('nPiso');
-            $table->integer('barrio')->nullable();
+            $table->string('barrio')->nullable();
             $table->string('escalera')->nullable();
             $table->string('bloque')->nullable();
             $table->bigInteger('idInmueble')->unsigned();

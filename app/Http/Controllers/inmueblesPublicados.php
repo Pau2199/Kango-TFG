@@ -15,6 +15,13 @@ use DB;
 
 class inmueblesPublicados extends Controller
 {
+
+//    public function updateImagenes(Request $request){
+//        $inmueble = Property::find(3);
+//        $inmueble->descripcion = $requests->perfil;
+//        $inmueble->save();
+//    }
+
     /**
      * Display a listing of the resource.
      *
@@ -49,50 +56,6 @@ class inmueblesPublicados extends Controller
     public function borrarImagen ($imagen){
         //        DB::table('image')->where('nombre', '=', $imagen)->delete();
     }
-
-    /*public function modificarInmuebleVista($id, $pulsado){
-        $idIm = explode('-', $id);
-        $datos;
-
-        if($idIm[0] == 'A'){            $datos=User::select('property.*','address.tipo_de_via','address.barrio','address.localidad','address.provincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio','rental.internet', 'rental.animales', 'rental.reformas', 'rental.calefaccion', 'rental.aireAcondicionado', 'rental.fianza')
-            ->join('property', 'users.id', '=', 'property.idUsuario')
-            ->join('address', 'property.id', '=', 'address.idInmueble')
-            ->join('rental', 'property.id', '=', 'rental.idInmueble')
-            ->where('property.idUsuario', Auth::user()->id)
-            ->where('property.id', $idIm[1])
-            ->get();
-
-                for($i = 0 ; $i<count($datos) ; $i++){
-                        $imagenes = DB::select('SELECT i.nombre, i.id FROM image i WHERE idInmueble = "'. $datos[$i]->id .'"');
-                        $datos[$i]->img = $imagenes;
-                        $datos[$i]->alquiler = true;
-                }
-
-            }else{
-
-            $datos = User::select('property.*','address.tipo_de_via','address.localidad','address.provincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio')
-                ->join('property', 'users.id', '=', 'property.idUsuario')
-                ->join('address', 'property.id', '=', 'address.idInmueble')
-                ->join('sale', 'property.id', '=', 'sale.idInmueble')
-                ->where('property.idUsuario', Auth::user()->id)
-                ->where('property.id',$idIm[1])
-                ->get();
-
-            for($i = 0 ; $i<count($datos) ; $i++){
-                $imagenes = DB::select('SELECT i.nombre, i.id FROM image i WHERE idInmueble = "'. $datos[$i]->id .'"');
-                $datos[$i]->img = $imagenes;
-            }
-        }
-
-
-
-
-        return view('formInmuebleNuevo')
-            ->with('id', $id)
-            ->with('pulsado', $pulsado)
-            ->with('datos', $datos);
-    }*/
-
     /**
      * Show the form for creating a new resource.
      *

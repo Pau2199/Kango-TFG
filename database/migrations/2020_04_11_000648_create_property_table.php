@@ -24,7 +24,7 @@ class CreatePropertyTable extends Migration
             $table->boolean('garage');
             $table->bigInteger('n_habitaciones');
             $table->bigInteger('n_cuartos_de_banyo');
-            $table->string('idUsuario');
+            $table->bigInteger('idUsuario')->unsigned();
             $table->boolean('disponible');
             $table->timestamps();
         });

@@ -94,14 +94,13 @@ class publicarNuevoInmuebleController extends Controller
         ]);
 
         $inmueble = new Property;
-        $inmueble->idUsuario = $request->usuario;
+        $inmueble->idUsuario = Auth::user()->id;
         $inmueble->metros_cuadrados = $request->nMetrosCuadrados;
         $inmueble->precio = $request->precio;
         $inmueble->tipo_de_vivienda = $request->tipoInmueble;
         $inmueble->descripcion = $request->descripcion;
         $inmueble->n_habitaciones = $request->nHabitaciones;
         $inmueble->n_cuartos_de_banyo = $request->nCuartosBanyo;
-        $inmueble->precio = $request->precio;
         $inmueble->precio = $request->precio;
         $inmueble->disponible = true;
 
@@ -297,8 +296,7 @@ class publicarNuevoInmuebleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        //    }
 
     /**
      * Remove the specified resource from storage.

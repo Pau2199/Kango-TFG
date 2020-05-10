@@ -15,8 +15,8 @@ class UserTableSeeder extends Seeder
         $nombres_hombre = array('Rafael','Juan','Mateo','Tomas','Antonio','Jose','Rafael','Miguel');
         $nombres_mujer = array('Laura','Raquel','Marta','Claudia','Maria','Olga','Noemi', 'Julia');
         $apellidos = array('Gomez','Perez','Hernandez','Garcia','Romero','Sosa','Ruiz','Flores');
-        $sexos = array('Hombre', 'Mujer');
-        $roles = array('Usuario', 'Administrador');
+        $sexos = array('H', 'M');
+        $roles = array('User', 'Admin');
         // Generar las fechas y las contraseñas
         $n_usuarios = 5;
         for ($i = 0; $i < $n_usuarios; $i++){
@@ -26,62 +26,79 @@ class UserTableSeeder extends Seeder
         }
 
         DB::table('users')->insert([
-            [
-            'nombre' => $nombres_hombre[0],
-            'sexo' => $sexos[0],
-            'primer_apellido' => $apellidos[rand(0,7)],
-            'segundo_apellido' => $apellidos[rand(0,7)],
-            'rol' => $roles[rand(0,1)],
-            'fecha_nacimiento' => $fechas_nacimiento[0],
-            'email' => Str::random(10).'@gmail.com',
-            'password' => $contraseñas[0],
-            'dni' => Str::random(9),
+            [    
+                'nombre' => $nombres_hombre[0],
+                'id' => 1,
+                'sexo' => $sexos[0],
+                'primer_apellido' => $apellidos[rand(0,7)],
+                'segundo_apellido' => $apellidos[rand(0,7)],
+                'rol' => $roles[rand(0,1)],
+                'fecha_nacimiento' => $fechas_nacimiento[0],
+                'email' => Str::random(10).'@gmail.com',
+                'password' => $contraseñas[0],
+                'nif_nie' => Str::random(9),
             ],
             [
-            'nombre' => $nombres_mujer[0],
-            'sexo' => $sexos[1],
-            'primer_apellido' => $apellidos[rand(0,7)],
-            'segundo_apellido' => $apellidos[rand(0,7)],
-            'rol' => $roles[rand(0,1)],
-            'fecha_nacimiento' => $fechas_nacimiento[1],
-            'email' => Str::random(10).'@gmail.com',
-            'password' => $contraseñas[1],
-            'dni' => Str::random(9),
+                'nombre' => $nombres_mujer[0],
+                'id' => 2,
+                'sexo' => $sexos[1],
+                'primer_apellido' => $apellidos[rand(0,7)],
+                'segundo_apellido' => $apellidos[rand(0,7)],
+                'rol' => $roles[rand(0,1)],
+                'fecha_nacimiento' => $fechas_nacimiento[1],
+                'email' => Str::random(10).'@gmail.com',
+                'password' => $contraseñas[1],
+                'nif_nie' => Str::random(9),
             ],
             [
-            'nombre' => $nombres_hombre[1],
-            'sexo' => $sexos[0],
-            'primer_apellido' => $apellidos[rand(0,7)],
-            'segundo_apellido' => $apellidos[rand(0,7)],
-            'rol' => $roles[rand(0,1)],
-            'fecha_nacimiento' => $fechas_nacimiento[2],
-            'email' => Str::random(10).'@gmail.com',
-            'password' => $contraseñas[2],
-            'dni' => Str::random(9),
+                'nombre' => $nombres_hombre[1],
+                'id' => 3,
+                'sexo' => $sexos[0],
+                'primer_apellido' => $apellidos[rand(0,7)],
+                'segundo_apellido' => $apellidos[rand(0,7)],
+                'rol' => $roles[rand(0,1)],
+                'fecha_nacimiento' => $fechas_nacimiento[2],
+                'email' => Str::random(10).'@gmail.com',
+                'password' => $contraseñas[2],
+                'nif_nie' => Str::random(9),
             ],
             [
-            'nombre' => $nombres_mujer[1],
-            'sexo' => $sexos[1],
-            'primer_apellido' => $apellidos[rand(0,7)],
-            'segundo_apellido' => $apellidos[rand(0,7)],
-            'rol' => $roles[rand(0,1)],
-            'fecha_nacimiento' => $fechas_nacimiento[3],
-            'email' => Str::random(10).'@gmail.com',
-            'password' => $contraseñas[3],
-            'dni' => Str::random(9),
+                'nombre' => $nombres_mujer[1],
+                'id' => 4,
+                'sexo' => $sexos[1],
+                'primer_apellido' => $apellidos[rand(0,7)],
+                'segundo_apellido' => $apellidos[rand(0,7)],
+                'rol' => $roles[rand(0,1)],
+                'fecha_nacimiento' => $fechas_nacimiento[3],
+                'email' => Str::random(10).'@gmail.com',
+                'password' => $contraseñas[3],
+                'nif_nie' => Str::random(9),
             ],
             [
-            'nombre' => $nombres_hombre[2],
-            'sexo' => $sexos[0],
-            'primer_apellido' => $apellidos[rand(0,7)],
-            'segundo_apellido' => $apellidos[rand(0,7)],
-            'rol' => $roles[rand(0,1)],
-            'fecha_nacimiento' => $fechas_nacimiento[4],
-            'email' => Str::random(10).'@gmail.com',
-            'password' => $contraseñas[4],
-            'dni' => Str::random(9),
-            ],  
+                'nombre' => $nombres_hombre[2],
+                'id' => 5,
+                'sexo' => $sexos[0],
+                'primer_apellido' => $apellidos[rand(0,7)],
+                'segundo_apellido' => $apellidos[rand(0,7)],
+                'rol' => $roles[rand(0,1)],
+                'fecha_nacimiento' => $fechas_nacimiento[4],
+                'email' => Str::random(10).'@gmail.com',
+                'password' => $contraseñas[4],
+                'nif_nie' => Str::random(9),
+            ], 
+            [
+                'nombre' => 'Pau',
+                'id' => 6,
+                'sexo' => 'H',
+                'primer_apellido' => $apellidos[rand(0,7)],
+                'segundo_apellido' => $apellidos[rand(0,7)],
+                'rol' => $roles[1],
+                'fecha_nacimiento' => $fechas_nacimiento[4],
+                'email' => 'pau_ll_m@hotmail.com',
+                'password' => 'pau1234',
+                'nif_nie' => Str::random(9),
+            ],
         ]
-        );
+                                  );
     }
 }

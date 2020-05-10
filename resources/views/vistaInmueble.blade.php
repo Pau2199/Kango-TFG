@@ -12,6 +12,10 @@
 <script src="{{asset('js/anunciosInmuebleJS.js')}}"></script>
 @stop
 @section('content')
+<div class="text-center w-100 bg-success font-weight-bold" id="mensajeInfo">
+<p> Modificación realizada correctamente! - La página se recargara en 3 segundos.</p>
+<p></p>
+</div>
 <div class="container-fluid my-4 mr-3 ml-3">
     <div class="row">
         <div id="vistaInmueble" class="col-lg-6 col-md-12 col-sm-12 col-12">
@@ -305,7 +309,42 @@
         <div class="col-lg-8" id="modificarInm">
             <div class="row p-5 justify-content-center">
                 <div class="col-sm-12 col-md-8">
+<!--
+                    <form action="/inmuebles/vistaInmueble/anyadirImagenes" id="formImagenes" methos="POST">
+                        {{csrf_field()}}
+                        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                        <div class="form-group" id="divButton">
+                            <div class="form-row">
+                                <div class="col-md-6" id="perf">
+                                    <span  class="font-weight-bold">Imagén de perfil</span>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input @error('perfil') is-invalid @enderror" name="perfil" id="perfil">
+                                        <label id="labelImagenPefil" class="custom-file-label" for="perfil">Selecionar Imagen de Perfil</label>
+                                        <strong id="mensajeperfil" class="comprobaciones"></strong>
+                                        @error('perfil')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="masImg">
+                                    <span  class="font-weight-bold">Añadir más imagenes</span>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="masImagenes[]" multiple="" id="masImagenes">
+                                        <label id="labelmasImagenes" class="custom-file-label" for="masImagenes">Selecionar más Imagenes</label>
+                                        <strong id="mensajemasImagenes" class="comprobaciones"></strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-3">
+                                <button type="submit" id='botonImagenes' class="btn btn-primary">Guardar Imagenes</button>
+                            </div>
+                        </div>
+                    </form>
+-->
                     <form action="" id="formEditar">
+                        {{csrf_field()}}
                         <p>Direccion</p>
                         <div class="form-row">
                             <div class="form-group-row col-md-2">
@@ -542,43 +581,6 @@
                             <button type="submit" id='botonRegistro' class="btn btn-primary">Guardar Modificaciones</button>
                         </div>
                     </form>
-                    <div class="mt-5" id="divForm">
-                        <form action="">
-                            <div class="form-group">
-                                <div class="form-row">
-                                    <div class="col-md-6" id="divPerfil">
-                                        <span  class="font-weight-bold">Imagén de perfil</span>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input @error('perfil') is-invalid @enderror" name="perfil" id="perfil">
-                                            <label id="labelImagenPefil" class="custom-file-label" for="perfil">Selecionar Imagen de Perfil</label>
-                                            <strong id="mensajeperfil" class="comprobaciones"></strong>
-                                            @error('perfil')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6" id="divImagenes">
-                                        <span  class="font-weight-bold">Añadir más imagenes</span>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input @error('masImagenes') is-invalid @enderror" name="masImagenes[]" multiple="" id="masImagenes">
-                                            <label id="labelmasImagenes" class="custom-file-label" for="masImagenes">Selecionar más Imagenes</label>
-                                            <strong id="mensajemasImagenes" class="comprobaciones"></strong>
-                                            @error('masImagenes')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> 
-                            <div class="justify-content-center">
-                                <button type="submit" id='botonRegistro' class="btn btn-primary">Guardar Imagenes</button>
-                            </div>                 
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>

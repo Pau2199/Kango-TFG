@@ -1,6 +1,7 @@
 $(function(){
     $('#modificarInm').hide();
     $('#vertical').hide();
+    $('#mensajeInfo').hide();
 
     $('#botonModificacion').click(function(){
         if($(this).html() == 'Activar Edición'){
@@ -13,9 +14,9 @@ $(function(){
                 $('#vistaInmueble').hide();
                 $('#modificarInm').show();
                 $('#vertical').show();
-                $('#divForm').hide();
-                $('#divPerfil').hide();
-                $('#divImagenes').hide();
+                /*                $('#masImg').hide();
+                $('#perf').hide();
+                $('#divButton').hide();*/
 
                 var direccion = $('#direccion').html().split(' ');
                 for(var i = 0; i<direccion.length ; i++){
@@ -132,25 +133,64 @@ $(function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    $('.botonesImagenes').click(function(){
-        var imagen = $(this).attr('id');
-        var boton = $(this);
-        $.ajax({
-            url: '/inmuebles/vistaInmueble/borrarImagen/'+imagen,
-            method: 'GET',
-            success: function(data){
-                boton.parent().parent().remove();
-                $('#divForm').show();
+    //    $('.botonesImagenes').click(function(){
+    //        var imagen = $(this).attr('id');
+    //        console.log(imagen);
+    //        var boton = $(this);
+    //        $.ajax({
+    //            url: '/inmuebles/vistaInmueble/borrarImagen/'+imagen,
+    //            method: 'GET',
+    //            success: function(data){
+    //                boton.parent().parent().remove();
+    //                $('#divButton').show();
+    //                if(imagen.includes('perfil') == true){
+    //                    $('#perf').show();    
+    //                }else{
+    //                    $('#masImg').show();
+    //                }
+    //            }
+    //        })
+    //    })
 
-                if(imagen.indexOf('perfil') > -1){
-                    $('#divPerfil').show();
-                }else{
-                    $('#divImagenes').show();
+    //    $('#botonImagenes').click(function(){
+    //        event.preventDefault();
+    //        imagenPerfil = "";
+    //        restoImagenes = [];
+    //
+    //        if($('#perf').css('display') != 'none'){
+    //            if($('#perfil').val() == "" ){
+    //                $('#mensajeperfil').html('Este campo no puede estar vacio');
+    //            }else{
+    //                imagenPerfil = $('#perfil').val();
+    //            }
+    //        }
+    //        var imagenes = $('img.vertical');
+    //        var nombre = [];
+    //        imagenes.each(function(){
+    //            restoImagenes.push($(this).attr('src').split('/')[4]);
+    //        })
+    //        var contador = 0;
+    //        for(var i = 0 ; i<nombre.length; i++){
+    //            if(nombre[i].indexOf('perfil') == -1){
+    //                contador++;
+    //            }
+    //        }
+    //        console.log(imagenPerfil);
+    //        if($('#masImagenes').prop('files').length + contador > 3){
+    //            console.log('entra');
+    //            $('#mensajemasImagenes').html('Como máximo puede subir hasta 3 imagenes extras, actualmente tienes registradas '  + ' imagenes en la base de datos');
+    //        }
+    //
+    //        if(imagenPerfil == "" && restoImagenes.length == 0){
+    //            console.log('error imagenes');
+    //        }else{
+    //            $('#formImagenes').submit();
+    //        }
+    //
+    //    })
 
-                }
-            }
-        })
-    })
+
+
 
     $('input').blur(function(){
         $('#mensaje'+$(this).attr('id')).html('');
@@ -255,7 +295,11 @@ $(function(){
                 method: 'GET',
                 data: $('#formEditar').serialize(),
                 success: function(data){
-                    console.log(data);
+                    $('html, body').animate({scrollTop: 0},1000)
+                    $('#mensajeInfo').show();
+                    setTimeout(function(){
+                        window.location.reload();
+                    }, 3000)
                 }
             })
         }
