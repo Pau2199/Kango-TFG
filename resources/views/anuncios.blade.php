@@ -70,20 +70,20 @@
                         <div class="card-body">
                             <p class="font-weight-bold card-text">Dirección</p>
                             <p class="card-text">
-                                @if($valor->tipo_de_via == 'C')
+                                @if($value->tipo_de_via == 'C')
                                 Calle 
-                                @elseif($valor->tipo_de_via == 'A')
+                                @elseif($value->tipo_de_via == 'A')
                                 Avenida
                                 @else
                                 Plaza
                                 @endif
-                                {{$valor->nombre_de_la_direccion}},
-                                {{$valor->nPatio}}
+                                {{$value->nombre_de_la_direccion}},
+                                {{$value->nPatio}}
                             </p>
                             <hr>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span>Localidad: {{$value->localidad}} </span>
-                                <span class="f">Provincia: {{$valor->provincia}} </span>
+                                <span class="f">Provincia: {{$value->provincia}} </span>
                             </div>
                             <hr>
                             <div class="text-center">
@@ -91,7 +91,7 @@
                             </div>
                             <div id="V{{$value->id}}" class="row text-center my-3">
                                 <div class="col-6">
-                                    <a href="/inmuebles/vistaInmueble/A-{{$value->id}}"><span class="detalles btn btn-info">Detalles</span></a>
+                                    <a href="/inmuebles/vistaInmueble/V-{{$value->id}}"><span class="detalles btn btn-info">Detalles</span></a>
                                 </div>
                                 <div class="col-6">
                                     <span class="btn btn-info">Desactivar</span>

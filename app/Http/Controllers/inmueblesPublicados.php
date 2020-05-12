@@ -16,11 +16,11 @@ use DB;
 class inmueblesPublicados extends Controller
 {
 
-//    public function updateImagenes(Request $request){
-//        $inmueble = Property::find(3);
-//        $inmueble->descripcion = $requests->perfil;
-//        $inmueble->save();
-//    }
+    //    public function updateImagenes(Request $request){
+    //        $inmueble = Property::find(3);
+    //        $inmueble->descripcion = $requests->perfil;
+    //        $inmueble->save();
+    //    }
 
     /**
      * Display a listing of the resource.
@@ -46,7 +46,20 @@ class inmueblesPublicados extends Controller
                               $datos[$i]->img = $imagenes;
                               $datos[$i]->alquiler = true;
                           }
-                         }
+                         }else{
+            $datos=User::select('property.*','address.tipo_de_via','address.barrio','address.localidad','address.provincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio','address.nPuerta','address.nPiso','address.escalera','address.bloque')
+                ->join('property', 'users.id', '=', 'property.idUsuario')
+                ->join('address', 'property.id', '=', 'address.idInmueble')
+                ->join('sale', 'property.id', '=', 'sale.idInmueble')
+                ->where('property.idUsuario', Auth::user()->id)
+                ->where('property.id', $id[1])
+                ->get(); 
+            for($i = 0 ; $i<count($datos) ; $i++){
+                $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $datos[$i]->id .'"');
+                $datos[$i]->img = $imagenes;
+                $datos[$i]->alquiler = false;
+            }
+        }
 
 
 
@@ -108,6 +121,7 @@ class inmueblesPublicados extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $numeroid = explode('-', $id);
 
         $inmueble = Property::find($numeroid[1]);
@@ -209,10 +223,11 @@ class inmueblesPublicados extends Controller
             $alquiler->save();
 
         }
-        return $request;
 
+    }
 
-
+    public function updateImage(Request $request, $id){
+        return $_POST['masImagenes'];
     }
 
     /**

@@ -14,17 +14,19 @@ $(function(){
                 $('#vistaInmueble').hide();
                 $('#modificarInm').show();
                 $('#vertical').show();
-                /*                $('#masImg').hide();
+                $('#masImg').hide();
                 $('#perf').hide();
-                $('#divButton').hide();*/
+                $('#divButton').hide();
 
                 var direccion = $('#direccion').html().split(' ');
+                console.log(direccion);
                 for(var i = 0; i<direccion.length ; i++){
-                    if(direccion[i] == 'Calle'){
+                    //console.log(direccion[i]);
+                    if(direccion[i].trim() == 'Calle'){
                         $('#C').attr('selected', 'true');
-                    }else if(direccion[i] == 'Avenida'){
+                    }else if(direccion[i].trim() == 'Avenida'){
                         $('#A').attr('selected', 'true');
-                    }else if(direccion[i] == 'Plaza'){
+                    }else if(direccion[i].trim() == 'Plaza'){
                         $('#P').attr('selected', 'true');
                     }else{
                         if(direccion[i] == '-'){
@@ -42,13 +44,22 @@ $(function(){
                                 patio += arrayPatio[cont]
                             }
                             $('#nPatio').val(parseInt(patio));
-                        }else if(direccion[i] != "" && isNaN(direccion[i])){
+                        }else if(direccion[i].trim() == 'Bloque'){
+                            $('#bloque').val(direccion[i+1]);
+                        }else if(direccion[i].trim() == 'Escalera'){
+                            $('#escalera').val(direccion[i+1]);
+
+                        }else if(direccion[i] != "" && isNaN(direccion[i]) && direccion[i] != direccion[i].toUpperCase()){
                             if($('#nombreDir').val() == ""){
                                 $('#nombreDir').val(direccion[i]);
                             }else{
                                 $('#nombreDir').val($('#nombreDir').val() + ' '+ direccion[i]);
                             }
                         }
+                        /*                        if(direccion[i+1].split('')[0] == ','){
+                            console.log('entra');
+                            break;
+                        }*/
                     }
                 }
 
@@ -70,8 +81,14 @@ $(function(){
                         }else{
                             $('#localidad').val(direccion[i+2]);
                         }
-                    }else if(direccion[i] == '-'){
-                        $('#barrio').val(direccion[i+3]);
+                    }else if(direccion[i] == 'Barrio' && direccion[i+1] == 'de'){
+                        var cont = i+2;
+                        var barrio = "";
+                        while(direccion[cont] != ""){
+                            barrio+= direccion[cont] + " ";
+                            cont++;
+                        }
+                        $('#barrio').val(barrio.trim());
                     }else if(direccion[i] == 'de'){
                         if(direccion[96].trim() == 'Piso'){
                             $('#Pi').attr('selected', 'true');
@@ -87,8 +104,8 @@ $(function(){
                     }
                 }
                 $('#nHabitaciones').val(parseInt($('#habitaciones').html().split('Habitaciones:')[1]));
-                $('#nCuartosBanyo').val(parseInt($('#banyos').html().split('Baño:')[1]));
-                $('#nMetrosCuadrados').val(parseInt($('#metros').html().split('Cuadrados:')[1]));
+                $('#nCuartosBanyo').val(parseInt($('#banyos').html().split('Baños:')[1]));
+                $('#nMetrosCuadrados').val(parseInt($('#metros').html().split('Área:')[1]));
 
 
                 if($('#piscina').html().trim() == 'Sí'){
@@ -133,24 +150,24 @@ $(function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    //    $('.botonesImagenes').click(function(){
-    //        var imagen = $(this).attr('id');
-    //        console.log(imagen);
-    //        var boton = $(this);
-    //        $.ajax({
-    //            url: '/inmuebles/vistaInmueble/borrarImagen/'+imagen,
-    //            method: 'GET',
-    //            success: function(data){
-    //                boton.parent().parent().remove();
-    //                $('#divButton').show();
-    //                if(imagen.includes('perfil') == true){
-    //                    $('#perf').show();    
-    //                }else{
-    //                    $('#masImg').show();
-    //                }
-    //            }
-    //        })
-    //    })
+    $('.botonesImagenes').click(function(){
+        var imagen = $(this).attr('id');
+        console.log(imagen);
+        var boton = $(this);
+        $.ajax({
+            url: '/inmuebles/vistaInmueble/borrarImagen/'+imagen,
+            method: 'GET',
+            success: function(data){
+                boton.parent().parent().remove();
+                $('#divButton').show();
+                if(imagen.includes('perfil') == true){
+                    $('#perf').show();    
+                }else{
+                    $('#masImg').show();
+                }
+            }
+        })
+    })
 
     //    $('#botonImagenes').click(function(){
     //        event.preventDefault();
@@ -292,9 +309,10 @@ $(function(){
             var id = window.location.href.split('/')[5];
             $.ajax({
                 url: '/inmuebles/vistaInmueble/modificar/'+id,
-                method: 'GET',
+                method: 'POST',
                 data: $('#formEditar').serialize(),
                 success: function(data){
+                    console.log(data);
                     $('html, body').animate({scrollTop: 0},1000)
                     $('#mensajeInfo').show();
                     setTimeout(function(){
