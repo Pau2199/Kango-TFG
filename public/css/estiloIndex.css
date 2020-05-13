@@ -10,3 +10,15 @@ aside{
 .botonPulsado{
     background-color: #FEC3A6;
 }
+.iconos{
+    width: 30px;
+    height: 30px;
+}
+.colorPrecio{
+    color: rgb(157,154,154);
+    font-weight: bold;
+}
+
+.footerPequeño{
+    background-color: #DAEAF7;
+}

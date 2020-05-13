@@ -11,7 +11,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <div id="panelFiltros"class="col-lg-2 d-none d-lg-block">
+        <div id="panelFiltros"class="col-lg-2 d-none d-lg-block mr-5">
             <aside class="colorFondo my-3">
                 <h4>Filtros de Busqueda</h4>
                 <form id="filtroBusqueda">
@@ -99,11 +99,130 @@
                 </form>
             </aside>
         </div>
-        <div class="col-lg-8 cold-md-2 col-12">
+        <div class="col-lg-9 cold-md-2 col-12">
             <section>
-                CASAASASASASASASA
+                @foreach($datos as $key => $valor)
+                <div class="card mt-3">
+                    <div class="d-flex justify-content-between card-header">
+                        <h5>
+                            @if($valor->alquiler == true)
+                            Alquiler
+                            @else
+                            Venta
+                            @endif
+                            de
+                            @if($valor->tipo_de_vivienda == 'P')
+                            Piso
+                            @elseif($valor->tipo_de_vivienda == 'D')
+                            Duplex
+                            @elseif($valor->tipo_de_vivienda == 'A')
+                            Adosado
+                            @elseif($valor->tipo_de_vivienda == 'C')
+                            Chalet
+                            @else
+                            Bajo
+                            @endif
+                            en {{$valor->provincia}}@if($valor->localidad != $valor->provincia),  {{$valor->localidad}} @endif
+                            - Barrio de {{$valor->barrio}}
+                        </h5>
+                        <span>{{$valor->nombre}} {{$valor->primer_apellido}} {{$valor->segundo_apellido}}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-12">
+                                <img class="img-fluid" src="{{asset('uploads/perfil6.jpg')}}" alt="">
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="row mb-3">
+                                    <div class="col-1">
+                                        <img src="{{asset('img/ubicacion.svg')}}" class="iconos" alt="">
+                                    </div>
+                                    <div class="col-11 d-flex justify-content-between">
+                                        <span>
+                                            @if($valor->tipo_de_via == 'C')
+                                            Calle
+                                            @elseif($valor->tipo_de_via == 'A')
+                                            Avenida
+                                            @else
+                                            Plaza
+                                            @endif
+                                            {{$valor->nombre_de_la_direccion}}
+                                            - {{$valor->codigo_postal}}
+                                        </span>
+                                        <img src="{{asset('img/corazonSinFondo.svg')}}" alt="" class="iconos">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h4 class="colorPrecio">{{$valor->precio}} €</h4>
+                                    </div>
+                                    <div class="col-4">
+                                        <span>{{$valor->n_habitaciones}} Hab. {{$valor->metros_cuadrados}} m²</span>
+                                    </div>
+                                    @if($valor->alquiler == true)
+                                    <div class="col-4">
+                                        <span>Fianza:  {{$valor->datosAlq[0]->fianza}}€</span>
+                                    </div>
+                                    @endif
+                                </div>
+                                <div class="row justify-content-center my-5">
+                                    @if($valor->garage == true)
+                                    <div class="col-1">
+                                        <img src="{{asset('img/garage.svg')}}" class="iconos" alt="">
+                                    </div>
+                                    @endif
+                                    @if($valor->piscina == true)
+                                    <div class="col-1">
+                                        <img src="{{asset('img/piscina.svg')}}" class="iconos" alt="">
+                                    </div>
+                                    @endif
+                                    @if($valor->ascensor == true)
+                                    <div class="col-1">
+                                        <img src="{{asset('img/ascensor.png')}}" class="iconos" alt="">
+                                    </div>
+                                    @endif
+                                    @if($valor->alquiler == true)
+                                    @if($valor->datosAlq[0]->animales == true)
+                                    <div class="col-1">
+                                        <img src="{{asset('img/animales.svg')}}" class="iconos" alt="">
+                                    </div>
+                                    @endif
+                                    @if($valor->datosAlq[0]->calefaccion == true)
+                                    <div class="col-1">
+                                        <img src="{{asset('img/calefaccion.png')}}" class="iconos" alt="">
+                                    </div>
+                                    @endif
+                                    @if($valor->datosAlq[0]->aireAcondicionado == true)
+                                    <div class="col-1">
+                                        <img src="{{asset('img/aireAcondicionado.svg')}}" class="iconos" alt="">
+                                    </div>
+                                    @endif
+                                    @if($valor->datosAlq[0]->internet == true)
+                                    <div class="col-1">
+                                        <img src="{{asset('img/internet.svg')}}" class="iconos" alt="">
+                                    </div>
+                                    @endif
+                                    @if($valor->datosAlq[0]->reformas == true)
+                                    <div class="col-1">
+                                        <img src="{{asset('img/reformas.png')}}" class="iconos" alt="">
+                                    </div>
+                                    @endif
+                                    @endif
+
+                                </div>
+                                <p class="card-text">
+                                    {{$valor->descripcion}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
             </section>
         </div>
     </div>
 </div>
 @stop
+@foreach($datos as $key => $valor)
+<?= var_dump($valor->datosAlq) ?>
+@endforeach
