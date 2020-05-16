@@ -36,7 +36,7 @@ class publicarNuevoInmuebleController extends Controller
             ->get();
 
         for($i = 0 ; $i<count($alquilados) ; $i++){
-            $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $alquilados[$i]->id .'"');
+            $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $alquilados[$i]->id .'" && i.nombre LIKE "perfil%"');
             $alquilados[$i]->img = $imagenes;
         }
 
@@ -48,7 +48,7 @@ class publicarNuevoInmuebleController extends Controller
             ->get();
 
         for($i = 0 ; $i<count($venta) ; $i++){
-            $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $venta[$i]->id .'"');
+            $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $venta[$i]->id .'" && i.nombre LIKE "perfil%"');
             $venta[$i]->img = $imagenes;
         }
 
@@ -89,7 +89,7 @@ class publicarNuevoInmuebleController extends Controller
             'provincia' => 'required',
             'nombreDir' => 'required',
             'nPuerta' => 'required',
-            'nPatio' => 'required',
+            //'nPatio' => 'required',
             'perfil' => 'required',
         ]);
 

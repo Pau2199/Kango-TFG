@@ -114,7 +114,13 @@
             <img class="img-fluid" id="sinDatos" src="{{asset('img/sinDatos1.jpg')}}" alt="No se han Encontrado datos">
             <section id="anuncios">
                 @foreach($datos as $key => $valor)
-                <div class="card mt-3">
+                <?php if($valor->alquiler == true){
+                    $id = 'A'.$valor->id;    
+                }else{
+                    $id = 'V'.$valor->id;    
+                }
+                ?>
+                <div class="card mt-3" id="{{$id}}">
                     <div class="d-flex justify-content-between card-header">
                         <h5>
                             @if($valor->alquiler == true)

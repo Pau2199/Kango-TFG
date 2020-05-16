@@ -127,7 +127,16 @@ $(function(){
                     $('#sinDatos').show();
                 }else{
                     for(var i = 0 ; i<data.length; i++){
-                        var divCard = $('<div>').attr('class', 'card mt-3');
+                        var id ="";
+                        if(data[i]['alquiler'] == true){
+                            id="A"+data[i]['id'];
+                        }else{
+                            id="V"+data[i]['id'];
+                        }
+                        var divCard = $('<div>').attr({
+                            class: 'card mt-3',
+                            id: id
+                        });
                         var divTitulo = $('<div>').attr('class', 'd-flex justify-content-between card-header');
                         var h5 = $('<h5>');
                         if(data[i]['alquiler'] == true){
@@ -248,13 +257,114 @@ $(function(){
 
                         if(data[i]['alquiler'] == true){
                             if(data[i]['datosAlq'] != null){
-                                
+                                if(data[i]['datosAlq'][0]['animales'] == true){
+                                    var divcolanimales = $('<div>').attr('class', 'col-1')
+                                    var ianimales = $('<img>').attr({
+                                        src: '/img/animales.svg',
+                                        alt: 'Animales',
+                                        class: 'iconos'
+                                    })
+                                    divcolanimales.append(ianimales);
+                                    divRowAnya.append(divcolanimales);
+                                }
+                                if(data[i]['datosAlq'][0]['calefaccion'] == true){
+                                    var divcolcalefaccion = $('<div>').attr('class', 'col-1')
+                                    var icalefaccion = $('<img>').attr({
+                                        src: '/img/calefaccion.png',
+                                        alt: 'Calefaccion',
+                                        class: 'iconos'
+                                    })
+                                    divcolcalefaccion.append(icalefaccion);
+                                    divRowAnya.append(divcolcalefaccion);
+                                }
+                                if(data[i]['datosAlq'][0]['aireAcondicionado'] == true){
+                                    var divcolaireAcondicionado = $('<div>').attr('class', 'col-1')
+                                    var iaireAcondicionado = $('<img>').attr({
+                                        src: '/img/aireAcondicionado.svg',
+                                        alt: 'Aire Acondicionado',
+                                        class: 'iconos'
+                                    })
+                                    divcolaireAcondicionado.append(iaireAcondicionado);
+                                    divRowAnya.append(divcolaireAcondicionado);
+                                }
+                                if(data[i]['datosAlq'][0]['internet'] == true){
+                                    var divcolinternet = $('<div>').attr('class', 'col-1')
+                                    var iinternet = $('<img>').attr({
+                                        src: '/img/internet.svg',
+                                        alt: 'Internet',
+                                        class: 'iconos'
+                                    })
+                                    divcolinternet.append(iinternet);
+                                    divRowAnya.append(divcolinternet);
+                                }
+                                if(data[i]['datosAlq'][0]['reformas'] == true){
+                                    var divcolreformas = $('<div>').attr('class', 'col-1')
+                                    var ireformas = $('<img>').attr({
+                                        src: '/img/reformas.png',
+                                        alt: 'Reformas',
+                                        class: 'iconos'
+                                    })
+                                    divcolreformas.append(ireformas);
+                                    divRowAnya.append(divcolreformas);
+                                }
                             }else{
-                                
+                                if(data[i]['animales'] == true){
+                                    var divcolanimales = $('<div>').attr('class', 'col-1')
+                                    var ianimales = $('<img>').attr({
+                                        src: '/img/animales.svg',
+                                        alt: 'Animales',
+                                        class: 'iconos'
+                                    })
+                                    divcolanimales.append(ianimales);
+                                    divRowAnya.append(divcolanimales);
+                                }
+                                if(data[i]['calefaccion'] == true){
+                                    var divcolcalefaccion = $('<div>').attr('class', 'col-1')
+                                    var icalefaccion = $('<img>').attr({
+                                        src: '/img/calefaccion.png',
+                                        alt: 'Calefaccion',
+                                        class: 'iconos'
+                                    })
+                                    divcolcalefaccion.append(icalefaccion);
+                                    divRowAnya.append(divcolcalefaccion);
+                                }
+                                if(data[i]['aireAcondicionado'] == true){
+                                    var divcolaireAcondicionado = $('<div>').attr('class', 'col-1')
+                                    var iaireAcondicionado = $('<img>').attr({
+                                        src: '/img/aireAcondicionado.svg',
+                                        alt: 'Aire Acondicionado',
+                                        class: 'iconos'
+                                    })
+                                    divcolaireAcondicionado.append(iaireAcondicionado);
+                                    divRowAnya.append(divcolaireAcondicionado);
+                                }
+                                if(data[i]['internet'] == true){
+                                    var divcolinternet = $('<div>').attr('class', 'col-1')
+                                    var iinternet = $('<img>').attr({
+                                        src: '/img/internet.svg',
+                                        alt: 'Internet',
+                                        class: 'iconos'
+                                    })
+                                    divcolinternet.append(iinternet);
+                                    divRowAnya.append(divcolinternet);
+                                }
+                                if(data[i]['reformas'] == true){
+                                    var divcolreformas = $('<div>').attr('class', 'col-1')
+                                    var ireformas = $('<img>').attr({
+                                        src: '/img/reformas.png',
+                                        alt: 'Reformas',
+                                        class: 'iconos'
+                                    })
+                                    divcolreformas.append(ireformas);
+                                    divRowAnya.append(divcolreformas);
+                                }
                             }
                         }
-
                         divContenido.append(divRowAnya);
+
+                        var p = $('<p>').attr('class', 'card-text');
+                        p.html(data[i]['descripcion']);
+                        divContenido.append(p);
 
 
 

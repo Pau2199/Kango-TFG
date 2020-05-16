@@ -26,15 +26,15 @@ $(function(){
 
     $('input').blur(function(){
         $('#mensaje'+$(this).attr('id')).html('');
-        if($(this).val() == "" && $(this).attr('id') != 'nPiso'){
+        if($(this).val() == "" && $(this).attr('id') != 'nPiso' && $(this).attr('id') != 'nPatio'){
             $('#mensaje'+$(this).attr('id')).html('Este campo es obligatorio');
         }else{
             if($(this).attr('id') == 'provincia' || $(this).attr('id') == 'localidad' || $(this).attr('id') == 'nombreDir'){
                 validarProvinciaLocalidadNombre($(this).attr('id'), $(this).val());
             }
-            if($(this).attr('id') == 'nPatio'){
+            /*if($(this).attr('id') == 'nPatio'){
                 validarPatioPiso($(this).attr('id'), $(this).val());
-            }
+            }*/
             if($(this).attr('id') == 'nHabitaciones'){
                 validarHabitaciones($(this).attr('id'), $(this).val());
             }
@@ -64,9 +64,9 @@ $(function(){
                 validarProvinciaLocalidadNombre($(this).attr('id'), $(this).val());
             }
 
-            if($(this).attr('id') == 'nPatio'){
+            /*if($(this).attr('id') == 'nPatio'){
                 validarPatioPiso($(this).attr('id'), $(this).val());
-            }
+            }*/
             if($(this).attr('id') == 'nHabitaciones'){
                 validarHabitaciones($(this).attr('id'), $(this).val());
             }

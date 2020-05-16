@@ -125,11 +125,11 @@
                         <label class="font-weight-bold" for="nPatio">Patio</label>
                         <input type="number" class="form-control @error('nPatio') is-invalid @enderror" name="nPatio" id="nPatio" placeholder="NºPatio">
                         <strong id="mensajenPatio" class="comprobaciones" ></strong>
-                        @error('nPatio')
+<!--                        @error('nPatio')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                        @enderror
+                        @enderror-->
                     </div>
                 </div>
                 <div class="form-row">

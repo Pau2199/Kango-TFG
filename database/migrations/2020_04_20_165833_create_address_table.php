@@ -21,8 +21,8 @@ class CreateAddressTable extends Migration
             $table->string('nombre_de_la_direccion');
             $table->string('codigo_postal');
             $table->integer('nPuerta');
-            $table->integer('nPatio');
-            $table->string('nPiso');
+            $table->integer('nPatio')->nullable();
+            $table->string('nPiso')->nullable();
             $table->string('barrio')->nullable();
             $table->string('escalera')->nullable();
             $table->string('bloque')->nullable();
