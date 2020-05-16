@@ -48,7 +48,8 @@
                             </div>
                             <div id="A{{$valor->id}}" class="row text-center my-3">
                                 <div class="col-6">
-                                    <a href="/inmuebles/vistaInmueble/A-{{$valor->id}}"><span class="detalles btn btn-info">Detalles</span></a>                                </div>
+                                    <a href="/inmuebles/vistaInmueble/A-{{$valor->id}}"><span class="detalles btn btn-info">Detalles</span></a>                                
+                                </div>
                                 <div class="col-6">
                                     <span class="btn btn-info">Desactivar</span>
                                 </div>

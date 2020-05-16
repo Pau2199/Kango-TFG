@@ -10,10 +10,10 @@
         <span class="mr-3">Ordenar por: </span>
     </li>
     <li class="nav-item mr-1">
-        <span class="btn btn-light">Menor a Mayor</span>
+        <span class="btn btn-light botonesOrden">Menor a Mayor</span>
     </li>
     <li class="nav-item mr-1">
-        <span class="btn btn-light">Mayor a Menor</span>
+        <span class="btn btn-light botonesOrden">Mayor a Menor</span>
     </li>
     <li class="nav-item dropdown mr-5">
         <span class="dropdown-toggle btn btn-light" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Más</span>

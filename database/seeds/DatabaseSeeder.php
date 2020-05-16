@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
         // Llamadas a los seeds creados
         $this->call([
             UserTableSeeder::class,
+            ProvinceSeeder::class,
+            LocalitiesSeeder::class,
             //PostSeeder::class,
             //CommentSeeder::class,
         ]);

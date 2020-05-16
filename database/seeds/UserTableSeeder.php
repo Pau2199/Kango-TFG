@@ -98,7 +98,6 @@ class UserTableSeeder extends Seeder
                 'password' => 'pau1234',
                 'nif_nie' => Str::random(9),
             ],
-        ]
-                                  );
+        ]);
     }
 }

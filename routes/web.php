@@ -27,6 +27,13 @@ Route::post('inmuebles/agregarInmueble', 'publicarNuevoInmuebleController@store'
 Route::post('inmuebles/mostrarInmuebles', 'publicarNuevoInmuebleController@store');
 Route::get('inmuebles/anunciosActivos', 'publicarNuevoInmuebleController@mostrarInmuebles');
 
+//cargar datos de manera dinamica
+Route::get('/index/cargarProvincia', 'indexController@cargarProvincias');
+//cargar datos localidades de la provincia elegia
+Route::get('/index/cargarLocalidades/{provincia}', 'indexController@cargarLocalidades');
+Route::post('/index/filtrosBusqueda/{orden}', 'indexController@filtrosBusqueda');
+
+
 /*Route::get('inmuebles/anunciosActivos', function(){
     return view('index');
 });*/

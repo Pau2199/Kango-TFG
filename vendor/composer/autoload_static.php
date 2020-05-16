@@ -470,6 +470,7 @@ class ComposerStaticInit14e854abfe267779f8458105c92c4417
     );
 
     public static $classMap = array (
+        'AddressSeeder' => __DIR__ . '/../..' . '/database/seeds/AddressSeeder.php',
         'App\\Address' => __DIR__ . '/../..' . '/app/Address.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
@@ -481,6 +482,7 @@ class ComposerStaticInit14e854abfe267779f8458105c92c4417
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\indexController' => __DIR__ . '/../..' . '/app/Http/Controllers/indexController.php',
         'App\\Http\\Controllers\\inmueblesPublicados' => __DIR__ . '/../..' . '/app/Http/Controllers/inmueblesPublicados.php',
         'App\\Http\\Controllers\\publicarNuevoInmuebleController' => __DIR__ . '/../..' . '/app/Http/Controllers/publicarNuevoInmuebleController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
@@ -498,6 +500,7 @@ class ComposerStaticInit14e854abfe267779f8458105c92c4417
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Province' => __DIR__ . '/../..' . '/app/Province.php',
         'App\\Rental' => __DIR__ . '/../..' . '/app/Rental.php',
         'App\\Rules\\comprobarContrasenya' => __DIR__ . '/../..' . '/app/Rules/comprobarContrasenya.php',
         'App\\Rules\\esMayorDeEdad' => __DIR__ . '/../..' . '/app/Rules/esMayorDeEdad.php',
@@ -2658,6 +2661,7 @@ class ComposerStaticInit14e854abfe267779f8458105c92c4417
         'League\\Flysystem\\Util\\ContentListingFormatter' => __DIR__ . '/..' . '/league/flysystem/src/Util/ContentListingFormatter.php',
         'League\\Flysystem\\Util\\MimeType' => __DIR__ . '/..' . '/league/flysystem/src/Util/MimeType.php',
         'League\\Flysystem\\Util\\StreamHasher' => __DIR__ . '/..' . '/league/flysystem/src/Util/StreamHasher.php',
+        'LocalitiesSeeder' => __DIR__ . '/../..' . '/database/seeds/LocalitiesSeeder.php',
         'Mockery' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'Mockery\\Adapter\\Phpunit\\Legacy\\TestListenerForV5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/Legacy/TestListenerForV5.php',
         'Mockery\\Adapter\\Phpunit\\Legacy\\TestListenerForV6' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/Legacy/TestListenerForV6.php',
@@ -3581,6 +3585,7 @@ class ComposerStaticInit14e854abfe267779f8458105c92c4417
         'PhpParser\\Parser\\Tokens' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Parser/Tokens.php',
         'PhpParser\\PrettyPrinterAbstract' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/PrettyPrinterAbstract.php',
         'PhpParser\\PrettyPrinter\\Standard' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/PrettyPrinter/Standard.php',
+        'PropertyTableSeeder' => __DIR__ . '/../..' . '/database/seeds/PropertyTableSeeder.php',
         'Prophecy\\Argument' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Argument.php',
         'Prophecy\\Argument\\ArgumentsWildcard' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Argument/ArgumentsWildcard.php',
         'Prophecy\\Argument\\Token\\AnyValueToken' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Argument/Token/AnyValueToken.php',
@@ -3670,6 +3675,7 @@ class ComposerStaticInit14e854abfe267779f8458105c92c4417
         'Prophecy\\Prophet' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Prophet.php',
         'Prophecy\\Util\\ExportUtil' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Util/ExportUtil.php',
         'Prophecy\\Util\\StringUtil' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Util/StringUtil.php',
+        'ProvinceSeeder' => __DIR__ . '/../..' . '/database/seeds/ProvinceSeeder.php',
         'Psr\\Container\\ContainerExceptionInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerExceptionInterface.php',
         'Psr\\Container\\ContainerInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerInterface.php',
         'Psr\\Container\\NotFoundExceptionInterface' => __DIR__ . '/..' . '/psr/container/src/NotFoundExceptionInterface.php',

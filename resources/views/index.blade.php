@@ -15,6 +15,7 @@
             <aside class="colorFondo my-3">
                 <h4>Filtros de Busqueda</h4>
                 <form id="filtroBusqueda">
+                    @csrf
                     <div class="form-group m-3">
                         <span class="font-weight-bold">Tipo de busqueda</span>
                         <div class="checkbox mt-1">
@@ -27,27 +28,32 @@
                     <div id="eleccionTipoBusqueda" class="form-group m-3">
                         <span id="elegidoEnTipoDeBusqueda" class="font-weight-bold"></span>
                         <div class="checkbox mt-1">
-                            <label class="mr-2"><input id="Si" name="tipoBusqueda" value="alquiler" type="radio">Si</label> 
-                            <label class="ml-2"><input id="No" name="tipoBusqueda" value="compra" type="radio">No</label>
+                            <label class="mr-2"><input id="Si" name="opcionAlquiler" value="alquiler" type="radio">Si</label> 
+                            <label class="ml-2"><input id="No" name="opcionAlquiler" value="compra" type="radio">No</label>
                         </div>
                     </div>
                     <!-- Hasta aquí-->
                     <div class="form-group m-3">
                         <span class="font-weight-bold">Seleciona una Provincia</span>
-                        <select id="provincia" class="form-control w-100">
+                        <select name="provincia" id="provincia" class="form-control w-100">
                             <option selected>-</option>
                         </select>
                     </div>
                     <div class="form-group m-3">
                         <span class="font-weight-bold">Seleciona una Localidad</span>
-                        <select id="localidad" class="form-control w-100">
+                        <select name="localidad" id="localidad" class="form-control w-100">
                             <option selected>-</option>
                         </select>
                     </div>
                     <div class="form-group m-3">
                         <span class="font-weight-bold">Tipo de Vivienda</span>
-                        <select id="tipoVivienda" class="form-control w-100">
+                        <select name="tipoInmueble" id="tipoVivienda" class="form-control w-100">
                             <option selected>-</option>
+                            <option value="P">Piso</option>
+                            <option value="D">Duplex</option>
+                            <option value="A">Adosado</option>
+                            <option value="C">Chalet</option>
+                            <option value="B">Bajo</option>
                         </select>
                     </div>
                     <div class="form-group m-3">
@@ -56,7 +62,7 @@
                     </div>
                     <div class="form-group m-3">
                         <span class="font-weight-bold">Nº de Cuartos de Baño</span>
-                        <input class="w-100" type="number" name="nHabitaciones" min="1" max="10">
+                        <input class="w-100" type="number" name="nBanyos" min="1" max="10">
                     </div>
                     <div class="form-group m-3">
                         <span class="font-weight-bold">Opciones de la Vivienda</span>
@@ -69,7 +75,7 @@
                             <label class="form-check-label" for="piscina">Piscina</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="Ascensor" id="Ascensor" value="Ascensor">
+                            <input class="form-check-input" type="checkbox" name="ascensor" id="Ascensor" value="Ascensor">
                             <label class="form-check-label" for="Ascensor">Ascensor</label>
                         </div>
                         <div id="opcionesAlquiler">
@@ -78,8 +84,12 @@
                                 <label class="form-check-label" for="internet">Internet</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="amueblado" id="amueblado" value="amueblado">
-                                <label class="form-check-label" for="amueblado">Amueblado</label>
+                                <input class="form-check-input" type="checkbox" name="aireAcondicionado" id="aireAcondicionado" value="amueblado">
+                                <label class="form-check-label" for="aireAcondicionado">Aire Acondicionado</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="calefaccion" id="calefaccion" value="calefaccion">
+                                <label class="form-check-label" for="calefaccion">Calefacion</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="animales" id="animales" value="animales">
@@ -92,15 +102,17 @@
                         </div>
                     </div>
                     <div class="form-group m-3 text-center">
-                        <span type="button" class="btn btn-light d-lg-none ">Menor a Mayor</span>
-                        <span type="button" class="btn btn-light d-lg-none">Mayor a Menor</span>
+                        <span type="button" class="btn btn-light d-lg-none botonesOrden">Menor a Mayor</span>
+                        <span type="button" class="btn btn-light d-lg-none botonesOrden">Mayor a Menor</span>
                         <span type="button" class="btn btn-danger">Reiniciar Filtros</span>
                     </div>
                 </form>
             </aside>
         </div>
         <div class="col-lg-9 cold-md-2 col-12">
-            <section>
+            <img class="img-fluid" id="carga" src="{{asset('img/carga.jpg')}}" alt="Cargando...">
+            <img class="img-fluid" id="sinDatos" src="{{asset('img/sinDatos1.jpg')}}" alt="No se han Encontrado datos">
+            <section id="anuncios">
                 @foreach($datos as $key => $valor)
                 <div class="card mt-3">
                     <div class="d-flex justify-content-between card-header">
