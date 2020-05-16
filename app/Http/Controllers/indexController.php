@@ -17,7 +17,7 @@ class indexController extends Controller
      */
     public function index()
     {
-        $datos = DB::select('SELECT DISTINCT u.nombre, u.primer_apellido, u.segundo_apellido, p.*, a.localidad, a.provincia, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal FROM users u, property p, rental r, sale s, address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1');
+        $datos = DB::select('SELECT DISTINCT u.nombre, u.primer_apellido, u.segundo_apellido, p.*, a.localidad, a.provincia, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal FROM users u, property p, address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1');
 
         for($i = 0 ; $i<count($datos); $i++){
             $alquiler = DB::select('SELECT r.internet, r.animales, r.reformas, r.calefaccion, r.aireAcondicionado, r.fianza FROM rental r WHERE r.idInmueble = "'. $datos[$i]->id.'"');
@@ -33,8 +33,7 @@ class indexController extends Controller
         }
 
         return view('index')->with('datos', $datos);
-
-    }
+    }   
 
     public function cargarProvincias(){
 
@@ -54,8 +53,8 @@ class indexController extends Controller
         $es_compra = false;
         $where = "";
         $whereAlquiler = "";
-        $consultaVenta = 'SELECT DISTINCT u.nombre, u.primer_apellido, u.segundo_apellido, p.*, a.localidad, a.provincia, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal FROM users u, property p, rental r, sale s, address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1 && p.id = s.idInmueble ';
-        $consultaAlquiler = 'SELECT DISTINCT u.nombre, u.primer_apellido, u.segundo_apellido, p.*, a.localidad, a.provincia, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal, r.internet, r.animales, r.reformas, r.calefaccion, r.aireAcondicionado, r.fianza FROM users u, property p, rental r, sale s, address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1 && p.id = r.idInmueble ';
+        $consultaVenta = 'SELECT DISTINCT u.nombre, u.primer_apellido, u.segundo_apellido, p.*, a.localidad, a.provincia, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal FROM users u, property p, sale s, address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1 && p.id = s.idInmueble ';
+        $consultaAlquiler = 'SELECT DISTINCT u.nombre, u.primer_apellido, u.segundo_apellido, p.*, a.localidad, a.provincia, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal, r.internet, r.animales, r.reformas, r.calefaccion, r.aireAcondicionado, r.fianza FROM users u, property p, rental r, address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1 && p.id = r.idInmueble ';
         $consultaTotal = 'SELECT DISTINCT u.nombre, u.primer_apellido, u.segundo_apellido, p.*, a.localidad, a.provincia, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal FROM users u, property p,address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1 ';
         $datos;
 
@@ -144,7 +143,7 @@ class indexController extends Controller
             if($orden != 'nada'){
                 $consultaTotal .= 'ORDER BY p.precio '.$orden; 
             }
-            
+
             $datos = DB::select($consultaTotal);
             for($i = 0; $i<count($datos); $i++){
                 $alquiler = DB::select('SELECT r.internet, r.animales, r.reformas, r.calefaccion, r.aireAcondicionado, r.fianza FROM rental r WHERE r.idInmueble = '. $datos[$i]->id);

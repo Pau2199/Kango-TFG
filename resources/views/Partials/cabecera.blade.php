@@ -60,7 +60,7 @@
                 </div>
                 @else
                 <div class="dropdown-menu mr-5">
-                    <a class="dropdown-item" href="inmuebles/anunciosActivos">Inmuebles</a>
+                    <a class="dropdown-item" href="/inmuebles/anunciosActivos">Inmuebles</a>
                     <a class="dropdown-item" href="#">Perfil</a>
                     <a class="dropdown-item" href="#">Separated link</a>
                     <div class="dropdown-divider"></div>

@@ -24,8 +24,8 @@ Route::get('/inmuebles/modificarInmuebleVista/{id}/{pulsado}','inmueblesPublicad
 Route::get('/inmuebles/vistaInmueble/borrarImagen/{imagen}','inmueblesPublicados@borrarImagen');
 Route::post('/inmuebles/vistaInmueble/modificar/{id}','inmueblesPublicados@update');
 Route::post('inmuebles/agregarInmueble', 'publicarNuevoInmuebleController@store');
-Route::post('inmuebles/mostrarInmuebles', 'publicarNuevoInmuebleController@store');
-Route::get('inmuebles/anunciosActivos', 'publicarNuevoInmuebleController@mostrarInmuebles');
+Route::post('/inmuebles/mostrarInmuebles', 'publicarNuevoInmuebleController@store');
+Route::get('/inmuebles/anunciosActivos', 'publicarNuevoInmuebleController@mostrarInmuebles');
 
 //cargar datos de manera dinamica
 Route::get('/index/cargarProvincia', 'indexController@cargarProvincias');
