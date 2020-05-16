@@ -115,9 +115,9 @@
             <section id="anuncios">
                 @foreach($datos as $key => $valor)
                 <?php if($valor->alquiler == true){
-                    $id = 'A'.$valor->id;    
+                    $id = 'A-'.$valor->id;    
                 }else{
-                    $id = 'V'.$valor->id;    
+                    $id = 'V-'.$valor->id;    
                 }
                 ?>
                 <div class="card mt-3" id="{{$id}}">

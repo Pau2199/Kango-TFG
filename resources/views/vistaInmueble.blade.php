@@ -131,7 +131,9 @@
                             {{$datos[0]->nombre_de_la_direccion}}
                             ,{{$datos[0]->nPatio}}
                             Pta {{$datos[0]->nPuerta}}
+                            @if($datos[0]->nPiso != null)
                             Piso {{$datos[0]->nPiso}}
+                            @endif
                             @if($datos[0]->bloque != null)
                             Bloque {{$datos[0]->bloque}}
                             @endif
@@ -300,7 +302,7 @@
             <span id="desc">{{$datos[0]->descripcion}}</span>
             <hr>
             <div class="row my-4">
-                @if(Auth::user()->id == $datos[0]->idUsuario)
+                @if(Auth::user() != null and Auth::user()->id == $datos[0]->idUsuario)
                 <div class="col-6 text-center">
                     <span id="botonModificacion" class="btn btn-info">Activar Edición</span>
                 </div>
@@ -581,8 +583,5 @@
         </div>
     </div>
 </div>
-<input id="usuarioInmId" type="hidden" value="{{$datos[0]->idUsuario}}">
-<input id="usuarioLogId" type="hidden" value="{{Auth::user()->id}}">
-
 
 @stop

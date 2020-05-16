@@ -37,7 +37,6 @@ class inmueblesPublicados extends Controller
             ->join('property', 'users.id', '=', 'property.idUsuario')
             ->join('address', 'property.id', '=', 'address.idInmueble')
             ->join('rental', 'property.id', '=', 'rental.idInmueble')
-            ->where('property.idUsuario', Auth::user()->id)
             ->where('property.id', $id[1])
             ->get();
 
@@ -51,7 +50,6 @@ class inmueblesPublicados extends Controller
                 ->join('property', 'users.id', '=', 'property.idUsuario')
                 ->join('address', 'property.id', '=', 'address.idInmueble')
                 ->join('sale', 'property.id', '=', 'sale.idInmueble')
-                ->where('property.idUsuario', Auth::user()->id)
                 ->where('property.id', $id[1])
                 ->get(); 
             for($i = 0 ; $i<count($datos) ; $i++){

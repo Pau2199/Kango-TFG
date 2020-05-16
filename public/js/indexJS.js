@@ -92,6 +92,13 @@ $(function(){
             $('#localidad').append(option);
         }
     })
+    
+    $('#anuncios').on('click', 'div.card', function(){
+        id = $(this).attr('id');
+        console.log(id);
+        $(location).attr('href', '/inmuebles/vistaInmueble/'+id)
+    });
+    
 
     $('#filtroBusqueda').change(function(){
         peticionFiltros();
@@ -128,16 +135,20 @@ $(function(){
                 }else{
                     for(var i = 0 ; i<data.length; i++){
                         var id ="";
+                        //cogemos el di que es el usaremos para pasarlo a la vista del inmueble
                         if(data[i]['alquiler'] == true){
-                            id="A"+data[i]['id'];
+                            id="A-"+data[i]['id'];
                         }else{
-                            id="V"+data[i]['id'];
+                            id="V-"+data[i]['id'];
                         }
+                        //creamos el div que engloba a toda la tarjeta
                         var divCard = $('<div>').attr({
                             class: 'card mt-3',
                             id: id
                         });
+                        //creamos el titulo del div
                         var divTitulo = $('<div>').attr('class', 'd-flex justify-content-between card-header');
+                        //Creamos la etiqueta h5  que es donde estara el titulo dle inmueble
                         var h5 = $('<h5>');
                         if(data[i]['alquiler'] == true){
                             h5.append('Alquiler de ')
@@ -151,25 +162,37 @@ $(function(){
                             h5.append(data[i]['provincia']+', ' + data[i]['localidad'] + ' ');
                         }
                         h5.append('- Barrio de ' + data[i]['barrio'])
-
+                        
+                        //creamos el span que es donde estara el nombre del usuario
                         var span = $('<span>').html(data[i]['nombre'] + ' ' + data[i]['primer_apellido'] + ' ' + data[i]['segundo_apellido']);
+                        //metemos el h5 y el span creados al contenedor de este apartado
                         divTitulo.append(h5);
                         divTitulo.append(span);
+                        //el contenedor lo añadimos al contenedor principal
                         divCard.append(divTitulo);
-
+                        
+                        //creamos el div contedor dle grupo de la tarjeta
                         var divBody = $('<div>').attr('class', 'card-body');
+                        
+                        //creamos el row contenedor del cuerpo de la tarjeta
                         var divRowPri = $('<div>').attr('class', 'row');
+                        
+                        //creamos un col que ocupa la mitad del contenedor para poner la imagen
                         var divColimg = $('<div>').attr('class', 'col-xl-6 col-lg-12');
                         var img = $('<img>').attr({
                             src: "/uploads/"+data[i]['img'][0]['nombre'],
                             alt: "Imagen Perfil",
                             class: "img-fluid"
                         })
+                        //agregamos la imagen al col y despues del row del cuerpo
                         divColimg.append(img);
                         divRowPri.append(divColimg);
 
+                        //creamos el div que contendra el contenido del inmueble
                         var divContenido = $('<div>').attr('class', 'col-xl-6');
+                        //creamos el row que contendra el contenido del inmueble
                         var divRowContenido = $('<div>').attr('class', 'row mb-3');
+                        //agregamos la direccion y el icono y lo añadimos al row del contenido
                         var divImgUbi = $('<div>').attr('class', 'col-1');
                         var imgIconono = $('<img>').attr({
                             class: 'iconos',
@@ -186,6 +209,7 @@ $(function(){
                             data[i]['nombre_de_la_direccion'] + ' - ' +  data[i]['codigo_postal']
                         )
                         divDireccion.append(span);
+                        //creamos el corazón para guardar el inmueble en favoritos
                         var imgCorazón = $('<img>').attr({
                             src: "/img/corazonSinFondo.svg",
                             atl: 'Imagen Corazon',
@@ -194,7 +218,8 @@ $(function(){
                         divDireccion.append(imgCorazón);
                         divRowContenido.append(divDireccion);
                         divContenido.append(divRowContenido);
-
+                        
+                        //creamos el row de información del inmueble, este row tendra el precio , las habitaciones y si es alquiler la fianza.
                         var divRowInfo = $('<div>').attr('class', 'row');
                         var divPrecio = $('<div>').attr('class', 'col-4');
                         var precio = $('<h4>').attr('class', 'colorPrecio');
@@ -222,7 +247,7 @@ $(function(){
                         }
                         divContenido.append(divRowInfo);
 
-
+                        //creamos el div que contendra todos los iconos de las caracteristicas del inmueble , este tendra tanto para alquiler como los normales
                         var divRowAnya = $('<div>').attr('class', 'row justify-content-center my-5');
                         if(data[i]['ascensor'] == true){
                             var divcolAscensor = $('<div>').attr('class', 'col-1')
@@ -361,17 +386,18 @@ $(function(){
                             }
                         }
                         divContenido.append(divRowAnya);
-
+                         //agregamos la descripcion
                         var p = $('<p>').attr('class', 'card-text');
                         p.html(data[i]['descripcion']);
                         divContenido.append(p);
 
-
-
+                        //agregamos al row principal el cuerpo de la tarjeta
                         divRowPri.append(divContenido);
+                        //agregamos el row principal al body
                         divBody.append(divRowPri);
+                        //agregamos todo al container general
                         divCard.append(divBody);
-
+                        //lo agregamos al section de la página.
                         $('#anuncios').append(divCard);
                     }
                 }

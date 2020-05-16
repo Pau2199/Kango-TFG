@@ -655,9 +655,6 @@ class LocalitiesSeeder extends Seeder
             ['nombre' => 'Madrid',
              'idProvincia' => 18,
             ],
-            ['nombre' => 'Madrid',
-             'idProvincia' => 18,
-            ],
             ['nombre' => 'Alcala de Henares',
              'idProvincia' => 18,
             ],
@@ -1090,10 +1087,6 @@ class LocalitiesSeeder extends Seeder
             ['nombre' => 'Barboles',
              'idProvincia' => 28,
             ],
-
-
-
-
 
         ]);
     }

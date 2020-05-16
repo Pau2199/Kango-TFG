@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
             UserTableSeeder::class,
             ProvinceSeeder::class,
             LocalitiesSeeder::class,
+            PropertyTableSeeder::class,
+            AddressTableSeeder::class,
+            SaleTableSeeder::class,
+            RentalTableSeeder::class,
+            ImageTableSeeder::class,
             //PostSeeder::class,
             //CommentSeeder::class,
         ]);
