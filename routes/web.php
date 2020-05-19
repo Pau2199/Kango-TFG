@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'indexController@index');
 
 Auth::routes();
-//Route::post('/inmuebles/vistaInmueble/anyadirImagenes','inmueblesPublicados@updateImagenes');
+
 Route::get('/inmuebles/vistaInmueble/{id}', 'inmueblesPublicados@index');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('inmuebles/publicarNuevo', 'publicarNuevoInmuebleController@index');
@@ -27,13 +27,17 @@ Route::post('inmuebles/agregarInmueble', 'publicarNuevoInmuebleController@store'
 Route::post('/inmuebles/mostrarInmuebles', 'publicarNuevoInmuebleController@store');
 Route::get('/inmuebles/anunciosActivos', 'publicarNuevoInmuebleController@mostrarInmuebles');
 
+Route::get('/perfil/horarioVisita', 'horarioVisitaController@index');
+Route::get('/perfil/modificarHorario', 'horarioVisitaController@store');
+Route::get('/perfil/obtenerHorarioUsuario', 'horarioVisitaController@obtenerHorario');
+Route::get('/perfil/borrarFranjaHoraria/{id}', 'horarioVisitaController@destroy');
+
+Route::get('/perfil/datosPersonales', 'datosPersonalesController@index');
+
+
 //cargar datos de manera dinamica
 Route::get('/index/cargarProvincia', 'indexController@cargarProvincias');
 //cargar datos localidades de la provincia elegia
 Route::get('/index/cargarLocalidades/{provincia}', 'indexController@cargarLocalidades');
 Route::post('/index/filtrosBusqueda/{orden}', 'indexController@filtrosBusqueda');
 
-
-/*Route::get('inmuebles/anunciosActivos', function(){
-    return view('index');
-});*/

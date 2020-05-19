@@ -14,7 +14,6 @@
 @section('content')
 <div class="text-center w-100 bg-success font-weight-bold" id="mensajeInfo">
     <p> Modificación realizada correctamente! - La página se recargara en 3 segundos.</p>
-    <p></p>
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -82,9 +81,9 @@
                 @foreach($valor as $clave => $value)
                 <div>
                     <img src='{{asset("uploads/$value")}}' class="{{$value}} img-fluid mt-3 vertical" data-target="#carouselExampleIndicators" data-slide-to="{{$key}}"/>
-                    <div class="text-center">
-                        <span class="btn btn-info mt-2 botonesImagenes" id="{{$value}}">Borrar Imagen</span>
-                    </div>
+                    <!--                    <div class="text-center">
+<span class="btn btn-info mt-2 botonesImagenes" id="{{$value}}">Borrar Imagen</span>
+</div>-->
                 </div>
                 @endforeach
                 @endforeach
@@ -310,10 +309,23 @@
                     <span class="btn btn-info">Desactivar publicación</span>
                 </div>
                 @else
-                <span class="btn btn-info">Desactivar publicación</span>
+                @if(Auth::user() != null)
+                @if($datos[0]->alquiler == true)
+                <span class="btn btn-info">Alquilar Inmueble</span>
+                @endif
+                <span class="btn btn-info">Solicitar una Visita</span>
+                <span class="btn btn-info">Mandar un mensaje</span>
+                <span class="btn btn-info">Guardar en favoritos</span>
+                @else
+                <span class="btn btn-info">Guardar en favoritos</span>
+                @endif
                 @endif
             </div>
         </div>
+        <input type="hidde" id="idInmuebleUser" value="{{$datos[0]->idUsuario}}">
+        @if(Auth::user())
+        <input type="hidde" id="idUser" value="{{Auth::user()->id}}">
+        @endif
         <div class="col-lg-10 col-md-12" id="modificarInm">
             <div class="row justify-content-center">
                 <div class="col-sm-12 col-md-8">
@@ -338,7 +350,7 @@
                             </div>
                             <div class="form-group col-md-4 col-sm-6 col-12">
                                 <label class="font-weight-bold" for="nombreDir">Nombre</label>
-                                <input id="nombreDir" type="text" class="form-control @error('nombreDir') is-invalid @enderror" name="nombreDir" id="nombreDir" placeholder="Nombre de la dirección">
+                                <input value="{{$datos[0]->nombre_de_la_direccion}}" id="nombreDir" type="text" class="form-control @error('nombreDir') is-invalid @enderror" name="nombreDir" id="nombreDir" placeholder="Nombre de la dirección">
                                 <strong id="mensajenombreDir" class="comprobaciones" ></strong>
                                 @error('nombreDir')
                                 <span class="invalid-feedback" role="alert">
@@ -381,7 +393,7 @@
                             </div>
                             <div class="form-group col-md-4 col-sm-6 col-12">
                                 <label class="font-weight-bold" for="nPuerta">Puerta</label>
-                                <input type="text" class="form-control @error('nPuerta') is-invalid @enderror" name="nPuerta" id="nPuerta" placeholder="NºPuerta">
+                                <input type="text" value="{{$datos[0]->nPuerta}}" class="form-control @error('nPuerta') is-invalid @enderror" name="nPuerta" id="nPuerta" placeholder="NºPuerta">
                                 <strong id="mensajenPuerta" class="comprobaciones" ></strong>
                                 @error('nPuerta')
                                 <span class="invalid-feedback" role="alert">
@@ -413,7 +425,7 @@
                             </div>
                             <div class="form-group col-md-4 col-sm-6 col-12">
                                 <label class="font-weight-bold" for="provincia">Provincia</label>
-                                <input id="provincia" type="text" class="form-control  @error('provincia') is-invalid @enderror" value=""name="provincia" id="provincia" placeholder="Provincia">
+                                <input id="provincia" value="{{$datos[0]->provincia}}" type="text" class="form-control  @error('provincia') is-invalid @enderror" value=""name="provincia" id="provincia" placeholder="Provincia">
                                 <strong id="mensajeprovincia" class="comprobaciones" ></strong>
                                 @error('provincia')
                                 <span class="invalid-feedback" role="alert">
@@ -423,7 +435,7 @@
                             </div>
                             <div class="form-group col-md-4 col-sm-6 col-12">
                                 <label class="font-weight-bold" for="localidad">Localidad</label>
-                                <input id="localidad" type="text" class="form-control  @error('localidad') is-invalid @enderror" name="localidad" id="localidad" placeholder="Localidad">
+                                <input id="localidad" type="text" value="{{$datos[0]->localidad}}" class="form-control  @error('localidad') is-invalid @enderror" name="localidad" id="localidad" placeholder="Localidad">
                                 <strong id="mensajelocalidad" class="comprobaciones" ></strong>
                                 @error('localidad')
                                 <span class="invalid-feedback" role="alert">
@@ -433,7 +445,7 @@
                             </div>
                             <div class="form-group col-md-4 col-sm-6 col-12">
                                 <label class="font-weight-bold" for="cp">Código Postal</label>
-                                <input id="cp" type="number" class="form-control @error('cp') is-invalid @enderror" name="cp" id="cp" placeholder="Codigo Postal">
+                                <input id="cp" type="number" value="{{$datos[0]->codigo_postal}}" class="form-control @error('cp') is-invalid @enderror" name="cp" id="cp" placeholder="Codigo Postal">
                                 <strong id="mensajencp" class="comprobaciones" ></strong>
                                 @error('cp')
                                 <span class="invalid-feedback" role="alert">
@@ -447,7 +459,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label class="font-weight-bold" for="nHabitaciones">Habitaciones</label>
-                                <input type="number" class="form-control @error('nHabitaciones') is-invalid @enderror" name="nHabitaciones" id="nHabitaciones" placeholder="NºHabitaciones">
+                                <input type="number" value="{{$datos[0]->n_habitaciones}}" class="form-control @error('nHabitaciones') is-invalid @enderror" name="nHabitaciones" id="nHabitaciones" placeholder="NºHabitaciones">
                                 <strong id="mensajenHabitaciones" class="comprobaciones" ></strong>
                                 @error('nHabitaciones')
                                 <span class="invalid-feedback" role="alert">
@@ -457,7 +469,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="font-weight-bold" for="nCuartosBanyo">Baños</label>
-                                <input type="number" class="form-control @error('nCuartosBanyo') is-invalid @enderror" name="nCuartosBanyo" id="nCuartosBanyo" placeholder="Nº Cuartos de Baño">
+                                <input type="number" value="{{$datos[0]->n_cuartos_de_banyo}}" class="form-control @error('nCuartosBanyo') is-invalid @enderror" name="nCuartosBanyo" id="nCuartosBanyo" placeholder="Nº Cuartos de Baño">
                                 <strong id="mensajenCuartosBanyo" class="comprobaciones" ></strong>
                                 @error('nCuartosBanyo')
                                 <span class="invalid-feedback" role="alert">
@@ -467,7 +479,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="font-weight-bold" for="nMetrosCuadrados">Área</label>
-                                <input type="number" class="form-control @error('nMetrosCuadrados') is-invalid @enderror" name="nMetrosCuadrados" id="nMetrosCuadrados" placeholder="Metros Cuadrados">
+                                <input type="number" value="{{$datos[0]->metros_cuadrados}}" class="form-control @error('nMetrosCuadrados') is-invalid @enderror" name="nMetrosCuadrados" id="nMetrosCuadrados" placeholder="Metros Cuadrados">
                                 <strong id="mensajenMetrosCuadrados" class="comprobaciones" ></strong>
                                 @error('nMetrosCuadrados')
                                 <span class="invalid-feedback" role="alert">
@@ -522,7 +534,7 @@
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label class="font-weight-bold" for="precio">Precio del Inmueble</label>
-                                <input type="number" class="form-control @error('precio') is-invalid @enderror" name="precio" id="formPrecio" placeholder="Precio del Inmueble">
+                                <input type="number" value="{{$datos[0]->precio}}" class="form-control @error('precio') is-invalid @enderror" name="precio" id="formPrecio" placeholder="Precio del Inmueble">
                                 <strong id="mensajeprecio" class="comprobaciones" ></strong>
                                 @error('nCuartosBanyo')
                                 <span class="invalid-feedback" role="alert">
@@ -583,5 +595,4 @@
         </div>
     </div>
 </div>
-
 @stop

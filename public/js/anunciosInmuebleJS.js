@@ -1,11 +1,15 @@
 $(function(){
+    var idInmuebleUser = $('#idInmuebleUser').val();
+    var idUser = $('#idUser').val();
+    $('#idInmuebleUser').remove();
+    $('#idUser').remove();
     $('#modificarInm').hide();
     $('#vertical').hide();
     $('#mensajeInfo').hide();
 
     $('#botonModificacion').click(function(){
         if($(this).html() == 'Activar Edición'){
-            if($('#usuarioInmId').val() != $('#usuarioLogId').val()){
+            if(idInmuebleUser != idUser){
                 alert('No eres el propietario de este inmueble, se va a recargar la página.')
                 location.reload();
             }else{
@@ -19,9 +23,7 @@ $(function(){
                 $('#divButton').hide();
 
                 var direccion = $('#direccion').html().split(' ');
-                console.log(direccion);
                 for(var i = 0; i<direccion.length ; i++){
-                    //console.log(direccion[i]);
                     if(direccion[i].trim() == 'Calle'){
                         $('#C').attr('selected', 'true');
                     }else if(direccion[i].trim() == 'Avenida'){
@@ -29,121 +31,84 @@ $(function(){
                     }else if(direccion[i].trim() == 'Plaza'){
                         $('#P').attr('selected', 'true');
                     }else{
-                        if(direccion[i] == '-'){
-                            $('#cp').val(parseInt(direccion[i+1]));
-                        }else if(direccion[i] == "Pta"){
-                            $('#nPuerta').val(parseInt(direccion[i+1]));
-                        }else if(direccion[i] == 'Piso'){
-                            $('#nPiso').val(parseInt(direccion[i+1]));
-                        }else if(direccion[i].split('')[0] == ','){
-                            var patio = '';
-                            var arrayPatio = direccion[i].split('');
-                            var cont = 0;
-                            while(cont <= arrayPatio.length){
-                                cont++
-                                patio += arrayPatio[cont]
-                            }
-                            $('#nPatio').val(parseInt(patio));
-                        }else if(direccion[i].trim() == 'Bloque'){
-                            $('#bloque').val(direccion[i+1]);
-                        }else if(direccion[i].trim() == 'Escalera'){
-                            $('#escalera').val(direccion[i+1]);
-
-                        }else if(direccion[i] != "" && isNaN(direccion[i]) && direccion[i] != direccion[i].toUpperCase()){
-                            if($('#nombreDir').val() == ""){
-                                $('#nombreDir').val(direccion[i]);
-                            }else{
-                                $('#nombreDir').val($('#nombreDir').val() + ' '+ direccion[i]);
-                            }
+                    }if(direccion[i] == 'Piso'){
+                        $('#nPiso').val(parseInt(direccion[i+1]));
+                    }else if(direccion[i].split('')[0] == ','){
+                        var patio = '';
+                        var arrayPatio = direccion[i].split('');
+                        var cont = 0;
+                        while(cont <= arrayPatio.length){
+                            cont++
+                            patio += arrayPatio[cont]
                         }
-                        /*                        if(direccion[i+1].split('')[0] == ','){
-                            console.log('entra');
-                            break;
-                        }*/
+                    }else if(direccion[i].trim() == 'Bloque'){
+                        $('#bloque').val(direccion[i+1]);
+                    }else if(direccion[i].trim() == 'Escalera'){
+                        $('#escalera').val(direccion[i+1]);
                     }
                 }
-
-                var direccion = $('h2').html().split(' ');
-                var opcion = direccion[32].trim();
-                for(var i = 0 ; i<direccion.length ; i++){
-                    if(direccion[i] == 'en'){
-                        var provincia = "";
-                        for(var z = 0 ; z<direccion[i+1].length; z++){
-                            if (direccion[i+1][z] != ','){
-
-                                provincia += direccion[i+1][z];
-                            }
-                        } 
-
-                        $('#provincia').val(provincia);
-                        if(direccion[i+2] == ""){
-                            $('#localidad').val(provincia);
-                        }else{
-                            $('#localidad').val(direccion[i+2]);
-                        }
-                    }else if(direccion[i] == 'Barrio' && direccion[i+1] == 'de'){
-                        var cont = i+2;
-                        var barrio = "";
-                        while(direccion[cont] != ""){
-                            barrio+= direccion[cont] + " ";
-                            cont++;
-                        }
-                        $('#barrio').val(barrio.trim());
-                    }else if(direccion[i] == 'de'){
-                        if(direccion[96].trim() == 'Piso'){
-                            $('#Pi').attr('selected', 'true');
-                        }else if(direccion[96].trim() == 'Duplex'){
-                            $('#Du').attr('selected', 'true');
-                        }else if(direccion[96].trim() == 'Adosado'){
-                            $('#Ad').attr('selected', 'true');
-                        }else if(direccion[96].trim() == 'Chalet'){
-                            $('#Ch').attr('selected', 'true');
-                        }else if(direccion[96].trim() == 'Bajo'){
-                            $('#Ba').attr('selected', 'true');
-                        }
-                    }
-                }
-                $('#nHabitaciones').val(parseInt($('#habitaciones').html().split('Habitaciones:')[1]));
-                $('#nCuartosBanyo').val(parseInt($('#banyos').html().split('Baños:')[1]));
-                $('#nMetrosCuadrados').val(parseInt($('#metros').html().split('Área:')[1]));
-
-
-                if($('#piscina').html().trim() == 'Sí'){
-                    $('#formPiscina').attr('checked', true);
-                }
-                if($('#garaje').html().trim() == 'Sí'){
-                    $('#formGaraje').attr('checked', true);
-                }
-                if($('#ascensor').html().trim() == 'Sí'){
-                    $('#formAscensor').attr('checked', true);
-                }
-                if(opcion == 'Alquiler'){
-                    if($('#calefaccion').html().trim() == 'Sí'){
-                        $('#formCalefaccion').attr('checked', true);
-                    }
-                    if($('#animales').html().trim() == 'Sí'){
-                        $('#formAnimales').attr('checked', true);
-                    }
-                    if($('#reformas').html().trim() == 'Sí'){
-                        $('#formReformas').attr('checked', true);
-                    }
-                    if($('#internet').html().trim() == 'Sí'){
-                        $('#formInternet').attr('checked', true);
-                    }
-                    if($('#aireAcondicionado').html().trim() == 'Sí'){
-                        $('#formAire').attr('checked', true);
-                    }   
-                }
-
-                $('#formPrecio').val(parseInt($('#precio').html().split('Precio:')[1].split('€')[0]));
-                if(opcion == 'Alquiler'){
-                    $('#formFianza').val(parseInt($('#fianza').html().split('Fianza:')[1].split('€')[0]));
-                }
-                $('#descripcion').html($('#desc').html());
             }
-        }else{
-        }
 
+            var direccion = $('h2').html().split(' ');
+            var opcion = direccion[32].trim();
+            for(var i = 0 ; i<direccion.length ; i++){
+                if(direccion[i] == 'Barrio' && direccion[i+1] == 'de'){
+                    var cont = i+2;
+                    var barrio = "";
+                    while(direccion[cont] != ""){
+                        barrio+= direccion[cont] + " ";
+                        cont++;
+                    }
+                    $('#barrio').val(barrio.trim());
+                }else if(direccion[i] == 'de'){
+                    if(direccion[96].trim() == 'Piso'){
+                        $('#Pi').attr('selected', 'true');
+                    }else if(direccion[96].trim() == 'Duplex'){
+                        $('#Du').attr('selected', 'true');
+                    }else if(direccion[96].trim() == 'Adosado'){
+                        $('#Ad').attr('selected', 'true');
+                    }else if(direccion[96].trim() == 'Chalet'){
+                        $('#Ch').attr('selected', 'true');
+                    }else if(direccion[96].trim() == 'Bajo'){
+                        $('#Ba').attr('selected', 'true');
+                    }
+                }
+            }
+
+            if($('#piscina').html().trim() == 'Sí'){
+                $('#formPiscina').attr('checked', true);
+            }
+            if($('#garaje').html().trim() == 'Sí'){
+                $('#formGaraje').attr('checked', true);
+            }
+            if($('#ascensor').html().trim() == 'Sí'){
+                $('#formAscensor').attr('checked', true);
+            }
+            if(opcion == 'Alquiler'){
+                if($('#calefaccion').html().trim() == 'Sí'){
+                    $('#formCalefaccion').attr('checked', true);
+                }
+                if($('#animales').html().trim() == 'Sí'){
+                    $('#formAnimales').attr('checked', true);
+                }
+                if($('#reformas').html().trim() == 'Sí'){
+                    $('#formReformas').attr('checked', true);
+                }
+                if($('#internet').html().trim() == 'Sí'){
+                    $('#formInternet').attr('checked', true);
+                }
+                if($('#aireAcondicionado').html().trim() == 'Sí'){
+                    $('#formAire').attr('checked', true);
+                }   
+            }
+
+            if(opcion == 'Alquiler'){
+                $('#formFianza').val(parseInt($('#fianza').html().split('Fianza:')[1].split('€')[0]));
+            }
+            $('#descripcion').html($('#desc').html());
+        }else{
+
+        }
     })
     $.ajaxSetup({
         headers: {
@@ -169,56 +134,13 @@ $(function(){
         })
     })
 
-    //    $('#botonImagenes').click(function(){
-    //        event.preventDefault();
-    //        imagenPerfil = "";
-    //        restoImagenes = [];
-    //
-    //        if($('#perf').css('display') != 'none'){
-    //            if($('#perfil').val() == "" ){
-    //                $('#mensajeperfil').html('Este campo no puede estar vacio');
-    //            }else{
-    //                imagenPerfil = $('#perfil').val();
-    //            }
-    //        }
-    //        var imagenes = $('img.vertical');
-    //        var nombre = [];
-    //        imagenes.each(function(){
-    //            restoImagenes.push($(this).attr('src').split('/')[4]);
-    //        })
-    //        var contador = 0;
-    //        for(var i = 0 ; i<nombre.length; i++){
-    //            if(nombre[i].indexOf('perfil') == -1){
-    //                contador++;
-    //            }
-    //        }
-    //        console.log(imagenPerfil);
-    //        if($('#masImagenes').prop('files').length + contador > 3){
-    //            console.log('entra');
-    //            $('#mensajemasImagenes').html('Como máximo puede subir hasta 3 imagenes extras, actualmente tienes registradas '  + ' imagenes en la base de datos');
-    //        }
-    //
-    //        if(imagenPerfil == "" && restoImagenes.length == 0){
-    //            console.log('error imagenes');
-    //        }else{
-    //            $('#formImagenes').submit();
-    //        }
-    //
-    //    })
-
-
-
-
     $('input').blur(function(){
         $('#mensaje'+$(this).attr('id')).html('');
-        if($(this).val() == "" && $(this).attr('id') != 'nPiso'){
+        if($(this).val() == "" && $(this).attr('id') != 'nPiso' && $(this).attr('id') != 'nPatio'){
             $('#mensaje'+$(this).attr('id')).html('Este campo es obligatorio');
         }else{
             if($(this).attr('id') == 'provincia' || $(this).attr('id') == 'localidad' || $(this).attr('id') == 'nombreDir'){
                 validarProvinciaLocalidadNombre($(this).attr('id'), $(this).val());
-            }
-            if($(this).attr('id') == 'nPatio'){
-                validarPatioPiso($(this).attr('id'), $(this).val());
             }
             if($(this).attr('id') == 'nHabitaciones'){
                 validarHabitaciones($(this).attr('id'), $(this).val());
@@ -247,9 +169,6 @@ $(function(){
                 validarProvinciaLocalidadNombre($(this).attr('id'), $(this).val());
             }
 
-            if($(this).attr('id') == 'nPatio'){
-                validarPatioPiso($(this).attr('id'), $(this).val());
-            }
             if($(this).attr('id') == 'nHabitaciones'){
                 validarHabitaciones($(this).attr('id'), $(this).val());
             }
@@ -276,32 +195,9 @@ $(function(){
             validarFianza('fianza', $('#fianza').val());
         }
 
-        /*        if($('#divPerfil').css('display') != 'none'){
-            if($('#perfil').val() == "" ){
-                $('#mensajeperfil').html('Este campo no puede estar vacio');
-            }
-        }
-
-        if($('#divImagenes').css('display') != 'none'){
-            var imagenes = $('img.vertical');
-            var nombre = [];
-            imagenes.each(function(){
-                nombre.push($(this).attr('src').split('/')[4]);
-            })
-            var contador = 0;
-            for(var i = 0 ; i<nombre.length; i++){
-                if(nombre[i].indexOf('perfil') == -1){
-                    contador++;
-                }
-            }
-            var cont
-            if($('#masImagenes').prop('files').length + contador > 3){
-                $('#mensajemasImagenes').html('Como máximo puede subir hasta 3 imagenes extras, actualmente tienes registradas ' + contador + ' imagenes en la base de datos');
-            }
-        }*/
-
         $('strong').each(function(){
             if($(this).html() != ""){
+                console.log($(this).html())
                 errorEncontrado = true;
             }
         })
@@ -323,11 +219,6 @@ $(function(){
         }
         console.log(errorEncontrado);
     })
-
-
-
-
-
 
     function validarProvinciaLocalidadNombre(campo, mensaje){
         $('#mensaje'+campo).html('');
