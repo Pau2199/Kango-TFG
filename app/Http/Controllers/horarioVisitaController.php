@@ -19,6 +19,11 @@ class horarioVisitaController extends Controller
         return view('horarioVisita');
     }
 
+    public function obtenerHorarioPropietario(Request $request){
+        $agregados = Visiting_hour::where('dia', '=', $request->nombreDia)->where('idUsuario', '=', $request->idUser)->get();
+        return $agregados;
+    }
+
     public function obtenerHorario(){
         $dias = array('Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo');
         $datos = [];

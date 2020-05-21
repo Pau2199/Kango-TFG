@@ -95,9 +95,21 @@ class UserTableSeeder extends Seeder
                 'rol' => $roles[1],
                 'fecha_nacimiento' => $fechas_nacimiento[4],
                 'email' => 'pau_ll_m@hotmail.com',
-                'password' => 'pau1234',
+                'password' => Hash::make('pau1234'),
                 'nif_nie' => Str::random(9),
             ],
+            [
+                'nombre' => $nombres_hombre[2],
+                'id' => 7,
+                'sexo' => $sexos[0],
+                'primer_apellido' => $apellidos[rand(0,7)],
+                'segundo_apellido' => $apellidos[rand(0,7)],
+                'rol' => $roles[rand(0,1)],
+                'fecha_nacimiento' => $fechas_nacimiento[4],
+                'email' => Str::random(10).'@gmail.com',
+                'password' => $contraseñas[4],
+                'nif_nie' => Str::random(9),
+            ], 
         ]);
     }
 }

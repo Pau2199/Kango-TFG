@@ -13,39 +13,42 @@ $(function(){
                 }
             } 
         }
-    })
+    });
 
 
     var textoHermano = "";
     $('td').dblclick(function(){
+        var dia = $(this).attr('class');
+        $(this).addClass('bg-warning');
+        $('#texto').html('Agregando... Por favor Espere!');
         if($(this).hasClass('bg-info')){
             $('#texto').html('Ya tienes registrada esa franja horaria para ese dia de la semana! Haz doble click si deseas eliminarla');
+            $(this).removeClass('bg-warning');
             $('#mensajeInfo').removeClass('bg-success');
             $('html, body').animate({scrollTop: 0},1000)
             $('#mensajeInfo').addClass('bg-danger').show();
         }else{
-            $('#mensajeInfo').hide();
             var elemento = $(this);
             var primerHermano = $(this).siblings(':first').html();
-            var dia = $(this).attr('class');
-            var data = {dia: dia, horaInicio: primerHermano.split('-')[0].trim(), horaFinal: primerHermano.split('-')[1].trim()}
-            console.log(data);
+            var datos = {dia: dia, horaInicio: primerHermano.split('-')[0].trim(), horaFinal: primerHermano.split('-')[1].trim()}
             $.ajax({
                 url: '/perfil/modificarHorario',
                 method: 'GET',
-                data: data,
+                data: datos,
                 success: function(data){
                     var id = data['id'];
                     if(data['error'] == true){
+                        elemento.removeClass('bg-warning');
                         $('#texto').html('Ya tienes registrada esa franja horaria para ese dia de la semana! Haz doble click si deseas eliminarla');
                         $('#mensajeInfo').removeClass('bg-success');
                         $('html, body').animate({scrollTop: 0},1000)
                         $('#mensajeInfo').addClass('bg-danger').show();
                     }else{
                         data = JSON.stringify(data);
+                        elemento.removeClass('bg-warning');
                         elemento.addClass('bg-info');
                         elemento.attr('id', dia + ' - ' + id);
-                        $('#texto').html('Franja Horaria agregada correctamente!');
+                        $('#texto').html('Franja Horaria: '+ datos['dia'] + ' de ' + datos['horaInicio'] + ' - ' + datos['horaFinal'] +  ' ha sido agregada correctamente!');
                         $('#mensajeInfo').removeClass('bg-danger');
                         $('html, body').animate({scrollTop: 0},1000)
                         $('#mensajeInfo').addClass('bg-success').show();
@@ -62,7 +65,7 @@ $(function(){
                 url: '/perfil/borrarFranjaHoraria/'+id,
                 method: 'GET',
                 success: function(data){
-                    
+
                 }
             }) 
         }

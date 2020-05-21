@@ -31,6 +31,7 @@ Route::get('/perfil/horarioVisita', 'horarioVisitaController@index');
 Route::get('/perfil/modificarHorario', 'horarioVisitaController@store');
 Route::get('/perfil/obtenerHorarioUsuario', 'horarioVisitaController@obtenerHorario');
 Route::get('/perfil/borrarFranjaHoraria/{id}', 'horarioVisitaController@destroy');
+Route::post('/obtenerHorarioPropietario', 'horarioVisitaController@obtenerHorarioPropietario');
 
 Route::get('/perfil/datosPersonales', 'datosPersonalesController@index');
 

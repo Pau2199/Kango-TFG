@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             SaleTableSeeder::class,
             RentalTableSeeder::class,
             ImageTableSeeder::class,
+            Visiting_hourTableSeeder::class,
             //PostSeeder::class,
             //CommentSeeder::class,
         ]);

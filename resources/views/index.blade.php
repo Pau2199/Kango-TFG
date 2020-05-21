@@ -242,5 +242,5 @@
 </div>
 @stop
 @foreach($datos as $key => $valor)
-<?= var_dump($valor->datosAlq) ?>
+<?= var_dump($valor->img) ?>
 @endforeach

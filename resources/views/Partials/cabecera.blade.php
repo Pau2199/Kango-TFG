@@ -97,6 +97,8 @@
                 @include('Partials.Navs.inmuebleNav')
         @elseif(Request::is('perfil/horarioVisita', 'perfil/datosPersonales'))
                 @include('Partials.Navs.perfilNav')
+        @else
+                @include('Partials.Navs.indexNav')
         @endif
     </div>
 </nav>

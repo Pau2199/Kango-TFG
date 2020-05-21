@@ -1,0 +1,10 @@
+td{
+    background-color: #FFDDBD;
+}
+
+th {
+    background-color: #FFC15A
+}
+table, td, th{
+    border: 2px solid !important;
+}

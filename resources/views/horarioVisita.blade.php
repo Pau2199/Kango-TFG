@@ -5,14 +5,22 @@
 @section('js')
 <script src="{{asset('js/horarioVisitaJS.js')}}"></script>
 @stop
+@section('css')
+<link rel="stylesheet" href="{{asset('css/estiloHorarioVisita.css')}}">
+@stop
 @section('content')
+
+<ul>
+    <li>Haz doble click sobre un recuadro para agregar una franja horaria</li>
+    <li>Para eliminar una franja horaria simplemente haz click sobre el recuadro coloreado</li>
+</ul>
 <div class="text-center w-100 font-weight-bold" id="mensajeInfo">
     <p id="texto"></p>
 </div>
-<table class="table table-bordered">
+<table class="table table-bordered w-75 ml-auto mr-auto">
     <thead>
         <tr class="text-center">
-            <th scope="col">#</th>
+            <th scope="col"></th>
             <th scope="col">Lunes</th>
             <th scope="col">Martes</th>
             <th scope="col">Miercoles</th>

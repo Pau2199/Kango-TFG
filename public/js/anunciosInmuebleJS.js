@@ -7,6 +7,121 @@ $(function(){
     $('#vertical').hide();
     $('#mensajeInfo').hide();
 
+    $('#ventanaNueva').click(function(){
+        $('#botones').hide();
+        var form = $('<form>');
+        var divRow = $('<div>').attr('class', 'form-row');
+        var divGroupDate = $('<div>').attr('class', 'form-group col-md-6');
+        var label = $('<label>').attr({
+            class: 'font-weight-bold',
+            for: 'fecha'
+        }).html('Fecha Deseada');
+        divGroupDate.append(label);
+        var dataPicker = $('<input>').attr({
+            type: 'date',
+            name: 'fecha',
+            id: 'datapicker',
+            class: 'form-control'
+        });
+        divGroupDate.append(dataPicker);
+        var strong = $('<strong>').attr('id', 'mensajedatapicker');
+        divGroupDate.append(strong);
+        divRow.append(divGroupDate);
+        var divGroupSelect = $('<div>').attr({class: 'form-group col-md-6',
+                                              id: 'divSelect'});
+        var labelSelect = $('<label>').attr({
+            class: 'font-weight-bold',
+            for: 'horas'
+        }).html('Hora Deseada');
+        divGroupSelect.append(labelSelect);
+        var select = $('<select>').attr({
+            name: 'hora',
+            class: 'form-control',
+            id: 'selectHoras'
+        });
+        var option = $('<option>').attr({
+            value: '-',
+            selected: true
+        }).html('-');
+        select.append(option);
+        divGroupSelect.append(select);
+        strong = $('<strong>').attr('id', 'mensajeselectHoras');
+        divGroupSelect.append(strong);
+        divRow.append(divGroupSelect);
+        form.append(divRow);
+
+        var button = $('<span>').attr({
+            class: 'btn bg-success',
+            id: 'solVisita'
+        }).html('Solicitar Visita');
+        form.append(button);
+        $('#agregarForm').append(form);
+        $('#divSelect').hide();
+    });
+    $('#agregarForm').on('change', 'input#datapicker', function(){
+        var dias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+        console.log($(this).val());
+        var date = new Date($(this).val());
+        var dia = dias[date.getDay()]
+        $.ajax({
+            url: '/obtenerHorarioPropietario',
+            method: 'POST',
+            data: {idUser: idUser, nombreDia: dia, "_token": $('#token').val()},
+            success: function(data){
+                for (var i = 0 ; i<data.length ; i++){
+                    var option = $('<option>').attr('value', data[i]['hora_inicio'] + '-' + data[i]['hora_final']).html(data[i]['hora_inicio'] + '-' + data[i]['hora_final']);
+                    $('#selectHoras').append(option);
+                }
+                $('#divSelect').show();
+
+            }
+        })
+    });
+
+    $('#agregarForm').on('click', 'span#solVisita', function(){
+        var error = false;
+        $('#mensajedatapicker').html('');
+        $('#mensajeselectHoras').html('');
+        if($('#datapicker').val() == ""){
+            error = true;
+            $('#mensajedatapicker').html('Debes selecionar una fecha');
+        }else{
+            var fechaSis = new Date();
+            var fechaElegida = new Date($('#datapicker').val());
+            if(fechaSis.getFullYear() != fechaElegida.getFullYear()){
+                error = true;
+                $('#mensajedatapicker').html('La fecha que seleciones debe ser para el año ' + fechaSis.getFullYear());
+            }else if((fechaElegida.getMonth()+1) - (fechaSis.getMonth()+1) >= 2){
+                error = true;
+                $('#mensajedatapicker').html('La fecha que seleciones no debe ser superior a dentro de 2 meses');
+            }else if(fechaElegida.getDate() == fechaSis.getDate() ){
+                error = true;
+                $('#mensajedatapicker').html('La fecha que seleciones no puede ser para el mismo dia');
+            }else if(fechaElegida.getDate() < fechaSis.getDate()){
+                error = true;
+                $('#mensajedatapicker').html('No puedes elegir para una fecha menor a la que te encuentras');
+            }
+        }
+
+        if($('#selectHoras').val() == '-'){
+            $('#mensajeselectHoras').html('Debes selecionar una hora');
+        }
+
+        if(error == false){
+/*            $.ajax({
+                url: '/enviarSolicitudVisita',
+                method: 'POST',
+                data: {idUser: idUser, nombreDia: dia, "_token": $('#token').val()},
+                success: function(data){
+
+                }
+            });*/
+        }
+
+
+    });
+
+
     $('#botonModificacion').click(function(){
         if($(this).html() == 'Activar Edición'){
             if(idInmuebleUser != idUser){

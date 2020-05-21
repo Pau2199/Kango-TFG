@@ -300,7 +300,7 @@
             <p class="font-weight-bold">Descripción</p>
             <span id="desc">{{$datos[0]->descripcion}}</span>
             <hr>
-            <div class="row my-4">
+            <div class="d-flex justify-content-center row my-4" id="agregarForm">
                 @if(Auth::user() != null and Auth::user()->id == $datos[0]->idUsuario)
                 <div class="col-6 text-center">
                     <span id="botonModificacion" class="btn btn-info">Activar Edición</span>
@@ -311,17 +311,20 @@
                 @else
                 @if(Auth::user() != null)
                 @if($datos[0]->alquiler == true)
-                <span class="btn btn-info">Alquilar Inmueble</span>
-                @endif
-                <span class="btn btn-info">Solicitar una Visita</span>
-                <span class="btn btn-info">Mandar un mensaje</span>
-                <span class="btn btn-info">Guardar en favoritos</span>
-                @else
-                <span class="btn btn-info">Guardar en favoritos</span>
+                <div id="botones">
+                    <span class="btn btn-info">Alquilar Inmueble</span>
+                    @endif
+                    <span class="btn btn-info" id="ventanaNueva">Solicitar una Visita</span>
+                    <span class="btn btn-info">Mandar un mensaje</span>
+                    <span class="btn btn-info">Guardar en favoritos</span>
+                    @else
+                    <span class="btn btn-info">Guardar en favoritos</span>
+                </div>
                 @endif
                 @endif
             </div>
         </div>
+        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
         <input type="hidde" id="idInmuebleUser" value="{{$datos[0]->idUsuario}}">
         @if(Auth::user())
         <input type="hidde" id="idUser" value="{{Auth::user()->id}}">
