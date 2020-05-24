@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLocalitiesTable extends Migration
+class CreateFavoriteTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateLocalitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('localities', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nombre', 100);
-            $table->bigInteger('idProvincia')->unsigned();
+        Schema::create('favorite', function (Blueprint $table) {
+            $table->bigInteger('idUser')->unsigned();
+            $table->bigInteger('idInmueble')->unsigned();
+            $table->primary(array('idUser', 'idInmueble'));
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateLocalitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('localities');
+        Schema::dropIfExists('favorite');
     }
 }

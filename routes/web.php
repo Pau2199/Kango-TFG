@@ -32,9 +32,12 @@ Route::get('/perfil/modificarHorario', 'horarioVisitaController@store');
 Route::get('/perfil/obtenerHorarioUsuario', 'horarioVisitaController@obtenerHorario');
 Route::get('/perfil/borrarFranjaHoraria/{id}', 'horarioVisitaController@destroy');
 Route::post('/obtenerHorarioPropietario', 'horarioVisitaController@obtenerHorarioPropietario');
+Route::post('/enviarSolicitudVisita', 'solicitudesController@enviarSolicitudVisita');
 
 Route::get('/perfil/datosPersonales', 'datosPersonalesController@index');
 
+Route::get('/obtenerNotificaciones', 'notificacionesController@index');
+Route::get('/notificaciones', 'notificacionesController@mostrarVista');
 
 //cargar datos de manera dinamica
 Route::get('/index/cargarProvincia', 'indexController@cargarProvincias');

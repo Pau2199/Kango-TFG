@@ -35,6 +35,10 @@ class horarioVisitaController extends Controller
 
         return $datos;
     }
+    
+    public function enviarSolicitudVisita(Request $request){
+        return $request;
+    }
 
     /**
      * Show the form for creating a new resource.

@@ -15,7 +15,7 @@ class AddForeignToNotificationTable extends Migration
     {
         Schema::table('notification', function (Blueprint $table) {
             $table->foreign('idUsuario')->references('id')->on('users')->onDelete('cascade');
-
+            $table->foreign('idRequest')->references('id')->on('request')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,7 @@ class AddForeignToNotificationTable extends Migration
     {
         Schema::table('notification', function (Blueprint $table) {
             $table->dropForeign('notification_idUsuario_foreign');
+            $table->dropForeign('notification_idRequest_foreign');
         });
     }
 }

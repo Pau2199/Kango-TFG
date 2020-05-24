@@ -9,9 +9,11 @@ $(function(){
 
     $('#ventanaNueva').click(function(){
         $('#botones').hide();
-        var form = $('<form>');
+        var form = $('<form>').attr('id', 'formHorarioVisita');
         var divRow = $('<div>').attr('class', 'form-row');
-        var divGroupDate = $('<div>').attr('class', 'form-group col-md-6');
+        var divGroupDate = $('<div>').attr({
+            class: 'form-group col-md-12',
+            id: 'groupDate'});
         var label = $('<label>').attr({
             class: 'font-weight-bold',
             for: 'fecha'
@@ -21,7 +23,8 @@ $(function(){
             type: 'date',
             name: 'fecha',
             id: 'datapicker',
-            class: 'form-control'
+            class: 'form-control',
+            value: '2020/05/21'
         });
         divGroupDate.append(dataPicker);
         var strong = $('<strong>').attr('id', 'mensajedatapicker');
@@ -39,11 +42,6 @@ $(function(){
             class: 'form-control',
             id: 'selectHoras'
         });
-        var option = $('<option>').attr({
-            value: '-',
-            selected: true
-        }).html('-');
-        select.append(option);
         divGroupSelect.append(select);
         strong = $('<strong>').attr('id', 'mensajeselectHoras');
         divGroupSelect.append(strong);
@@ -59,6 +57,7 @@ $(function(){
         $('#divSelect').hide();
     });
     $('#agregarForm').on('change', 'input#datapicker', function(){
+        $('#selectHoras').children().remove();
         var dias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
         console.log($(this).val());
         var date = new Date($(this).val());
@@ -66,12 +65,17 @@ $(function(){
         $.ajax({
             url: '/obtenerHorarioPropietario',
             method: 'POST',
-            data: {idUser: idUser, nombreDia: dia, "_token": $('#token').val()},
+            data: {idUser: idInmuebleUser, nombreDia: dia, "_token": $('#token').val()},
             success: function(data){
+                var option = $('<option>').attr({value: '-',
+                                                selected: true}).html('-');
+                $('#selectHoras').append(option);
                 for (var i = 0 ; i<data.length ; i++){
-                    var option = $('<option>').attr('value', data[i]['hora_inicio'] + '-' + data[i]['hora_final']).html(data[i]['hora_inicio'] + '-' + data[i]['hora_final']);
+                    option = $('<option>').attr('value', data[i]['inicio'] + '-' + data[i]['final']).html(data[i]['inicio'] + '-' + data[i]['final']);
                     $('#selectHoras').append(option);
                 }
+                $('#groupDate').removeClass('col-md-12');
+                $('#groupDate').addClass('col-md-6');
                 $('#divSelect').show();
 
             }
@@ -98,8 +102,10 @@ $(function(){
                 error = true;
                 $('#mensajedatapicker').html('La fecha que seleciones no puede ser para el mismo dia');
             }else if(fechaElegida.getDate() < fechaSis.getDate()){
-                error = true;
-                $('#mensajedatapicker').html('No puedes elegir para una fecha menor a la que te encuentras');
+                if((fechaElegida.getMonth()+1) <= (fechaSis.getMonth()+1)){
+                    error = true;
+                    $('#mensajedatapicker').html('No puedes elegir para una fecha menor a la que te encuentras');   
+                }
             }
         }
 
@@ -108,14 +114,28 @@ $(function(){
         }
 
         if(error == false){
-/*            $.ajax({
+            var idInmueble = window.location.href.split('/')[5].split('-')[1];
+            console.log(idInmueble);
+            $.ajax({
                 url: '/enviarSolicitudVisita',
                 method: 'POST',
-                data: {idUser: idUser, nombreDia: dia, "_token": $('#token').val()},
+                data: {inmueble:idInmueble, propietario: idInmuebleUser, usuarioSolicitante: idUser, fecha: $('#datapicker').val(), hora: $('#selectHoras').val(),"_token": $('#token').val()},
                 success: function(data){
-
+                    data = JSON.parse(data);
+                    if(error = true){
+                        $('#texto').html(data.mensaje);
+                        $('#mensajeInfo').removeClass('bg-success');
+                        $('#mensajeInfo').addClass('bg-danger');
+                        $('#mensajeInfo').show();
+                    }else{
+                        $('#mensajeInfo').removeClass('bg-danger');
+                        $('#texto').html('Solicitud de visita enviada correctamente!');
+                    }
+                    $('html, body').animate({scrollTop: 0},1000);
+                    $('#formHorarioVisita').remove();
+                    $('#botones').show();
                 }
-            });*/
+            });
         }
 
 
@@ -278,59 +298,64 @@ $(function(){
 
     $('#botonRegistro').click(function(){
         event.preventDefault();
-        var errorEncontrado = false;
-        $('input').each(function(){
-            if($(this).attr('id') == 'provincia' || $(this).attr('id') == 'localidad' || $(this).attr('id') == 'nombreDir'){
-                validarProvinciaLocalidadNombre($(this).attr('id'), $(this).val());
+        if(idInmuebleUser != idUser){
+            alert('No eres el propietario de este inmueble, se va a recargar la página.')
+            location.reload();
+        }else{
+            var errorEncontrado = false;
+            $('input').each(function(){
+                if($(this).attr('id') == 'provincia' || $(this).attr('id') == 'localidad' || $(this).attr('id') == 'nombreDir'){
+                    validarProvinciaLocalidadNombre($(this).attr('id'), $(this).val());
+                }
+
+                if($(this).attr('id') == 'nHabitaciones'){
+                    validarHabitaciones($(this).attr('id'), $(this).val());
+                }
+                if($(this).attr('id') == 'nCuartosBanyo'){
+                    validarCuartosBanyo($(this).attr('id'), $(this).val());
+                }
+                if($(this).attr('id') == 'precio'){
+                    validarPrecio($(this).attr('id'), $(this).val());
+                }
+                if($(this).attr('id') == 'nMetrosCuadrados'){
+                    validarMetrosCuadrados($(this).attr('id'), $(this).val());
+                }
+
+
+
+
+            })
+
+            $('select').each(function(){
+                validarSelect($(this).attr('id'), $(this).val());
+            })
+
+            if($('#tipoCompra').val() == 'A' ||  $('#tipoCompra').val() == 'AQ'){
+                validarFianza('fianza', $('#fianza').val());
             }
 
-            if($(this).attr('id') == 'nHabitaciones'){
-                validarHabitaciones($(this).attr('id'), $(this).val());
-            }
-            if($(this).attr('id') == 'nCuartosBanyo'){
-                validarCuartosBanyo($(this).attr('id'), $(this).val());
-            }
-            if($(this).attr('id') == 'precio'){
-                validarPrecio($(this).attr('id'), $(this).val());
-            }
-            if($(this).attr('id') == 'nMetrosCuadrados'){
-                validarMetrosCuadrados($(this).attr('id'), $(this).val());
-            }
-
-
-
-
-        })
-
-        $('select').each(function(){
-            validarSelect($(this).attr('id'), $(this).val());
-        })
-
-        if($('#tipoCompra').val() == 'A' ||  $('#tipoCompra').val() == 'AQ'){
-            validarFianza('fianza', $('#fianza').val());
-        }
-
-        $('strong').each(function(){
-            if($(this).html() != ""){
-                console.log($(this).html())
-                errorEncontrado = true;
-            }
-        })
-        if(errorEncontrado == false){
-            var id = window.location.href.split('/')[5];
-            $.ajax({
-                url: '/inmuebles/vistaInmueble/modificar/'+id,
-                method: 'POST',
-                data: $('#formEditar').serialize(),
-                success: function(data){
-                    console.log(data);
-                    $('html, body').animate({scrollTop: 0},1000)
-                    $('#mensajeInfo').show();
-                    setTimeout(function(){
-                        window.location.reload();
-                    }, 3000)
+            $('strong').each(function(){
+                if($(this).html() != ""){
+                    console.log($(this).html())
+                    errorEncontrado = true;
                 }
             })
+            if(errorEncontrado == false){
+                var id = window.location.href.split('/')[5];
+                $.ajax({
+                    url: '/inmuebles/vistaInmueble/modificar/'+id,
+                    method: 'POST',
+                    data: $('#formEditar').serialize(),
+                    success: function(data){
+                        console.log(data);
+                        $('html, body').animate({scrollTop: 0},1000)
+                        $('#mensajeInfo').show();
+                        setTimeout(function(){
+                            window.location.reload();
+                        }, 3000)
+                    }
+                })
+            }
         }
         console.log(errorEncontrado);
     })

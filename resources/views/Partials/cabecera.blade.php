@@ -76,15 +76,8 @@
                 @endif
             </div>
             @if(Auth::user())
-            <div class="btn-group mr-5 mr-md-4">
-                <a href="#" data-toggle="dropdown"><img class="svgTamanyo" class="mt-4" src="{{asset('img/notificacion.svg')}}" alt="Correo"></a>
-                <div class="dropdown-menu mr-5">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Separated link</a>
-                </div>
+            <div class="btn-group mr-5 mr-md-4" id="notificacion">
+                <a href="/notificaciones"><img class="svgTamanyo" class="mt-4" src="{{asset('img/notificacion.svg')}}" alt="Correo"></a>
             </div>
             @endif
             <img class="svgTamanyo" class="mt-4" src="{{asset('img/corazon.svg')}}" alt="Me gusta">
@@ -94,11 +87,11 @@
 <nav id="navbar" class="navbar navbar-expand filtro">
     <div class="collapse navbar-collapse" id="navbarNav">
         @if(Request::is('inmuebles/anunciosActivos', 'inmuebles/publicarNuevo', 'inmuebles/allAnuncios'))
-                @include('Partials.Navs.inmuebleNav')
+        @include('Partials.Navs.inmuebleNav')
         @elseif(Request::is('perfil/horarioVisita', 'perfil/datosPersonales'))
-                @include('Partials.Navs.perfilNav')
+        @include('Partials.Navs.perfilNav')
         @else
-                @include('Partials.Navs.indexNav')
+        @include('Partials.Navs.indexNav')
         @endif
     </div>
 </nav>

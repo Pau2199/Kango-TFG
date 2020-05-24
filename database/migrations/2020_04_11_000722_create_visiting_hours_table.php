@@ -15,8 +15,8 @@ class CreateVisitingHoursTable extends Migration
     {
         Schema::create('visiting_hours', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('hora_final',100);
-            $table->string('hora_inicio',100);
+            $table->string('final',100);
+            $table->string('inicio',100);
             $table->string('dia',100);
             $table->bigInteger('idUsuario')->unsigned();
             $table->timestamps();

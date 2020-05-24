@@ -20,7 +20,9 @@ class CreateNotificationTable extends Migration
             $table->string('titulo');
             $table->boolean('leido');
             $table->bigInteger('idUsuario')->unsigned();
+            $table->bigInteger('idRequest')->unsigned();
             $table->timestamps();
+
         });
     }
 

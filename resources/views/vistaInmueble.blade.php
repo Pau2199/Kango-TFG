@@ -12,8 +12,8 @@
 <script src="{{asset('js/anunciosInmuebleJS.js')}}"></script>
 @stop
 @section('content')
-<div class="text-center w-100 bg-success font-weight-bold" id="mensajeInfo">
-    <p> Modificación realizada correctamente! - La página se recargara en 3 segundos.</p>
+<div class="text-center w-100 font-weight-bold" id="mensajeInfo">
+    <p id="texto"> Modificación realizada correctamente! - La página se recargara en 3 segundos.</p>
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -310,8 +310,8 @@
                 </div>
                 @else
                 @if(Auth::user() != null)
-                @if($datos[0]->alquiler == true)
                 <div id="botones">
+                    @if($datos[0]->alquiler == true)
                     <span class="btn btn-info">Alquilar Inmueble</span>
                     @endif
                     <span class="btn btn-info" id="ventanaNueva">Solicitar una Visita</span>
