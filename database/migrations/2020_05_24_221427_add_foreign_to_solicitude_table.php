@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignToRequestTable extends Migration
+class AddForeignToSolicitudeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddForeignToRequestTable extends Migration
      */
     public function up()
     {
-        Schema::table('request', function (Blueprint $table) {
+        Schema::table('solicitude', function (Blueprint $table) {
             $table->foreign('solicitadaAIdUser')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('solicitadaDeIdUser')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('idInmueble')->references('id')->on('property')->onDelete('cascade');
@@ -27,10 +27,10 @@ class AddForeignToRequestTable extends Migration
      */
     public function down()
     {
-        Schema::table('request', function (Blueprint $table) {
-            $table->dropForeign('request_solicitadaAIdUser_foreign');
-            $table->dropForeign('request_solicitadaDeIdUser_foreign');
-            $table->dropForeign('request_idInmueble_foreign');
+        Schema::table('solicitude', function (Blueprint $table) {
+            $table->dropForeign('solicitude_solicitadaAIdUser_foreign');
+            $table->dropForeign('solicitude_solicitadaDeIdUser_foreign');
+            $table->dropForeign('solicitude_idInmueble_foreign');
         });
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Request;
+use App\Solicitude;
 use App\Notification;
 
 class solicitudesController extends Controller
@@ -22,17 +22,17 @@ class solicitudesController extends Controller
         $error = false;
         $mensaje = '';
 
-        $solicitudes = Visit::where('idInmueble', '=', $request->inmueble)->where('solicitadaAIdUser', '=', $request->propietario)->where('solicitadaDeIdUser', '=', $request->usuarioSolicitante)->get();
+        $solicitudes = Solicitude::where('idInmueble', '=', $request->inmueble)->where('solicitadaAIdUser', '=', $request->propietario)->where('solicitadaDeIdUser', '=', $request->usuarioSolicitante)->get();
 
         if(count($solicitudes) == 0){
-            $solicitudes = Visit::where('solicitadaDeIdUser', '=', $request->usuarioSolicitante)->where('estado', '=', 'enviada')->get();
+            $solicitudes = Solicitude::where('solicitadaDeIdUser', '=', $request->usuarioSolicitante)->where('estado', '=', 'enviada')->get();
 
             if(count($solicitudes)<=2){
-                $solicitudes = Visit::where('solicitadaDeIdUser', '=', $request->usuarioSolicitante)->where('fecha_solicitada', '=', $request->fecha)->where('hora', '=', $request->hora)->get();
+                $solicitudes = Solicitude::where('solicitadaDeIdUser', '=', $request->usuarioSolicitante)->where('fecha_solicitada', '=', $request->fecha)->where('hora', '=', $request->hora)->get();
 
                 if(count($solicitudes) == 0){
 
-                    $sol = new Request;
+                    $sol = new Solicitude;
                     $sol->idInmueble = $request->inmueble;
                     $sol->solicitadaAIdUser = $request->propietario;
                     $sol->solicitadaDeIdUser = $request->usuarioSolicitante;
@@ -43,12 +43,13 @@ class solicitudesController extends Controller
                     
                     $fecha = getdate();
                     $notification = new Notification;
-                    $notification->date = "";
-                    $notification->mensaje = "";
+                    
+                    $notification->fecha = $fecha['year'] . '/' . $fecha['mon'] . '/' . $fecha['mday'];
                     $notification->titulo = "Solicitud de Visita";
                     $notification->leido = false;
                     $notification->idUsuario = $request->propietario;
                     $notification->idRequest = $sol->id;
+                    $notification->save();
                     
                 }else{
                     $error = true;

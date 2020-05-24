@@ -121,6 +121,7 @@ $(function(){
                 method: 'POST',
                 data: {inmueble:idInmueble, propietario: idInmuebleUser, usuarioSolicitante: idUser, fecha: $('#datapicker').val(), hora: $('#selectHoras').val(),"_token": $('#token').val()},
                 success: function(data){
+                    console.log(data);
                     data = JSON.parse(data);
                     if(error = true){
                         $('#texto').html(data.mensaje);

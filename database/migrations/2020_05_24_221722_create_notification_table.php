@@ -16,13 +16,11 @@ class CreateNotificationTable extends Migration
         Schema::create('notification', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->Date('fecha');
-            $table->string('mensaje');
             $table->string('titulo');
             $table->boolean('leido');
             $table->bigInteger('idUsuario')->unsigned();
             $table->bigInteger('idRequest')->unsigned();
             $table->timestamps();
-
         });
     }
 
