@@ -35,10 +35,18 @@ class favoritosController extends Controller
      */
     public function store(Request $request)
     {
-        $fav = new Favorite;
-        $fav->idUser = $request->idUser;
-        $fav->idInmueble = $request->idInmueble;
-        $fav->save();
+        $favorito = Favorite::where('idUser', '=', $request->idUser)->where('idInmueble', '=', $request->idInmueble)->get();
+        $error = false;
+        if (count($favorito) == 0){
+            $fav = new Favorite;
+            $fav->idUser = $request->idUser;
+            $fav->idInmueble = $request->idInmueble;
+            $fav->save();   
+        }else{
+            $error = true;
+        }
+        
+        return $error;
     }
 
     /**

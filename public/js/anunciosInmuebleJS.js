@@ -15,7 +15,13 @@ $(function(){
                 method: 'POST',
                 data: {idUser: idUser, idInmueble: idInmueble, "_token": $('#token').val()},
                 success: function(data){
-                    $('#texto').html('Se ha añadido a favoritos Correctamente');
+                    if(data == false){
+                        $('#texto').html('Se ha añadido a favoritos Correctamente');
+                        $('#mensajeInfo').addClass('bg-success');
+                    }else{
+                        $('#texto').html('Ese inmueble ya este registrado como favorito');
+                        $('#mensajeInfo').addClass('bg-danger');
+                    }
                     $('#mensajeInfo').show();
                     $('html, body').animate({scrollTop: 0},1000);
                 }
