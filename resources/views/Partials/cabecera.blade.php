@@ -88,7 +88,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         @if(Request::is('inmuebles/anunciosActivos', 'inmuebles/publicarNuevo', 'inmuebles/allAnuncios'))
         @include('Partials.Navs.inmuebleNav')
-        @elseif(Request::is('perfil/horarioVisita', 'perfil/datosPersonales'))
+        @elseif(Request::is('perfil/horarioVisita', 'perfil/datosPersonales', 'perfil/solicitudesVisita'))
         @include('Partials.Navs.perfilNav')
         @else
         @include('Partials.Navs.indexNav')

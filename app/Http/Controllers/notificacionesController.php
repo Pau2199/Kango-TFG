@@ -17,7 +17,7 @@ class notificacionesController extends Controller
     {
         $notification ="";
         if(Auth::user() != null){
-            $notification = Notification::where('idUsuario', '=', Auth::user()->id)->get();
+            $notification = Notification::where('idUsuario', '=', Auth::user()->id)->where('leido', '=', false)->get();
         }
         return $notification;
     }

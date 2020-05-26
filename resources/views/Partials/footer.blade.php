@@ -1,4 +1,4 @@
-<footer class="page-footer font-small unique-color-dark footerGrande mt-2">
+<footer class="w-100 page-footer font-small unique-color-dark footerGrande mt-2">
     <div class="footerPequeño">
         <div class="container">
             <div class="row py-4 d-flex align-items-center">

@@ -79,7 +79,7 @@ $(function(){
                 $('#divSelect').show();
 
             }
-        })
+        });
     });
 
     $('#agregarForm').on('click', 'span#solVisita', function(){

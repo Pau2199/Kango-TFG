@@ -5,23 +5,23 @@
 @section('css')
 <link rel="stylesheet" href="{{asset('css/estiloRegistrarInmueble.css')}}">
 @stop
+@section('js')
+<script src="{{asset('js/notificacionesJS.js')}}"></script>
+@stop
 @section('content')
-@foreach($notificacion as $noti)
-<span>{{$noti}}</span>
+<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 col-12 m-2 border-right border-warning">
-            <div class="d-flex justify-content-between border border-info rounded mt-1 p-2">
+            @foreach($notificacion as $noti)
+            <div id="N-{{$noti->id}}/S-{{$noti->idRequest}}"class="d-flex justify-content-between border @if($noti->leido == true) border-info @else border-success @endif rounded mt-1 p-2">
                 <span class="font-weight-bold">{{$noti->titulo}}</span>
-                <span>{{$noti->fecha}}</span>
+                <span class="fecha">{{$noti->fecha}}</span>
             </div>
-            <div class="d-flex justify-content-between border border-success rounded mt-1 p-2">
-                <span class="font-weight-bold">Solicitud de Alquiler</span>
-                <span>29/10/19</span>
-            </div>
+            @endforeach
         </div>
-        @endforeach
-        <div class="col-md-7 col-12 m-2">
+        <div id="mensaje" class="col-md-7 col-12 m-2">
+            <span id="mensajeTexto">Haz click sobre una notificación</span>
         </div>
     </div>
 </div>
