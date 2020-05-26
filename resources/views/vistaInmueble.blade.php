@@ -314,11 +314,10 @@
                     @if($datos[0]->alquiler == true)
                     <span class="btn btn-info">Alquilar Inmueble</span>
                     @endif
-                    <span class="btn btn-info" id="ventanaNueva">Solicitar una Visita</span>
-                    <span class="btn btn-info">Mandar un mensaje</span>
-                    <span class="btn btn-info">Guardar en favoritos</span>
+                    <span class="btn btn-info" id="solicitar">Solicitar una Visita</span>
+                    <span class="favoritos btn btn-info">Guardar en favoritos</span>
                     @else
-                    <span class="btn btn-info">Guardar en favoritos</span>
+                    <span class="favoritos btn btn-info">Guardar en favoritos</span>
                 </div>
                 @endif
                 @endif

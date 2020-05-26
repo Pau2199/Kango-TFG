@@ -47,7 +47,7 @@ class solicitudesController extends Controller
                     $sol->idInmueble = $request->inmueble;
                     $sol->solicitadaAIdUser = $request->propietario;
                     $sol->solicitadaDeIdUser = $request->usuarioSolicitante;
-                    $sol->estado = 'enviada';
+                    $sol->estado = 'Enviada';
                     $sol->fecha_solicitada = $request->fecha;
                     $sol->hora = $request->hora;
                     $sol->save();
@@ -56,7 +56,7 @@ class solicitudesController extends Controller
                     $notification = new Notification;
 
                     $notification->fecha = $fecha['year'] . '/' . $fecha['mon'] . '/' . $fecha['mday'];
-                    $notification->titulo = "Solicitud de Visita";
+                    $notification->titulo = "Solicitud de Visita - Recibida";
                     $notification->leido = false;
                     $notification->idUsuario = $request->propietario;
                     $notification->idRequest = $sol->id;
@@ -120,7 +120,7 @@ class solicitudesController extends Controller
         }
         $address = Address::select('tipo_de_via', 'localidad', 'provincia', 'nombre_de_la_direccion','nPatio')->find($solicitudes->idInmueble);
 
-        return json_encode(array('tipoNoti' => $tipoNotificacion[1],'infoSolicitud' => $solicitudes, 'infoUser' => $user, 'direccionInmuebleSolicitado' => $address, 'nombreUserLogin' => Auth::user()->nombre));
+        return json_encode(array('idNotificacion' => $request->idNoti, 'tipoNoti' => $tipoNotificacion[1],'infoSolicitud' => $solicitudes, 'infoUser' => $user, 'direccionInmuebleSolicitado' => $address, 'nombreUserLogin' => Auth::user()->nombre));
 
     }
 

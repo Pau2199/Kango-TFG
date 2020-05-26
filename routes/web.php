@@ -42,6 +42,12 @@ Route::get('/perfil/datosPersonales', 'datosPersonalesController@index');
 Route::get('/obtenerNotificaciones', 'notificacionesController@index');
 Route::get('/notificaciones', 'notificacionesController@mostrarVista');
 Route::post('/notificaciones/obtenerInformaciónNotificacion', 'solicitudesController@show');
+Route::get('/notificaciones/borrarNotificación/{id}', 'notificacionesController@destroy');
+
+
+Route::post('/favoritos/agregarFavoritos', 'favoritosController@store');
+
+
 
 //cargar datos de manera dinamica
 Route::get('/index/cargarProvincia', 'indexController@cargarProvincias');

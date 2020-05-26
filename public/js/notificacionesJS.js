@@ -1,10 +1,13 @@
 $(function(){
+    $('#mensajeInfo').hide();
     var fecha = $('.fecha').each(function(){
         $(this).html(escribirFechaFormato($(this).html()));
     });
-
+    var click ="";
     $('.border').click(function(){
         $('#mensajeTexto').html('Cargando datos... Por favor Espere!')
+        click = $(this);
+        $('#mensajeInfo').hide();
         var idSol = $(this).attr('id').split('/')[1].split('-')[1];
         var idNoti = $(this).attr('id').split('/')[0].split('-')[1];
         console.log(idSol);
@@ -35,7 +38,7 @@ $(function(){
                 var div = $('<div>').attr('class', 'text-center');
                 var spanButton = $('<span>').attr({
                     class: 'btn btn-danger',
-                    id: 'eliminarNotificacion'
+                    id: 'N-' + data['idNotificacion'],
                 }).html('Eliminar Notificación');
                 div.append(spanButton);
 
@@ -49,6 +52,24 @@ $(function(){
             }
         });
     });
+
+    $('#mensaje').on('click', 'span.btn-danger', function(){
+        $('#mensaje').children().remove();
+        click.remove();
+        var id = $(this).attr('id').split('-')[1];
+        $.ajax({
+            url: '/notificaciones/borrarNotificación/'+id,
+            methos: 'GET',
+            success: function(){
+                $('#texto').html('Notificación Borrada correctamente');
+                $('#mensajeInfo').show();
+                $('#mensaje').children().remove();
+                click.remove();
+                $('#mensaje').html('Haz click sobre una notificación');
+
+            }
+        })
+    })
 });
 
 function escribirFechaFormato(fecha){

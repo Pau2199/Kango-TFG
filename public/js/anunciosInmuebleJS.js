@@ -7,7 +7,46 @@ $(function(){
     $('#vertical').hide();
     $('#mensajeInfo').hide();
 
-    $('#ventanaNueva').click(function(){
+    $('.favoritos').click(function(){
+        var idInmueble = window.location.href.split('/')[5].split('-')[1];
+        if(idUser != null){
+            $.ajax({
+                url: '/favoritos/agregarFavoritos',
+                method: 'POST',
+                data: {idUser: idUser, idInmueble: idInmueble, "_token": $('#token').val()},
+                success: function(data){
+                    $('#texto').html('Se ha añadido a favoritos Correctamente');
+                    $('#mensajeInfo').show();
+                    $('html, body').animate({scrollTop: 0},1000);
+                }
+            });
+        }else{
+            var idInmueble = window.location.href.split('/')[5].split('-')[1];
+            error = false;
+            if(getCookie('favoritos') != ""){
+                var favoritos = getCookie('favoritos').split(',');
+                console.log(favoritos);
+                for(var i = 0; i<favoritos.length ; i++){
+                    if(favoritos[i] == idInmueble){
+                        $('#texto').html('Este inmueble ya esta guardado en favoritos');
+                        $('#mensajeInfo').addClass('bg-danger')
+                        $('#mensajeInfo').show();
+                        $('html, body').animate({scrollTop: 0},1000);
+                        error = true;
+                        break;
+                    }
+                }
+                if(error == false){
+                    console.log('entra');
+                    setCookie('favoritos', getCookie('favoritos') + ',' + idInmueble ,999999999);
+                }
+            }else{
+                setCookie('favoritos', idInmueble ,999999999);
+
+            }
+        }
+    })
+    $('#solicitar').click(function(){
         $('#botones').hide();
         var form = $('<form>').attr('id', 'formHorarioVisita');
         var divRow = $('<div>').attr('class', 'form-row');
@@ -68,7 +107,7 @@ $(function(){
             data: {idUser: idInmuebleUser, nombreDia: dia, "_token": $('#token').val()},
             success: function(data){
                 var option = $('<option>').attr({value: '-',
-                                                selected: true}).html('-');
+                                                 selected: true}).html('-');
                 $('#selectHoras').append(option);
                 for (var i = 0 ; i<data.length ; i++){
                     option = $('<option>').attr('value', data[i]['inicio'] + '-' + data[i]['final']).html(data[i]['inicio'] + '-' + data[i]['final']);
@@ -443,7 +482,31 @@ $(function(){
         }
 
     }
+});
 
+function setCookie(cname, cvalue, exdays){
+    var d = new Date(); d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
 
+function deleteCookie(cname) {
+    var valor = cname+'=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
+    document.cookie = valor; 
+}
 
-})
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' '){
+            c = c.substring(1); 
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length); 
+        }
+    } return "";
+}

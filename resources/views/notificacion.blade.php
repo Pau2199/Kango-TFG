@@ -10,6 +10,9 @@
 @stop
 @section('content')
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+<div class="text-center w-100 font-weight-bold bg-success" id="mensajeInfo">
+    <p id="texto"></p>
+</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 col-12 m-2 border-right border-warning">
