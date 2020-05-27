@@ -115,13 +115,13 @@
             <section id="anuncios">
                 @foreach($datos as $key => $valor)
                 <?php if($valor->alquiler == true){
-                    $id = 'A-'.$valor->id;    
-                }else{
-                    $id = 'V-'.$valor->id;    
-                }
+    $id = 'A-'.$valor->id;    
+}else{
+    $id = 'V-'.$valor->id;    
+}
                 ?>
-                <div class="card mt-3" id="{{$id}}">
-                    <div class="d-flex justify-content-between card-header">
+                <div class="card mt-3">
+                    <div id="{{$id}}" class="d-flex justify-content-between card-header">
                         <h5>
                             @if($valor->alquiler == true)
                             Alquiler
@@ -153,7 +153,7 @@
                             <div class="col-xl-6">
                                 <div class="row mb-3">
                                     <div class="col-1">
-                                        <img src="{{asset('img/ubicacion.svg')}}" class="iconos" alt="">
+                                        <img src="{{asset('img/ubicacion.svg')}}" class="iconos" alt="Icono Ubicacion">
                                     </div>
                                     <div class="col-11 d-flex justify-content-between">
                                         <span>
@@ -167,7 +167,11 @@
                                             {{$valor->nombre_de_la_direccion}}
                                             - {{$valor->codigo_postal}}
                                         </span>
-                                        <img src="{{asset('img/corazonSinFondo.svg')}}" alt="" class="iconos">
+
+                                        <i class="fa fa-heart-o {{$id}} @if($valor->favorito == true) colorCorazon @endif iconoCorazon"></i>
+                                        <!--
+<img src="{{asset('img/corazonSinFondo.svg')}}" alt="Guardar Favoritos" class="favoritos {{$id}} iconos">
+-->
                                     </div>
                                 </div>
                                 <div class="row">
@@ -240,6 +244,7 @@
         </div>
     </div>
 </div>
+<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 @stop
 @foreach($datos as $key => $valor)
 <?= var_dump($valor->img) ?>

@@ -29,11 +29,12 @@ class HomeController extends Controller
             if(Auth::check()){
                 $array = explode(',', $_COOKIE['favoritos']);
                 for($i = 0 ; $i<count($array); $i++){
-                    $favorito = Favorite::where('idUser', '=', Auth::User()->id)->where('idInmueble', '=', $array[$i])->get();
+                    $id = explode('-', $array[$i]);
+                    $favorito = Favorite::where('idUser', '=', Auth::User()->id)->where('idInmueble', '=', $id[1])->get();
                     if(count($favorito) == 0){
                         $fav = new Favorite;
                         $fav->idUser = Auth::User()->id;
-                        $fav->idInmueble = $array[$i];
+                        $fav->idInmueble = $id[1];
                         $fav->save(); 
                     }
                 }

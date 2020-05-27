@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Favorite;
+use Auth;
 
 class favoritosController extends Controller
 {
@@ -35,17 +36,22 @@ class favoritosController extends Controller
      */
     public function store(Request $request)
     {
-        $favorito = Favorite::where('idUser', '=', $request->idUser)->where('idInmueble', '=', $request->idInmueble)->get();
+        $id = explode('-', $request->idInmueble);
         $error = false;
-        if (count($favorito) == 0){
-            $fav = new Favorite;
-            $fav->idUser = $request->idUser;
-            $fav->idInmueble = $request->idInmueble;
-            $fav->save();   
+        if($request->eliminarFav == 0){
+            $favorito = Favorite::where('idUser', '=', Auth::User()->id)->where('idInmueble', '=', $id[1])->get();
+            $error = false;
+            if (count($favorito) == 0){
+                $fav = new Favorite;
+                $fav->idUser = Auth::User()->id;
+                $fav->idInmueble = $id[1];
+                $fav->save();   
+            }else{
+                $error = true;
+            }
         }else{
-            $error = true;
+            Favorite::where('idUser', '=', Auth::User()->id)->where('idInmueble', '=', $id[1])->delete();
         }
-        
         return $error;
     }
 

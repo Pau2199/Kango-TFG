@@ -4,6 +4,16 @@ $(function(){
     $('#carga').hide();
     $('#sinDatos').hide();
 
+
+    if($('#notificacion').length == 0){
+        if (getCookie('favoritos') != ""){
+            var array = getCookie('favoritos').split(',');
+            for(var i = 0 ; i<array.length ; i++){
+                $('.'+array[i]).addClass('colorCorazon');
+            }
+        }
+    }
+
     if(document.referrer){
         var url = document.referrer;
         url = url.split('8000/');
@@ -14,6 +24,74 @@ $(function(){
         }
     }
 
+    $('#anuncios').on('click', 'i', function(){
+        var id = $(this).attr('class').split(' ')[2];
+        console.log(id);
+        var imagen = $(this);
+        var eliminar = 0;
+        if($(this).hasClass('colorCorazon')){
+            console.log('entra1');
+            eliminar = 1;
+            $(this).removeClass('colorCorazon');
+        }
+
+        if($('#notificacion').length > 0 ){
+            console.log('entra');
+            console.log(eliminar);
+            $.ajax({
+                url: '/favoritos/agregarFavoritos',
+                method: 'POST',
+                data: {eliminarFav: eliminar, idInmueble: id, "_token": $('#token').val()},
+                success: function(data){
+                    if(eliminar == 0 && data == false){
+                        imagen.addClass('colorCorazon');   
+                    }
+                }
+            });
+        }else{
+            error = false;
+            if(eliminar == true){
+                if(getCookie('favoritos') != ""){
+                    var inmuebles = "";
+                    var array = getCookie('favoritos').split(',');
+                    for(var i = 0 ; i<array.length; i++){
+                        if(array[i] != id){
+                            if(i == 0){
+                                inmuebles = array[i];
+                            }else{
+                                if(inmuebles == ""){
+                                    inmuebles += array[i];   
+                                }else{
+                                    inmuebles += ',' + array[i];   
+                                }
+                            }
+                        }
+                    }
+                    imagen.removeClass('colorCorazon');
+                    setCookie('favoritos', inmuebles, 999999999);
+                }
+            }else{
+                if(getCookie('favoritos') != ""){
+                    var favoritos = getCookie('favoritos').split(',');
+                    console.log(favoritos);
+                    for(var i = 0; i<favoritos.length ; i++){
+                        if(favoritos[i] == id){
+                            error = true;
+                            break;
+                        }
+                    }
+                    if(error == false){
+                        imagen.addClass('colorCorazon');
+                        setCookie('favoritos', getCookie('favoritos') + ',' + id ,999999999);
+                    }
+                }else{
+                    imagen.addClass('colorCorazon');
+                    setCookie('favoritos', id ,999999999);
+
+                }   
+            }
+        }
+    })
 
     $('.tipoBusqueda').click(function(){
         $('#opcionesAlquiler').hide();
@@ -92,13 +170,13 @@ $(function(){
             $('#localidad').append(option);
         }
     })
-    
-    $('#anuncios').on('click', 'div.card', function(){
+
+    $('#anuncios').on('click', 'div.card-header', function(){
         id = $(this).attr('id');
         console.log(id);
         $(location).attr('href', '/inmuebles/vistaInmueble/'+id)
     });
-    
+
 
     $('#filtroBusqueda').change(function(){
         peticionFiltros();
@@ -162,7 +240,7 @@ $(function(){
                             h5.append(data[i]['provincia']+', ' + data[i]['localidad'] + ' ');
                         }
                         h5.append('- Barrio de ' + data[i]['barrio'])
-                        
+
                         //creamos el span que es donde estara el nombre del usuario
                         var span = $('<span>').html(data[i]['nombre'] + ' ' + data[i]['primer_apellido'] + ' ' + data[i]['segundo_apellido']);
                         //metemos el h5 y el span creados al contenedor de este apartado
@@ -170,13 +248,13 @@ $(function(){
                         divTitulo.append(span);
                         //el contenedor lo añadimos al contenedor principal
                         divCard.append(divTitulo);
-                        
+
                         //creamos el div contedor dle grupo de la tarjeta
                         var divBody = $('<div>').attr('class', 'card-body');
-                        
+
                         //creamos el row contenedor del cuerpo de la tarjeta
                         var divRowPri = $('<div>').attr('class', 'row');
-                        
+
                         //creamos un col que ocupa la mitad del contenedor para poner la imagen
                         var divColimg = $('<div>').attr('class', 'col-xl-6 col-lg-12');
                         var img = $('<img>').attr({
@@ -210,15 +288,14 @@ $(function(){
                         )
                         divDireccion.append(span);
                         //creamos el corazón para guardar el inmueble en favoritos
-                        var imgCorazón = $('<img>').attr({
-                            src: "/img/corazonSinFondo.svg",
-                            atl: 'Imagen Corazon',
-                            class: 'iconos'
-                        });
-                        divDireccion.append(imgCorazón);
+                        var icorazon = $('<i>').attr('class' ,'fa fa-heart-o '+id + ' iconoCorazon');
+                        if(data[i]['favorito'] == true){
+                            icorazon.addClass('colorCorazon');
+                        }
+                        divDireccion.append(icorazon);
                         divRowContenido.append(divDireccion);
                         divContenido.append(divRowContenido);
-                        
+
                         //creamos el row de información del inmueble, este row tendra el precio , las habitaciones y si es alquiler la fianza.
                         var divRowInfo = $('<div>').attr('class', 'row');
                         var divPrecio = $('<div>').attr('class', 'col-4');
@@ -386,7 +463,7 @@ $(function(){
                             }
                         }
                         divContenido.append(divRowAnya);
-                         //agregamos la descripcion
+                        //agregamos la descripcion
                         var p = $('<p>').attr('class', 'card-text');
                         p.html(data[i]['descripcion']);
                         divContenido.append(p);
@@ -406,3 +483,30 @@ $(function(){
     }
 
 })
+
+function setCookie(cname, cvalue, exdays){
+    var d = new Date(); d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function deleteCookie(cname) {
+    var valor = cname+'=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
+    document.cookie = valor; 
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' '){
+            c = c.substring(1); 
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length); 
+        }
+    } return "";
+}

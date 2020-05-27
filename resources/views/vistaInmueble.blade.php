@@ -315,9 +315,10 @@
                     <span class="btn btn-info">Alquilar Inmueble</span>
                     @endif
                     <span class="btn btn-info" id="solicitar">Solicitar una Visita</span>
-                    <span class="favoritos btn btn-info">Guardar en favoritos</span>
+                    <span>{{$datos[0]}}</span>
+                    <span class="favoritos btn btn-info">@if($datos[0]->favorito == true) Quitar de Favoritos @else Añadir a Favoritos @endif</span>
                     @else
-                    <span class="favoritos btn btn-info">Guardar en favoritos</span>
+                    <span class="favoritos btn btn-info">@if($datos[0]->favorito == true) Quitar de Favoritos @else Añadir a Favoritos @endif</span>
                 </div>
                 @endif
                 @endif

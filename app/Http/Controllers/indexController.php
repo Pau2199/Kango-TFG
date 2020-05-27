@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Address;
 use App\Location;
 use App\Province;
+use App\Favorite;
+use Auth;
 use DB;
 
 class indexController extends Controller
@@ -30,6 +32,18 @@ class indexController extends Controller
 
             $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $datos[$i]->id .'" && i.nombre LIKE "perfil%"');
             $datos[$i]->img = $imagenes;
+
+            if(Auth::check()){
+                $favorito = Favorite::where('idUser', '=', Auth::User()->id)->where('idInmueble', '=', $datos[$i]->id)->get();
+                if(count($favorito) > 0){
+                    $datos[$i]->favorito = true;
+                }else{
+                    $datos[$i]->favorito = false;
+                }
+            }else{
+                $datos[$i]->favorito = false;
+            }
+
         }
 
         return view('index')->with('datos', $datos);
@@ -160,6 +174,16 @@ class indexController extends Controller
         for($i = 0; $i<count($datos); $i++){
             $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $datos[$i]->id .'" && i.nombre LIKE "perfil%"');
             $datos[$i]->img = $imagenes;
+            if(Auth::check()){
+                $favorito = Favorite::where('idUser', '=', Auth::User()->id)->where('idInmueble', '=', $datos[$i]->id)->get();
+                if(count($favorito) > 0){
+                    $datos[$i]->favorito = true;
+                }else{
+                    $datos[$i]->favorito = false;
+                }
+            }else{
+                $datos[$i]->favorito = false;
+            }
         }
 
         return $datos;
