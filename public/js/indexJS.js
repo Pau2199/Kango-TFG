@@ -68,7 +68,11 @@ $(function(){
                         }
                     }
                     imagen.removeClass('colorCorazon');
-                    setCookie('favoritos', inmuebles, 999999999);
+                    if(inmuebles == ""){
+                        deleteCookie('favoritos');
+                    }else{
+                        setCookie('favoritos', inmuebles, 999999999);
+                    }
                 }
             }else{
                 if(getCookie('favoritos') != ""){

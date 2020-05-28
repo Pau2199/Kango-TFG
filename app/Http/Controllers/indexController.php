@@ -41,7 +41,20 @@ class indexController extends Controller
                     $datos[$i]->favorito = false;
                 }
             }else{
-                $datos[$i]->favorito = false;
+                if(isset($_COOKIE['favoritos'])){
+                    $array = explode(',', $_COOKIE['favoritos']);
+                    for($j = 0; $j<count($array); $j++ ){
+                        $id = explode('-', $array[$j]);
+                        if($id[1] == $datos[$i]->id){
+                            $datos[$i]->favorito = true;
+                            break;
+                        }else{
+                            $datos[$i]->favorito = false;
+                        }
+                    }
+                }else{
+                    $datos[$i]->favorito = false;
+                }
             }
 
         }
@@ -182,7 +195,20 @@ class indexController extends Controller
                     $datos[$i]->favorito = false;
                 }
             }else{
-                $datos[$i]->favorito = false;
+                if(isset($_COOKIE['favoritos'])){
+                    $array = explode(',', $_COOKIE['favoritos']);
+                    for($j = 0; $j<count($array); $j++ ){
+                        $id = explode('-', $array[$j]);
+                        if($id[1] == $datos[$i]->id){
+                            $datos[$i]->favorito = true;
+                            break;
+                        }else{
+                            $datos[$i]->favorito = true;
+                        }
+                    }
+                }else{
+                    $datos[$i]->favorito = false;
+                }
             }
         }
 

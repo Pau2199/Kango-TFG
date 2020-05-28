@@ -46,6 +46,7 @@ Route::get('/notificaciones/borrarNotificación/{id}', 'notificacionesController
 
 
 Route::post('/favoritos/agregarFavoritos', 'favoritosController@store');
+Route::get('/favoritos/mostrarFavoritos', 'favoritosController@index');
 
 
 

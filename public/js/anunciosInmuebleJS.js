@@ -8,47 +8,71 @@ $(function(){
     $('#mensajeInfo').hide();
 
     $('.favoritos').click(function(){
-        var idInmueble = window.location.href.split('/')[5].split('-')[1];
+        var id = window.location.href.split('/')[5];
+        var eliminar = 0;
+        var boton = $(this);
+        if($(this).html().trim() == 'Quitar de Favoritos'){
+            eliminar = 1;
+        }
+
         if(idUser != null){
             $.ajax({
                 url: '/favoritos/agregarFavoritos',
                 method: 'POST',
-                data: {idUser: idUser, idInmueble: idInmueble, "_token": $('#token').val()},
+                data: {eliminarFav: eliminar, idUser: idUser, idInmueble: id, "_token": $('#token').val()},
                 success: function(data){
-                    if(data == false){
-                        $('#texto').html('Se ha añadido a favoritos Correctamente');
-                        $('#mensajeInfo').addClass('bg-success');
+                    if(eliminar == 0){
+                        boton.html('Quitar de Favoritos');
                     }else{
-                        $('#texto').html('Ese inmueble ya este registrado como favorito');
-                        $('#mensajeInfo').addClass('bg-danger');
+                        boton.html('Añadir a Favoritos');
                     }
-                    $('#mensajeInfo').show();
-                    $('html, body').animate({scrollTop: 0},1000);
                 }
             });
         }else{
-            var idInmueble = window.location.href.split('/')[5].split('-')[1];
-            error = false;
-            if(getCookie('favoritos') != ""){
-                var favoritos = getCookie('favoritos').split(',');
-                console.log(favoritos);
-                for(var i = 0; i<favoritos.length ; i++){
-                    if(favoritos[i] == idInmueble){
-                        $('#texto').html('Este inmueble ya esta guardado en favoritos');
-                        $('#mensajeInfo').addClass('bg-danger')
-                        $('#mensajeInfo').show();
-                        $('html, body').animate({scrollTop: 0},1000);
-                        error = true;
-                        break;
+            if(eliminar == 1){
+                if(getCookie('favoritos') != ""){
+                    var inmuebles = "";
+                    var array = getCookie('favoritos').split(',');
+                    for(var i = 0 ; i<array.length; i++){
+                        if(array[i] != id){
+                            if(i == 0){
+                                inmuebles = array[i];
+                            }else{
+                                if(inmuebles == ""){
+                                    inmuebles += array[i];   
+                                }else{
+                                    inmuebles += ',' + array[i];   
+                                }
+                            }
+                        }
+                    }
+                    boton.html('Añadir a Favoritos');
+                    if(inmuebles == ""){
+                        deleteCookie('favoritos');
+                    }else{
+                        setCookie('favoritos', inmuebles, 999999999);
                     }
                 }
-                if(error == false){
-                    console.log('entra');
-                    setCookie('favoritos', getCookie('favoritos') + ',' + idInmueble ,999999999);
-                }
             }else{
-                setCookie('favoritos', idInmueble ,999999999);
+                var error = false;
+                if(getCookie('favoritos') != ""){
+                    var favoritos = getCookie('favoritos').split(',');
+                    console.log(favoritos);
+                    for(var i = 0; i<favoritos.length ; i++){
+                        if(favoritos[i] == id){
+                            error = true;
+                            break;
+                        }
+                    }
+                    if(error == false){
+                        boton.html('Quitar de Favoritos');
+                        setCookie('favoritos', getCookie('favoritos') + ',' + id ,999999999);
+                    }
+                }else{
+                    boton.html('Quitar de Favoritos');
+                    setCookie('favoritos', id ,999999999);
 
+                }   
             }
         }
     })

@@ -9,6 +9,7 @@ use App\Image;
 use App\Address;
 use App\Rental;
 use App\Sale;
+use App\Favorite;
 use Auth;
 use App\User;
 use DB;
@@ -37,15 +38,37 @@ class inmueblesPublicados extends Controller
             ->join('property', 'users.id', '=', 'property.idUsuario')
             ->join('address', 'property.id', '=', 'address.idInmueble')
             ->join('rental', 'property.id', '=', 'rental.idInmueble')
-            ->where('property.id', $id[1])
-            ->get();
+            ->where('property.id', $id[1])->get();
 
                           for($i = 0 ; $i<count($datos) ; $i++){
                               $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $datos[$i]->id .'"');
                               $datos[$i]->img = $imagenes;
                               $datos[$i]->alquiler = true;
+                              if(Auth::check()){
+                                  $favorito = Favorite::where('idUser', '=', Auth::User()->id)->where('idInmueble', '=', $datos[$i]->id)->get();
+                                  if(count($favorito) > 0){
+                                      $datos[$i]->favorito = true;
+                                  }else{
+                                      $datos[$i]->favorito = false;
+                                  }
+                              }else{
+                                  if(isset($_COOKIE['favoritos'])){
+                                      $array = explode(',', $_COOKIE['favoritos']);
+                                      for($j = 0; $j<count($array); $j++ ){
+                                          $id = explode('-', $array[$j]);
+                                          if($id[1] == $datos[$i]->id){
+                                              $datos[$i]->favorito = true;
+                                              break;
+                                          }else{
+                                              $datos[$i]->favorito = true;
+                                          }
+                                      }
+                                  }else{
+                                      $datos[$i]->favorito = false;
+                                  }
+                              }
                           }
-                         }else{
+            }else{
             $datos=User::select('property.*','address.tipo_de_via','address.barrio','address.localidad','address.provincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio','address.nPuerta','address.nPiso','address.escalera','address.bloque')
                 ->join('property', 'users.id', '=', 'property.idUsuario')
                 ->join('address', 'property.id', '=', 'address.idInmueble')
@@ -56,6 +79,29 @@ class inmueblesPublicados extends Controller
                 $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $datos[$i]->id .'"');
                 $datos[$i]->img = $imagenes;
                 $datos[$i]->alquiler = false;
+                if(Auth::check()){
+                    $favorito = Favorite::where('idUser', '=', Auth::User()->id)->where('idInmueble', '=', $datos[$i]->id)->get();
+                    if(count($favorito) > 0){
+                        $datos[$i]->favorite = true;
+                    }else{
+                        $datos[$i]->favorite = false;
+                    }
+                }else{
+                    if(isset($_COOKIE['favoritos'])){
+                        $array = explode(',', $_COOKIE['favoritos']);
+                        for($j = 0; $j<count($array); $j++ ){
+                            $id = explode('-', $array[$j]);
+                            if($id[1] == $datos[$i]->id){
+                                $datos[$i]->favorito = true;
+                                break;
+                            }else{
+                                $datos[$i]->favorito = false;
+                            }
+                        }
+                    }else{
+                        $datos[$i]->favorito = false;
+                    }
+                }
             }
         }
 

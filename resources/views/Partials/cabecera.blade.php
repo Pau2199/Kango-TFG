@@ -80,7 +80,7 @@
                 <a href="/notificaciones"><img class="svgTamanyo" class="mt-4" src="{{asset('img/notificacion.svg')}}" alt="Correo"></a>
             </div>
             @endif
-            <img class="svgTamanyo" class="mt-4" src="{{asset('img/corazon.svg')}}" alt="Me gusta">
+            <a href="/favoritos/mostrarFavoritos"><img class="svgTamanyo" class="mt-4" src="{{asset('img/corazon.svg')}}" alt="Me gusta"></a>
         </div>
     </div>
 </header>
