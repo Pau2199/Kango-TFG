@@ -8,7 +8,6 @@
 @section('css')
 <link rel="stylesheet" href="{{asset('css/estiloRegistrarInmueble.css')}}">
 @stop
-
 @section('js')
 <script src="{{asset('js/registrarInmuebleJS.js')}}"></script>
 @stop

@@ -18,9 +18,9 @@ class favoritosController extends Controller
      */
     public function index()
     {
+        $dato = [];
         if(Auth::check()){
             $favorito = Favorite::where('idUser', '=', Auth::User()->id)->get();
-            $dato = [];
             if(count($favorito) > 0){
                 for($i  = 0 ; $i<count($favorito); $i++){
                     $dato[$i] = Property::select('id','precio','tipo_de_vivienda','disponible')->where('id', $favorito[$i]->idInmueble)->first();
@@ -34,7 +34,23 @@ class favoritosController extends Controller
                         $dato[$i]->alquiler = 0;
 
                     }
-                    //array_push($datos, $array);
+                }
+            }
+        }else{
+            if(isset($_COOKIE['favoritos'])){
+                $array = explode(',', $_COOKIE['favoritos']);
+                for($j = 0; $j<count($array); $j++ ){
+                    $id = explode('-', $array[$j]);
+                    $dato[$j] = Property::select('id','precio','tipo_de_vivienda','disponible')->where('id', $id[1])->first();
+                    $direccion = Address::select('id','localidad', 'provincia', 'nombre_de_la_direccion','tipo_de_via')->where('idInmueble', '=',$id[1])->get();
+                    $dato[$j]->direccion = $direccion;
+                    $alquiler = Rental::select('fianza', 'id')->where('idInmueble', '=', $id[1])->get();
+                    if(count($alquiler) > 0){
+                        $dato[$j]->alquiler = 1;
+                        $dato[$j]->datosAlq = $alquiler;
+                    }else{
+                        $dato[$j]->alquiler = 0;
+                    }
                 }
             }
         }
