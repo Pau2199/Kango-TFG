@@ -7,6 +7,8 @@ use App\Solicitude;
 use App\Notification;
 use App\User;
 use App\Address;
+use App\Location;
+use App\Province;
 use Auth;
 
 class solicitudesController extends Controller
@@ -21,7 +23,9 @@ class solicitudesController extends Controller
 
         $solicitud = Solicitude::where('solicitadaAIdUser', '=', Auth::user()->id)->get();
         for($i = 0 ; $i<count($solicitud) ; $i++){
-            $direccion = Address::select('id','localidad', 'provincia', 'nombre_de_la_direccion','tipo_de_via')->where('id', '=',$solicitud[$i]->idInmueble)->get();
+            $direccion = Address::select('id','idLocalidad', 'idProvincia', 'nombre_de_la_direccion','tipo_de_via')->where('id', '=',$solicitud[$i]->idInmueble)->get();
+            $direccion[$i]->idLocalidad = Location::select('nombre')->where('id', $direccion[$i]->idLocalidad)->get();
+            $direccion[$i]->idProvincia = Province::select('nombre')->where('id',$direccion[$i]->idProvincia)->get();
             $solicitud[$i]->direccion = $direccion;
             $datosSolicitante = User::select('id','nombre', 'primer_apellido', 'segundo_apellido')->where('id', '=',$solicitud[$i]->solicitadaDeIdUser)->get();
             $solicitud[$i]->datosSolicitante = $datosSolicitante;
@@ -118,7 +122,9 @@ class solicitudesController extends Controller
         }else{
             $user = User::select('nombre', 'primer_apellido', 'segundo_apellido')->find($solicitudes->solicitadaAIdUser);
         }
-        $address = Address::select('tipo_de_via', 'localidad', 'provincia', 'nombre_de_la_direccion','nPatio')->find($solicitudes->idInmueble);
+        $address = Address::select('tipo_de_via', 'idLocalidad', 'idProvincia', 'nombre_de_la_direccion','nPatio')->find($solicitudes->idInmueble);
+        $address->idLocalidad = Location::select('nombre')->where('id', $address->idLocalidad)->get();
+        $address->idProvincia = Province::select('nombre')->where('id', $address->idProvincia)->get();
 
         return json_encode(array('idNotificacion' => $request->idNoti, 'tipoNoti' => $tipoNotificacion[1],'infoSolicitud' => $solicitudes, 'infoUser' => $user, 'direccionInmuebleSolicitado' => $address, 'nombreUserLogin' => Auth::user()->nombre));
 

@@ -133,20 +133,20 @@ $(function(){
             for (var i = 0 ; i<data.length ; i++){
                 var option = $('<option>');
                 option.attr({
-                    value: data[i].provincia
+                    value: data[i].idProvincia[0]['nombre']
                 });
-                option.html(data[i].provincia);
+                option.html(data[i].idProvincia[0]['nombre']);
                 $('#provincia').append(option);
             }
         }
-    })
+    });
 
     $('#provincia').change(function(){
         if($(this).val() != '-'){
-            var provincia = $(this).val();
-            console.log(provincia)
+            var selecionada = $(this).val().trim();
+            console.log(selecionada);
             $.ajax({
-                url: '/index/cargarLocalidades/'+provincia,
+                url: '/index/cargarLocalidades/'+selecionada,
                 method: 'GET',
                 success: function(data){
                     $('#localidad option').remove();
@@ -238,10 +238,10 @@ $(function(){
                             h5.append('Venta de ');
                         }
                         h5.append(arrayTipoPiso[data[i]['tipo_de_vivienda']] + ' en ');
-                        if(data[i]['provincia'] == data[i]['localidad']){
-                            h5.append(data[i]['provincia']);
+                        if(data[i]['idProvincia'][0]['nombre'] == data[i]['idLocalidad'][0]['nombre']){
+                            h5.append(data[i]['idProvincia'][0]['nombre']);
                         }else{
-                            h5.append(data[i]['provincia']+', ' + data[i]['localidad'] + ' ');
+                            h5.append(data[i]['idProvincia'][0]['nombre']+', ' + data[i]['idLocalidad'][0]['nombre'] + ' ');
                         }
                         h5.append('- Barrio de ' + data[i]['barrio'])
 

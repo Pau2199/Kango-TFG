@@ -1,3 +1,0 @@
-
-1. php artisan make:seeder UserSeeder
-2. composer dump-autoload

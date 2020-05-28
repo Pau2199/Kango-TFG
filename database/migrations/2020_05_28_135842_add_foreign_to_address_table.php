@@ -14,7 +14,9 @@ class AddForeignToAddressTable extends Migration
     public function up()
     {
         Schema::table('address', function (Blueprint $table) {
-            $table->foreign('idInmueble')->references('id')->on('property')->onDelete('cascade');
+            $table->foreign('idInmueble')->references('id')->on('property');
+            $table->foreign('idProvincia')->references('id')->on('provinces');
+            $table->foreign('idLocalidad')->references('id')->on('localities');
         });
     }
 
@@ -27,7 +29,8 @@ class AddForeignToAddressTable extends Migration
     {
         Schema::table('address', function (Blueprint $table) {
             $table->dropForeign('address_idInmueble_foreign');
-
+            $table->dropForeign('address_idProvincia_foreign');
+            $table->dropForeign('address_idLocalidad_foreign');
         });
     }
 }

@@ -108,7 +108,7 @@
                 @else
                 Bajo
                 @endif
-                en {{$datos[0]->provincia}}@if($datos[0]-> provincia != $datos[0]->localidad), {{$datos[0]->localidad}}@endif
+                en {{$datos[0]->idProvincia[0]->nombre}}@if($datos[0]->idProvincia[0]->nombre != $datos[0]->idLocalidad[0]->nombre), {{$datos[0]->idLocalidad[0]->nombre}}@endif
                 @if($datos[0]->barrio != null)
                 - Barrio de {{$datos[0]->barrio}}
                 @endif
@@ -158,7 +158,7 @@
             </div>
             <hr>
             <div class="mt-4">
-                <p class="font-weight-bold">Comunidad de Vececinos</p>
+                <p class="font-weight-bold">Comunidad de Vecinos</p>
                 <div class="row justify-content-center">
                     <div class="col-2">
                         <div class="row">
@@ -427,7 +427,7 @@
                             </div>
                             <div class="form-group col-md-4 col-sm-6 col-12">
                                 <label class="font-weight-bold" for="provincia">Provincia</label>
-                                <input id="provincia" value="{{$datos[0]->provincia}}" type="text" class="form-control  @error('provincia') is-invalid @enderror" value=""name="provincia" id="provincia" placeholder="Provincia">
+                                <input id="provincia" value="{{$datos[0]->idProvincia[0]->nombre}}" type="text" class="form-control  @error('provincia') is-invalid @enderror" value=""name="provincia" id="provincia" placeholder="Provincia">
                                 <strong id="mensajeprovincia" class="comprobaciones" ></strong>
                                 @error('provincia')
                                 <span class="invalid-feedback" role="alert">
@@ -437,7 +437,7 @@
                             </div>
                             <div class="form-group col-md-4 col-sm-6 col-12">
                                 <label class="font-weight-bold" for="localidad">Localidad</label>
-                                <input id="localidad" type="text" value="{{$datos[0]->localidad}}" class="form-control  @error('localidad') is-invalid @enderror" name="localidad" id="localidad" placeholder="Localidad">
+                                <input id="localidad" type="text" value="{{$datos[0]->idLocalidad[0]->nombre}}" class="form-control  @error('localidad') is-invalid @enderror" name="localidad" id="localidad" placeholder="Localidad">
                                 <strong id="mensajelocalidad" class="comprobaciones" ></strong>
                                 @error('localidad')
                                 <span class="invalid-feedback" role="alert">

@@ -68,7 +68,7 @@
                     Plaza
                     @endif
                     - {{$valor->direccion[0]->nombre_de_la_direccion}} 
-                    {{$valor->direccion[0]->provincia}},{{$valor->direccion[0]->localidad}}
+                    {{$valor->direccion[0]->idProvincia[0]->nombre}},{{$valor->direccion[0]->idLocalidad[0]->nombre}}
                 </td>
                 <td>
                     @if($valor->alquiler == 1)

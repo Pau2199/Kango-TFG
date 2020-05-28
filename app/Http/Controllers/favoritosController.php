@@ -7,6 +7,8 @@ use App\Favorite;
 use App\Property;
 use App\Address;
 use App\Rental;
+use App\Location;
+use App\Province;
 use Auth;
 
 class favoritosController extends Controller
@@ -24,7 +26,9 @@ class favoritosController extends Controller
             if(count($favorito) > 0){
                 for($i  = 0 ; $i<count($favorito); $i++){
                     $dato[$i] = Property::select('id','precio','tipo_de_vivienda','disponible')->where('id', $favorito[$i]->idInmueble)->first();
-                    $direccion = Address::select('id','localidad', 'provincia', 'nombre_de_la_direccion','tipo_de_via')->where('idInmueble', '=',$dato[$i]->id)->get();
+                    $direccion = Address::select('id','idLocalidad', 'idProvincia', 'nombre_de_la_direccion','tipo_de_via')->where('idInmueble', '=',$dato[$i]->id)->get();
+                    $direccion[0]->idLocalidad = Location::select('nombre')->where('id', $direccion[0]->idLocalidad)->get();
+                    $direccion[0]->idProvincia = Province::select('nombre')->where('id', $direccion[0]->idProvincia)->get();
                     $dato[$i]->direccion = $direccion;
                     $alquiler = Rental::select('fianza', 'id')->where('idInmueble', '=', $dato[$i]->id)->get();
                     if(count($alquiler) > 0){
@@ -43,6 +47,8 @@ class favoritosController extends Controller
                     $id = explode('-', $array[$j]);
                     $dato[$j] = Property::select('id','precio','tipo_de_vivienda','disponible')->where('id', $id[1])->first();
                     $direccion = Address::select('id','localidad', 'provincia', 'nombre_de_la_direccion','tipo_de_via')->where('idInmueble', '=',$id[1])->get();
+                    $direccion->idLocalidad = Location::select('nombre')->where('id', $direccion->idLocalidad)->get();
+                    $direccion->idProvincia = Province::select('nombre')->where('id', $direccion->idProvincia)->get();
                     $dato[$j]->direccion = $direccion;
                     $alquiler = Rental::select('fianza', 'id')->where('idInmueble', '=', $id[1])->get();
                     if(count($alquiler) > 0){

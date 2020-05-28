@@ -140,7 +140,7 @@
                             @else
                             Bajo
                             @endif
-                            en {{$valor->provincia}}@if($valor->localidad != $valor->provincia),  {{$valor->localidad}} @endif
+                            en {{$valor->idProvincia[0]->nombre}}@if($valor->idLocalidad[0]->nombre != $valor->idProvincia[0]->nombre),  {{$valor->idLocalidad[0]->nombre}} @endif
                             - Barrio de {{$valor->barrio}}
                         </h5>
                         <span>{{$valor->nombre}} {{$valor->primer_apellido}} {{$valor->segundo_apellido}}</span>
@@ -247,5 +247,5 @@
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 @stop
 @foreach($datos as $key => $valor)
-<?= var_dump($valor->img) ?>
+<?= var_dump($valor->idProvincia) ?>
 @endforeach

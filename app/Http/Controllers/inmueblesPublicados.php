@@ -10,6 +10,8 @@ use App\Address;
 use App\Rental;
 use App\Sale;
 use App\Favorite;
+use App\Province;
+use App\Location;
 use Auth;
 use App\User;
 use DB;
@@ -34,7 +36,7 @@ class inmueblesPublicados extends Controller
         $id = explode('-', $id);
         $datos;
 
-        if($id[0] == 'A'){            $datos=User::select('property.*','address.tipo_de_via','address.barrio','address.localidad','address.provincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio','address.nPuerta','address.nPiso','address.escalera','address.bloque','rental.internet', 'rental.animales', 'rental.reformas', 'rental.calefaccion', 'rental.aireAcondicionado', 'rental.fianza')
+        if($id[0] == 'A'){            $datos=User::select('property.*','address.tipo_de_via','address.barrio','address.idLocalidad','address.idProvincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio','address.nPuerta','address.nPiso','address.escalera','address.bloque','rental.internet', 'rental.animales', 'rental.reformas', 'rental.calefaccion', 'rental.aireAcondicionado', 'rental.fianza')
             ->join('property', 'users.id', '=', 'property.idUsuario')
             ->join('address', 'property.id', '=', 'address.idInmueble')
             ->join('rental', 'property.id', '=', 'rental.idInmueble')
@@ -44,6 +46,8 @@ class inmueblesPublicados extends Controller
                               $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $datos[$i]->id .'"');
                               $datos[$i]->img = $imagenes;
                               $datos[$i]->alquiler = true;
+                              $datos[$i]->idProvincia = Province::select('nombre')->where('id', $datos[$i]->idProvincia)->get();
+                              $datos[$i]->idLocalidad = Location::select('nombre')->where('id', $datos[$i]->idLocalidad)->get();
                               if(Auth::check()){
                                   $favorito = Favorite::where('idUser', '=', Auth::User()->id)->where('idInmueble', '=', $datos[$i]->id)->get();
                                   if(count($favorito) > 0){
@@ -68,8 +72,8 @@ class inmueblesPublicados extends Controller
                                   }
                               }
                           }
-            }else{
-            $datos=User::select('property.*','address.tipo_de_via','address.barrio','address.localidad','address.provincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio','address.nPuerta','address.nPiso','address.escalera','address.bloque')
+                         }else{
+            $datos=User::select('property.*','address.tipo_de_via','address.barrio','address.idLocalidad','address.idProvincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio','address.nPuerta','address.nPiso','address.escalera','address.bloque')
                 ->join('property', 'users.id', '=', 'property.idUsuario')
                 ->join('address', 'property.id', '=', 'address.idInmueble')
                 ->join('sale', 'property.id', '=', 'sale.idInmueble')
@@ -79,6 +83,8 @@ class inmueblesPublicados extends Controller
                 $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $datos[$i]->id .'"');
                 $datos[$i]->img = $imagenes;
                 $datos[$i]->alquiler = false;
+                $datos[$i]->idProvincia = Province::select('nombre')->where('id', $datos[$i]->idProvincia)->get();
+                $datos[$i]->idLocalidad = Location::select('nombre')->where('id', $datos[$i]->idLocalidad)->get();
                 if(Auth::check()){
                     $favorito = Favorite::where('idUser', '=', Auth::User()->id)->where('idInmueble', '=', $datos[$i]->id)->get();
                     if(count($favorito) > 0){

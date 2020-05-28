@@ -9,6 +9,8 @@ use App\Property;
 use App\Image;
 use App\Address;
 use App\Rental;
+use App\Province;
+use App\Location;
 use App\Sale;
 use Auth;
 use App\User;
@@ -28,7 +30,7 @@ class publicarNuevoInmuebleController extends Controller
     }
 
     public function mostrarInmuebles(){
-        $alquilados = User::select('property.*','address.tipo_de_via','address.localidad','address.provincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio','rental.internet', 'rental.animales', 'rental.reformas', 'rental.calefaccion', 'rental.aireAcondicionado', 'rental.fianza')
+        $alquilados = User::select('property.*','address.tipo_de_via','address.idProvincia','address.idLocalidad','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio','rental.internet', 'rental.animales', 'rental.reformas', 'rental.calefaccion', 'rental.aireAcondicionado', 'rental.fianza')
             ->join('property', 'users.id', '=', 'property.idUsuario')
             ->join('address', 'property.id', '=', 'address.idInmueble')
             ->join('rental', 'property.id', '=', 'rental.idInmueble')
@@ -38,9 +40,14 @@ class publicarNuevoInmuebleController extends Controller
         for($i = 0 ; $i<count($alquilados) ; $i++){
             $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $alquilados[$i]->id .'" && i.nombre LIKE "perfil%"');
             $alquilados[$i]->img = $imagenes;
+            $alquilados[$i]->idProvincia = Province::select('nombre')->where('id', $alquilados[$i]->idProvincia)->get();
+            $alquilados[$i]->idLocalidad = Location::select('nombre')->where('id', $alquilados[$i]->idLocalidad)->get();
+
+
+
         }
 
-        $venta = User::select('property.*','address.tipo_de_via','address.localidad','address.provincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio')
+        $venta = User::select('property.*','address.tipo_de_via','address.idLocalidad','address.idProvincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio')
             ->join('property', 'users.id', '=', 'property.idUsuario')
             ->join('address', 'property.id', '=', 'address.idInmueble')
             ->join('sale', 'property.id', '=', 'sale.idInmueble')
@@ -50,6 +57,8 @@ class publicarNuevoInmuebleController extends Controller
         for($i = 0 ; $i<count($venta) ; $i++){
             $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $venta[$i]->id .'" && i.nombre LIKE "perfil%"');
             $venta[$i]->img = $imagenes;
+            $venta[$i]->idProvincia = Province::select('nombre')->where('id', $venta[$i]->idProvincia)->get();
+            $venta[$i]->idLocalidad = Location::select('nombre')->where('id', $venta[$i]->idLocalidad)->get();
         }
 
         return view('anuncios')
@@ -190,8 +199,10 @@ class publicarNuevoInmuebleController extends Controller
 
         $direccion = new Address;
         $direccion->tipo_de_via = $request->tipoVia;
-        $direccion->localidad = $request->localidad;
-        $direccion->provincia = $request->provincia;
+        $id = Location::select('id')->where('nombre', $request->provincia)->get();
+        $direccion->idLocalidad = $id[0]->id;
+        $id = Province::select('id')->where('nombre', $request->localidad)->get();
+        $direccion->idProvincia = $id[0]->id;
         $direccion->nombre_de_la_direccion = $request->nombreDir;
         $direccion->codigo_postal = $request->cp;
         $direccion->barrio = $request->barrio;

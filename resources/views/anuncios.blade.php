@@ -34,8 +34,8 @@
                             </p>
                             <hr>
                             <div class="d-flex justify-content-between align-items-center">
-                                <span>Localidad: {{$valor->localidad}}</span>
-                                <span>Provincia: {{$valor->provincia}} </span>
+                                <span>Localidad: {{$valor->idLocalidad[0]->nombre}}</span>
+                                <span>Provincia: {{$valor->idProvincia[0]->nombre}} </span>
                             </div>
                             <hr>
                             <div class="row text-center">
@@ -83,8 +83,8 @@
                             </p>
                             <hr>
                             <div class="d-flex justify-content-between align-items-center">
-                                <span>Localidad: {{$value->localidad}} </span>
-                                <span class="f">Provincia: {{$value->provincia}} </span>
+                                <span>Localidad: {{$value->idLocalidad[0]->nombre}} </span>
+                                <span class="f">Provincia: {{$value->idProvincia[0]->nombre}} </span>
                             </div>
                             <hr>
                             <div class="text-center">
@@ -107,10 +107,4 @@
     </div>
 </div>
 @stop
-@foreach($alquilados as $key => $valor)
-<span>{{$valor}}</span>
-@endforeach
-@foreach($venta as $key => $valor)
-<span>{{$valor}}</span>
-@endforeach
 

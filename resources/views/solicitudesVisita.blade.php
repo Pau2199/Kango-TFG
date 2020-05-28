@@ -26,7 +26,7 @@
             <td class="fecha">{{$datos->fecha_solicitada}}</td>
             <td>{{$datos->hora}}</td>
             <td class="U-{{$datos->datosSolicitante[0]->id}}">{{$datos->datosSolicitante[0]->nombre}} {{$datos->datosSolicitante[0]->primer_apellido}} {{$datos->datosSolicitante[0]->segundo_apellido}}</td>
-            <td class="direccion" id="D-{{$datos->direccion[0]->id}}">{{$datos->direccion[0]->tipo_de_via}} {{$datos->direccion[0]->nombre_de_la_direccion}} {{$datos->direccion[0]->provincia}}, {{$datos->direccion[0]->localidad}}</td>
+            <td class="direccion" id="D-{{$datos->direccion[0]->id}}">{{$datos->direccion[0]->tipo_de_via}} {{$datos->direccion[0]->nombre_de_la_direccion}} {{$datos->direccion[0]->idProvincia[0]->nombre}}, {{$datos->direccion[0]->idLocalidad[0]->nombre}}</td>
             <td>{{$datos->estado}}</td>
             <td class="botonesForm">
                @if($datos->estado == 'Enviada')

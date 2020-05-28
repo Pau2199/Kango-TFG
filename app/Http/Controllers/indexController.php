@@ -19,7 +19,7 @@ class indexController extends Controller
      */
     public function index()
     {
-        $datos = DB::select('SELECT DISTINCT u.nombre, u.primer_apellido, u.segundo_apellido, p.*, a.localidad, a.provincia, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal FROM users u, property p, address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1');
+        $datos = DB::select('SELECT DISTINCT u.nombre, u.primer_apellido, u.segundo_apellido, p.*, a.idLocalidad, a.idProvincia, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal FROM users u, property p, address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1');
 
         for($i = 0 ; $i<count($datos); $i++){
             $alquiler = DB::select('SELECT r.internet, r.animales, r.reformas, r.calefaccion, r.aireAcondicionado, r.fianza FROM rental r WHERE r.idInmueble = "'. $datos[$i]->id.'"');
@@ -32,6 +32,9 @@ class indexController extends Controller
 
             $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $datos[$i]->id .'" && i.nombre LIKE "perfil%"');
             $datos[$i]->img = $imagenes;
+
+            $datos[$i]->idLocalidad = DB::select('SELECT l.nombre FROM localities l WHERE id = '. $datos[$i]->idLocalidad);
+            $datos[$i]->idProvincia = DB::select('SELECT p.nombre FROM provinces p WHERE id = '. $datos[$i]->idProvincia);
 
             if(Auth::check()){
                 $favorito = Favorite::where('idUser', '=', Auth::User()->id)->where('idInmueble', '=', $datos[$i]->id)->get();
@@ -64,7 +67,10 @@ class indexController extends Controller
 
     public function cargarProvincias(){
 
-        $provincias = Address::select('provincia')->distinct()->get();
+        $provincias = Address::select('idProvincia')->distinct()->get();
+        for($i = 0 ; $i<count($provincias) ; $i++){
+            $provincias[$i]->idProvincia  = Province::select('nombre')->where('id', '=', $provincias[$i]->idProvincia)->get();
+        }
         return $provincias;
 
     }
@@ -80,9 +86,10 @@ class indexController extends Controller
         $es_compra = false;
         $where = "";
         $whereAlquiler = "";
-        $consultaVenta = 'SELECT DISTINCT u.nombre, u.primer_apellido, u.segundo_apellido, p.*, a.localidad, a.provincia, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal FROM users u, property p, sale s, address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1 && p.id = s.idInmueble ';
-        $consultaAlquiler = 'SELECT DISTINCT u.nombre, u.primer_apellido, u.segundo_apellido, p.*, a.localidad, a.provincia, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal, r.internet, r.animales, r.reformas, r.calefaccion, r.aireAcondicionado, r.fianza FROM users u, property p, rental r, address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1 && p.id = r.idInmueble ';
-        $consultaTotal = 'SELECT DISTINCT u.nombre, u.primer_apellido, u.segundo_apellido, p.*, a.localidad, a.provincia, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal FROM users u, property p,address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1 ';
+        $consultaVenta = 'SELECT DISTINCT u.nombre, u.primer_apellido, u.segundo_apellido, p.*, a.idProvincia, a.idLocalidad, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal FROM users u, property p, sale s, address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1 && p.id = s.idInmueble ';
+        $consultaAlquiler = 'SELECT DISTINCT u.nombre, u.primer_apellido, u.segundo_apellido, p.*, a.idProvincia, a.idLocalidad, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal, r.internet, r.animales, r.reformas, r.calefaccion, r.aireAcondicionado, r.fianza FROM users u, property p, rental r, address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1 && p.id = r.idInmueble ';
+        $consultaTotal = 'SELECT DISTINCT u.nombre as userNombre, u.primer_apellido, u.segundo_apellido, p.*, a.idProvincia, a.idLocalidad, a.barrio, a.nombre_de_la_direccion, a.tipo_de_via, a.codigo_postal FROM users u, property p, address a WHERE p.idUsuario = u.id && p.id = a.idInmueble && p.disponible = 1 ';
+
         $datos;
 
         if($request->tipoBusqueda != null){
@@ -94,10 +101,12 @@ class indexController extends Controller
         }
 
         if($request->provincia != null && $request->provincia != '-'){
-            $where = '&& a.provincia = "'.$request->provincia.'" ';
+            $id = Province::select('id')->where('nombre', $request->provincia)->get();
+            $where = '&& a.idProvincia = "'.$id[0]->id.'" ';
         }
         if($request->localidad != null && $request->localidad != '-'){
-            $where .= '&& a.localidad = "'.$request->localidad.'" ';
+            $id = Location::select('id')->where('nombre', $request->localidad)->get();
+            $where .= '&& a.idLocalidad = "'.$id[0]->id.'" ';
         }
 
         if($request->tipoInmueble != null && $request->tipoInmueble != '-'){
@@ -187,6 +196,8 @@ class indexController extends Controller
         for($i = 0; $i<count($datos); $i++){
             $imagenes = DB::select('SELECT i.nombre FROM image i WHERE idInmueble = "'. $datos[$i]->id .'" && i.nombre LIKE "perfil%"');
             $datos[$i]->img = $imagenes;
+            $datos[$i]->idProvincia = Province::select('nombre')->where('id', $datos[$i]->idProvincia)->get();
+            $datos[$i]->idLocalidad = Location::select('nombre')->where('id', $datos[$i]->idLocalidad)->get();
             if(Auth::check()){
                 $favorito = Favorite::where('idUser', '=', Auth::User()->id)->where('idInmueble', '=', $datos[$i]->id)->get();
                 if(count($favorito) > 0){
