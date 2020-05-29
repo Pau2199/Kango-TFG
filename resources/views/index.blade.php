@@ -167,11 +167,7 @@
                                             {{$valor->nombre_de_la_direccion}}
                                             - {{$valor->codigo_postal}}
                                         </span>
-
                                         <i class="fa fa-heart-o {{$id}} @if($valor->favorito == true) colorCorazon @endif iconoCorazon"></i>
-                                        <!--
-<img src="{{asset('img/corazonSinFondo.svg')}}" alt="Guardar Favoritos" class="favoritos {{$id}} iconos">
--->
                                     </div>
                                 </div>
                                 <div class="row">
@@ -244,8 +240,4 @@
         </div>
     </div>
 </div>
-<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 @stop
-@foreach($datos as $key => $valor)
-<?= var_dump($valor->idProvincia) ?>
-@endforeach

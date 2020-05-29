@@ -306,7 +306,7 @@
                     <span id="botonModificacion" class="btn btn-info">Activar Edición</span>
                 </div>
                 <div class="col-6 text-center">
-                    <span class="btn btn-info">Desactivar publicación</span>
+                    <span id="I-{{$datos[0]->id}}" class="desc btn btn-info">@if($datos[0]->disponible == true)Desactivar @else Activar @endif</span>
                 </div>
                 @else
                 @if(Auth::user() != null)

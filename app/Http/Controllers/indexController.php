@@ -214,7 +214,7 @@ class indexController extends Controller
                             $datos[$i]->favorito = true;
                             break;
                         }else{
-                            $datos[$i]->favorito = true;
+                            $datos[$i]->favorito = false;
                         }
                     }
                 }else{

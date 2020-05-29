@@ -8,6 +8,9 @@
 @section('css')
 <link rel="stylesheet" href="{{asset('css/estiloAnuncios.css')}}">
 @stop
+@section('js')
+<script src="{{asset('js/anunciosInmuebleJS.js')}}"></script>
+@stop
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-around">
@@ -51,7 +54,7 @@
                                     <a href="/inmuebles/vistaInmueble/A-{{$valor->id}}"><span class="detalles btn btn-info">Detalles</span></a>                                
                                 </div>
                                 <div class="col-6">
-                                    <span class="btn btn-info">Desactivar</span>
+                                    <span id="I-{{$valor->id}}" class="desc btn btn-info">@if($valor->disponible == true)Desactivar @else Activar @endif</span>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +98,7 @@
                                     <a href="/inmuebles/vistaInmueble/V-{{$value->id}}"><span class="detalles btn btn-info">Detalles</span></a>
                                 </div>
                                 <div class="col-6">
-                                    <span class="btn btn-info">Desactivar</span>
+                                    <span id="I-{{$value->id}}" class="desc btn btn-info">@if($value->disponible == true)Desactivar @else Activar @endif</span>
                                 </div>
                             </div>
                         </div>

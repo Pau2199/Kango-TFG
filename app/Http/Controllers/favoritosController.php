@@ -46,9 +46,9 @@ class favoritosController extends Controller
                 for($j = 0; $j<count($array); $j++ ){
                     $id = explode('-', $array[$j]);
                     $dato[$j] = Property::select('id','precio','tipo_de_vivienda','disponible')->where('id', $id[1])->first();
-                    $direccion = Address::select('id','localidad', 'provincia', 'nombre_de_la_direccion','tipo_de_via')->where('idInmueble', '=',$id[1])->get();
-                    $direccion->idLocalidad = Location::select('nombre')->where('id', $direccion->idLocalidad)->get();
-                    $direccion->idProvincia = Province::select('nombre')->where('id', $direccion->idProvincia)->get();
+                    $direccion = Address::select('id','idLocalidad', 'idProvincia', 'nombre_de_la_direccion','tipo_de_via')->where('idInmueble', '=',$id[1])->get();
+                    $direccion[0]->idLocalidad = Location::select('nombre')->where('id', $direccion[0]->idLocalidad)->get();
+                    $direccion[0]->idProvincia = Province::select('nombre')->where('id', $direccion[0]->idProvincia)->get();
                     $dato[$j]->direccion = $direccion;
                     $alquiler = Rental::select('fianza', 'id')->where('idInmueble', '=', $id[1])->get();
                     if(count($alquiler) > 0){

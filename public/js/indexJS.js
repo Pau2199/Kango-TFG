@@ -26,73 +26,25 @@ $(function(){
 
     $('#anuncios').on('click', 'i', function(){
         var id = $(this).attr('class').split(' ')[2];
-        console.log(id);
         var imagen = $(this);
         var eliminar = 0;
         if($(this).hasClass('colorCorazon')){
-            console.log('entra1');
             eliminar = 1;
             $(this).removeClass('colorCorazon');
         }
-
         if($('#notificacion').length > 0 ){
-            console.log('entra');
-            console.log(eliminar);
-            $.ajax({
-                url: '/favoritos/agregarFavoritos',
-                method: 'POST',
-                data: {eliminarFav: eliminar, idInmueble: id, "_token": $('#token').val()},
-                success: function(data){
-                    if(eliminar == 0 && data == false){
-                        imagen.addClass('colorCorazon');   
-                    }
-                }
-            });
-        }else{
-            error = false;
-            if(eliminar == true){
-                if(getCookie('favoritos') != ""){
-                    var inmuebles = "";
-                    var array = getCookie('favoritos').split(',');
-                    for(var i = 0 ; i<array.length; i++){
-                        if(array[i] != id){
-                            if(i == 0){
-                                inmuebles = array[i];
-                            }else{
-                                if(inmuebles == ""){
-                                    inmuebles += array[i];   
-                                }else{
-                                    inmuebles += ',' + array[i];   
-                                }
-                            }
-                        }
-                    }
-                    imagen.removeClass('colorCorazon');
-                    if(inmuebles == ""){
-                        deleteCookie('favoritos');
-                    }else{
-                        setCookie('favoritos', inmuebles, 999999999);
-                    }
-                }
+            clickFavoritosLogeado(eliminar, id);
+            if(eliminar == 0){
+                imagen.addClass('colorCorazon');
             }else{
-                if(getCookie('favoritos') != ""){
-                    var favoritos = getCookie('favoritos').split(',');
-                    console.log(favoritos);
-                    for(var i = 0; i<favoritos.length ; i++){
-                        if(favoritos[i] == id){
-                            error = true;
-                            break;
-                        }
-                    }
-                    if(error == false){
-                        imagen.addClass('colorCorazon');
-                        setCookie('favoritos', getCookie('favoritos') + ',' + id ,999999999);
-                    }
-                }else{
-                    imagen.addClass('colorCorazon');
-                    setCookie('favoritos', id ,999999999);
-
-                }   
+                imagen.removeClass('colorCorazon');
+            }
+        }else{
+            clickFavoritosCookie(eliminar, id);
+            if(eliminar == 0){
+                imagen.addClass('colorCorazon');
+            }else{
+                imagen.removeClass('colorCorazon');
             }
         }
     })
@@ -177,7 +129,6 @@ $(function(){
 
     $('#anuncios').on('click', 'div.card-header', function(){
         id = $(this).attr('id');
-        console.log(id);
         $(location).attr('href', '/inmuebles/vistaInmueble/'+id)
     });
 

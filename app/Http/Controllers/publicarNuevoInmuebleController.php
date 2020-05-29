@@ -42,9 +42,6 @@ class publicarNuevoInmuebleController extends Controller
             $alquilados[$i]->img = $imagenes;
             $alquilados[$i]->idProvincia = Province::select('nombre')->where('id', $alquilados[$i]->idProvincia)->get();
             $alquilados[$i]->idLocalidad = Location::select('nombre')->where('id', $alquilados[$i]->idLocalidad)->get();
-
-
-
         }
 
         $venta = User::select('property.*','address.tipo_de_via','address.idLocalidad','address.idProvincia','address.nombre_de_la_direccion','address.codigo_postal','address.nPatio')

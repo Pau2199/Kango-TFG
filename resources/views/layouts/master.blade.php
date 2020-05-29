@@ -25,6 +25,7 @@
     <body>
         @include('partials.cabecera')
         @yield('content')
+        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
         @include('partials.footer')
     </body>
 </html>

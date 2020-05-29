@@ -1,9 +1,9 @@
 <footer class="w-100 page-footer font-small unique-color-dark footerGrande mt-2">
-    <div class="footerPequeño">
+    <div class="footerPequenyo">
         <div class="container">
             <div class="row py-4 d-flex align-items-center">
                 <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
-                    <h6 class="mb-0 ml-5">Siguesnos en nuestras Redes Sociales!</h6>
+                    <h6 class="mb-0 ml-5">Siguenos en nuestras Redes Sociales!</h6>
                 </div>
                 <div class="col-md-6 col-lg-7 text-center text-md-right">
                     <a href="https://www.facebook.com/"><img class="rrss mr-5" src="http://localhost:8000/img/facebook.png" alt="Facebook"></a>
@@ -18,22 +18,20 @@
             <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                 <h6 class="text-uppercase font-weight-bold">Kangoo Home</h6>
                 <hr class="mb-4 mt-0 d-inline-block mx-auto tamanyoBarraGris">
-                <p>Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet,
-                    consectetur
-                    adipisicing elit.
+                <p>Kangoo Home se trata de una inmobiliria online que se incorpora al mercado para realizar una competencía al resto del sector con esta atractiva y novedosa Web.
                 </p>
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h6 class="text-uppercase font-weight-bold">Conocenos un poco más!</h6>
                 <hr class="mb-4 mt-0 d-inline-block mx-auto tamanyoBarraGris">
                 <p>
-                    <a href="#!">¿Quienes somos?</a>
+                    <a class="linkFooter" href="#">¿Quienes somos?</a>
                 </p>
                 <p>
-                    <a href="#!">Trabaja con nosotros</a>
+                    <a class="linkFooter" href="#">Trabaja con nosotros</a>
                 </p>
                 <p>
-                    <a href="#!">Preguntas Frecuentes</a>
+                    <a class="linkFooter" href="#">Preguntas Frecuentes</a>
                 </p>
 
             </div>
@@ -41,22 +39,22 @@
                 <h6 class="text-uppercase font-weight-bold">Reglas y Politica de Privicad</h6>
                 <hr class="mb-4 mt-0 d-inline-block mx-auto tamanyoBarraGris">
                 <p>
-                    <a href="#!">Tratamiento de Datos Personales</a>
+                    <a class="linkFooter" href="#">Tratamiento de Datos Personales</a>
                 </p>
                 <p>
-                    <a href="#!">Condiciones al publicar un inmueble</a>
+                    <a class="linkFooter" href="#">Condiciones de publicación</a>
                 </p>
                 <p>
-                    <a href="#!">Reglas de Kangoo Home</a>
+                    <a class="linkFooter" href="#">Normas de la Web</a>
                 </p>
             </div>
             <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                 <h6 class="text-uppercase font-weight-bold">Contacta con Nosotros!</h6>
                 <hr class="mb-4 mt-0 d-inline-block mx-auto tamanyoBarraGris">
-                <p>New York, NY 10012, US</p>
-                <p>info@example.com</p>
-                <p>+ 01 234 567 88</p>
-                <p>+ 01 234 567 89</p>
+                <p>Calle Colón 21 - Valencia</p>
+                <p>info@kangooHome.com</p>
+                <p>(+54) 643 81 21 30</p>
+                <p>  967 32 12 43</p>
             </div>
         </div>
     </div>

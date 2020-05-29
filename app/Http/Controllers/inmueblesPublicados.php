@@ -64,7 +64,7 @@ class inmueblesPublicados extends Controller
                                               $datos[$i]->favorito = true;
                                               break;
                                           }else{
-                                              $datos[$i]->favorito = true;
+                                              $datos[$i]->favorito = false;
                                           }
                                       }
                                   }else{
@@ -276,9 +276,25 @@ class inmueblesPublicados extends Controller
 
     }
 
-    public function updateImage(Request $request, $id){
-        return $_POST['masImagenes'];
+    public function actualizarEstado(Request $request){
+        $inmueble = Property::find($request->idInmueble);
+        $info;
+        if(Auth::Check() && Auth::User()->id == $inmueble->idUsuario){
+            if($inmueble->disponible == 1){
+                $inmueble->disponible = 0;
+                $info = "act";
+            }else{
+                $inmueble->disponible = 1;
+                $info  = "desc";
+            }
+            $inmueble->save();
+        }else{
+            $info = "error";
+        }
+
+        return $info;
     }
+
 
     /**
      * Remove the specified resource from storage.

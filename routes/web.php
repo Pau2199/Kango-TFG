@@ -26,6 +26,7 @@ Route::post('/inmuebles/vistaInmueble/modificar/{id}','inmueblesPublicados@updat
 Route::post('inmuebles/agregarInmueble', 'publicarNuevoInmuebleController@store');
 Route::post('/inmuebles/mostrarInmuebles', 'publicarNuevoInmuebleController@store');
 Route::get('/inmuebles/anunciosActivos', 'publicarNuevoInmuebleController@mostrarInmuebles');
+Route::post('/inmueble/desactivar', 'inmueblesPublicados@actualizarEstado');
 
 Route::get('/perfil/horarioVisita', 'horarioVisitaController@index');
 Route::get('/perfil/modificarHorario', 'horarioVisitaController@store');

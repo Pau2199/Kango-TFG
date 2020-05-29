@@ -8,7 +8,7 @@ $(function(){
     $('#mensajeInfo').hide();
 
     $('.favoritos').click(function(){
-        var id = window.location.href.split('/')[5];
+        var idInmueble = window.location.href.split('/')[5];
         var eliminar = 0;
         var boton = $(this);
         if($(this).html().trim() == 'Quitar de Favoritos'){
@@ -16,66 +16,40 @@ $(function(){
         }
 
         if(idUser != null){
-            $.ajax({
-                url: '/favoritos/agregarFavoritos',
-                method: 'POST',
-                data: {eliminarFav: eliminar, idUser: idUser, idInmueble: id, "_token": $('#token').val()},
-                success: function(data){
-                    if(eliminar == 0){
-                        boton.html('Quitar de Favoritos');
-                    }else{
-                        boton.html('Añadir a Favoritos');
-                    }
-                }
-            });
-        }else{
+            clickFavoritosLogeado(eliminar, idInmueble)
             if(eliminar == 1){
-                if(getCookie('favoritos') != ""){
-                    var inmuebles = "";
-                    var array = getCookie('favoritos').split(',');
-                    for(var i = 0 ; i<array.length; i++){
-                        if(array[i] != id){
-                            if(i == 0){
-                                inmuebles = array[i];
-                            }else{
-                                if(inmuebles == ""){
-                                    inmuebles += array[i];   
-                                }else{
-                                    inmuebles += ',' + array[i];   
-                                }
-                            }
-                        }
-                    }
-                    boton.html('Añadir a Favoritos');
-                    if(inmuebles == ""){
-                        deleteCookie('favoritos');
-                    }else{
-                        setCookie('favoritos', inmuebles, 999999999);
-                    }
-                }
+                boton.html('Añadir a Favoritos')
             }else{
-                var error = false;
-                if(getCookie('favoritos') != ""){
-                    var favoritos = getCookie('favoritos').split(',');
-                    console.log(favoritos);
-                    for(var i = 0; i<favoritos.length ; i++){
-                        if(favoritos[i] == id){
-                            error = true;
-                            break;
-                        }
-                    }
-                    if(error == false){
-                        boton.html('Quitar de Favoritos');
-                        setCookie('favoritos', getCookie('favoritos') + ',' + id ,999999999);
-                    }
-                }else{
-                    boton.html('Quitar de Favoritos');
-                    setCookie('favoritos', id ,999999999);
-
-                }   
+                boton.html('Quitar de Favoritos');
+            }
+        }else{
+            clickFavoritosCookie(eliminar, idInmueble);
+            if(eliminar == 1){
+                boton.html('Añadir a Favoritos')
+            }else{
+                boton.html('Quitar de Favoritos');
             }
         }
+    });
+
+    $('.desc').click(function(){
+        var inm = $(this);
+        var id = $(this).attr('id').split('-')[1];
+        $.ajax({
+            url: '/inmueble/desactivar',
+            method: 'POST',
+            data: {idInmueble: id, "_token": $('#token').val()},
+            success: function(data){
+                console.log(data);
+                if(data == "desc"){
+                    inm.html('Desactivar')
+                }else if(data == "act"){
+                    inm.html('Activar')
+                }
+            }
+        });
     })
+
     $('#solicitar').click(function(){
         $('#botones').hide();
         var form = $('<form>').attr('id', 'formHorarioVisita');
@@ -315,30 +289,6 @@ $(function(){
 
         }
     })
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $('.botonesImagenes').click(function(){
-        var imagen = $(this).attr('id');
-        console.log(imagen);
-        var boton = $(this);
-        $.ajax({
-            url: '/inmuebles/vistaInmueble/borrarImagen/'+imagen,
-            method: 'GET',
-            success: function(data){
-                boton.parent().parent().remove();
-                $('#divButton').show();
-                if(imagen.includes('perfil') == true){
-                    $('#perf').show();    
-                }else{
-                    $('#masImg').show();
-                }
-            }
-        })
-    })
-
     $('input').blur(function(){
         $('#mensaje'+$(this).attr('id')).html('');
         if($(this).val() == "" && $(this).attr('id') != 'nPiso' && $(this).attr('id') != 'nPatio'){
@@ -390,15 +340,11 @@ $(function(){
                 if($(this).attr('id') == 'nMetrosCuadrados'){
                     validarMetrosCuadrados($(this).attr('id'), $(this).val());
                 }
-
-
-
-
-            })
+            });
 
             $('select').each(function(){
                 validarSelect($(this).attr('id'), $(this).val());
-            })
+            });
 
             if($('#tipoCompra').val() == 'A' ||  $('#tipoCompra').val() == 'AQ'){
                 validarFianza('fianza', $('#fianza').val());
@@ -406,10 +352,9 @@ $(function(){
 
             $('strong').each(function(){
                 if($(this).html() != ""){
-                    console.log($(this).html())
                     errorEncontrado = true;
                 }
-            })
+            });
             if(errorEncontrado == false){
                 var id = window.location.href.split('/')[5];
                 $.ajax({
@@ -417,7 +362,6 @@ $(function(){
                     method: 'POST',
                     data: $('#formEditar').serialize(),
                     success: function(data){
-                        console.log(data);
                         $('html, body').animate({scrollTop: 0},1000)
                         $('#mensajeInfo').show();
                         setTimeout(function(){
@@ -427,116 +371,5 @@ $(function(){
                 })
             }
         }
-        console.log(errorEncontrado);
-    })
-
-    function validarProvinciaLocalidadNombre(campo, mensaje){
-        $('#mensaje'+campo).html('');
-        if(campo  == 'nombreDir'){
-            if(mensaje.length < 5){
-                $('#mensaje'+campo).html('Este campo debe tener como minimo 10 caracteres');
-            }
-            if(mensaje.length > 100){
-                $('#mensaje'+campo).html('Este campo debe tener como máximo 100 caracteres');
-            }
-        }else{
-            if(mensaje.length < 4){
-                $('#mensaje'+campo).html('Este campo debe tener como minimo 4 caracteres');
-            }
-            if(mensaje.length > 20){
-                $('#mensaje'+campo).html('Este campo debe tener como máximo 20 caracteres');
-            }
-        }
-
-    }
-
-    function validarPatioPiso(campo, mensaje){
-        $('#mensaje'+campo).html('');
-        var correcto = true;
-        if(mensaje <= 0){
-            $('#mensaje'+campo).html('Este campo no puede ser menor o igual a 0');
-        }
-    }
-
-    function validarHabitaciones(campo, mensaje){
-        $('#mensaje'+campo).html('');
-        if(mensaje <= 0){
-            $('#mensaje'+campo).html('El número debe ser mayor o igual a 1');
-        }
-        if(mensaje > 5){
-            $('#mensaje'+campo).html('Solo se permite poner hasta el número 5');
-        }
-    }
-
-    function validarCuartosBanyo(campo, mensaje ){
-        if(mensaje <= 0){
-            $('#mensaje'+campo).html('El número debe ser mayor o igual a 1');
-        }
-        if(mensaje > 3){
-            $('#mensaje'+campo).html('Solo se permite poner hasta el número 3');
-        }
-    }
-
-    function validarSelect(campo, mensaje){
-        $('#mensaje'+campo).html('');
-        if(mensaje == '-'){
-            console.log(campo)
-            $('#mensaje'+campo).html('Debes selecionar una opción');
-        }else{
-            if(mensaje != 'A' && mensaje != 'P' && mensaje != 'D' && mensaje != 'C' && mensaje != 'B' && mensaje != 'C' && mensaje != 'A' && mensaje != 'P'){
-                $('#mensaje'+campo).html('Opción elegida incorrecta');
-            }
-        }
-    }
-
-    function validarPrecio(campo, mensaje){
-        $('#mensaje'+campo).html('');
-        if(mensaje <= 200){
-            $('#mensaje'+campo).html('El número de este campo debe ser superior a 200.');
-        }
-    }
-
-    function validarMetrosCuadrados(campo , mensaje){
-        $('#mensaje'+campo).html('');
-        if(mensaje < 30){
-            $('#mensaje'+campo).html('El número minimo que debes poner es de 30 metros cuadrados.');
-        }
-    }
-
-    function validarFianza(campo, mensaje){
-        $('#mensaje'+campo).html('');
-        var minimo = $('#precio').val()*2;
-        var maximo =$('#precio').val()*4;
-        if(mensaje < minimo && mensaje > maximo){
-            $('#mensaje'+campo).html('La fianza debe ser como mínimo 2 meses y como máximo 4 meses.');
-        }
-
-    }
+    });
 });
-
-function setCookie(cname, cvalue, exdays){
-    var d = new Date(); d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
-function deleteCookie(cname) {
-    var valor = cname+'=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
-    document.cookie = valor; 
-}
-
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' '){
-            c = c.substring(1); 
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length); 
-        }
-    } return "";
-}

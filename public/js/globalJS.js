@@ -1,4 +1,10 @@
 $(function(){
+    $('.textoLogin').each(function(){
+        if($(this).html() != ""){
+            $('#login').trigger('click');
+        }
+    })
+    
     $.ajax({
         url: '/obtenerNotificaciones',
         method: 'GET',
@@ -61,7 +67,6 @@ function validarCuartosBanyo(campo, mensaje ){
 function validarSelect(campo, mensaje){
     $('#mensaje'+campo).html('');
     if(mensaje == '-'){
-        console.log(campo)
         $('#mensaje'+campo).html('Debes selecionar una opción');
     }else{
         if(mensaje != 'A' && mensaje != 'AQ' && mensaje != 'C' && mensaje != 'P' && mensaje != 'D' && mensaje != 'C' && mensaje != 'B'){
@@ -88,10 +93,86 @@ function validarFianza(campo, mensaje){
     $('#mensaje'+campo).html('');
     var minimo = $('#precio').val()*2;
     var maximo =$('#precio').val()*4;
-    console.log(minimo);
-    console.log(maximo);
     if(mensaje < minimo && mensaje > maximo){
         $('#mensaje'+campo).html('La fianza debe ser como mínimo 2 meses y como máximo 4 meses.');
     }
+}
 
+function setCookie(cname, cvalue, exdays){
+    var d = new Date(); d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function deleteCookie(cname) {
+    var valor = cname+'=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
+    document.cookie = valor; 
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' '){
+            c = c.substring(1); 
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length); 
+        }
+    } return "";
+}
+
+function clickFavoritosLogeado(eliminar, idInmueble){
+    $.ajax({
+        url: '/favoritos/agregarFavoritos',
+        method: 'POST',
+        data: {eliminarFav: eliminar, idInmueble: idInmueble, "_token": $('#token').val()}
+    });
+}
+
+function clickFavoritosCookie(eliminar, idInmueble){
+    if(eliminar == 1){
+        if(getCookie('favoritos') != ""){
+            var inmuebles = "";
+            var array = getCookie('favoritos').split(',');
+            for(var i = 0 ; i<array.length; i++){
+                if(array[i] != idInmueble){
+                    if(i == 0){
+                        inmuebles = array[i];
+                    }else{
+                        if(inmuebles == ""){
+                            inmuebles += array[i];   
+                        }else{
+                            inmuebles += ',' + array[i];   
+                        }
+                    }
+                }
+            }
+            if(inmuebles == ""){
+                deleteCookie('favoritos');
+            }else{
+                setCookie('favoritos', inmuebles, 999999999);
+            }
+        }
+    }else{
+        var error = false
+        if(getCookie('favoritos') != ""){
+            var favoritos = getCookie('favoritos').split(',');
+            for(var i = 0; i<favoritos.length ; i++){
+                if(favoritos[i] == idInmueble){
+                    error = true;
+                    break;
+                }
+            }
+            if(error == false){
+                setCookie('favoritos', getCookie('favoritos') + ',' + idInmueble ,999999999);
+            }
+        }else{
+            setCookie('favoritos', idInmueble ,999999999);
+
+        } 
+    }
 }

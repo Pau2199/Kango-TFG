@@ -24,7 +24,6 @@
         <tbody>
             <tr>
                 <td>
-                    @if($valor->disponible == true)
                     <?php 
                     $id ="";
                     if($valor->alquiler == 1){
@@ -35,6 +34,7 @@
                     }
                     $id .= '-'.$valor->id
                     ?>
+                    @if($valor->disponible == true)
                     <a href="/inmuebles/vistaInmueble/{{$id}}" class="btn btn-info">Visualizar</a>
                     @endif
                 </td>

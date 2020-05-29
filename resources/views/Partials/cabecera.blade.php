@@ -13,7 +13,7 @@
             <div class="btn-group mr-5 mr-md-4">
                 <a href="#" data-toggle="dropdown"><img id="login" class="svgTamanyo" class="mt-4" src="{{asset('img/user.svg')}}" alt="Usuario"></a>
                 @if(!Auth::user())
-                <div class="container dropdown-menu dropdown-menu-right">
+                <div class="container dropdown-menu login dropdown-menu-right">
                     <div class="row justify-content-center">
                         <div class="col-md-12 text-center">
                             <form class="px-4 py-3" method="POST" action="{{ route('login') }}">
@@ -23,7 +23,7 @@
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong class="textoLogin">{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
@@ -32,7 +32,7 @@
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong class="textoLogin">{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
@@ -59,10 +59,9 @@
                     </div>
                 </div>
                 @else
-                <div class="dropdown-menu mr-5">
+                <div class="dropdown-menu dropdown-menu-right menuUser">
                     <a class="dropdown-item" href="/inmuebles/anunciosActivos">Inmuebles</a>
                     <a class="dropdown-item" href="/perfil/datosPersonales">Perfil</a>
-                    <a class="dropdown-item" href="#">Separated link</a>
                     <div class="dropdown-divider"></div>
                     <a class="btn btn-link" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
@@ -84,11 +83,11 @@
         </div>
     </div>
 </header>
-<nav id="navbar" class="navbar navbar-expand filtro">
+<nav id="navbar" class="navbar navbar-expand filtro footerPequenyo">
     <div class="collapse navbar-collapse" id="navbarNav">
         @if(Request::is('inmuebles/anunciosActivos', 'inmuebles/publicarNuevo', 'inmuebles/allAnuncios'))
         @include('Partials.Navs.inmuebleNav')
-        @elseif(Request::is('perfil/horarioVisita', 'perfil/datosPersonales', 'perfil/solicitudesVisita', 'notificaciones'))
+        @elseif(Request::is('perfil/horarioVisita', 'perfil/datosPersonales', 'perfil/solicitudesVisita', 'notificaciones', 'favoritos/mostrarFavoritos'))
         @include('Partials.Navs.perfilNav')
         @else
         @include('Partials.Navs.indexNav')

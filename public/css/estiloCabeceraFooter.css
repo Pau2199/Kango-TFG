@@ -14,16 +14,48 @@
     background-color: #F4B69E;
 }
 
-.footerPequeño{
+.footerPequenyo{
     background-color: #DAEAF7;
 }
 
-.dropdown-menu{
+.login{
     width: 300px !important;
 }
+
+.menuUser{
+    width: 200px !important;
+}
+
 .colorBoton{
     background-color: #FFC15A;
 }
 .tamanyoTexto{
     font-size: 15px;
+}
+
+.nav-link{
+    color: #000000;
+    font-weight: bold;
+    font-family: cursive;
+}
+
+.nav-link:hover{
+    color: #FFC15A;
+}
+
+.linkFooter{
+    /*color: rgb(11, 158, 215)*/;
+    color: rgb(11, 158, 215);
+    font-family: cursive;
+    text-decoration: none;
+}
+
+.linkFooter:hover{
+    color: white;
+    text-decoration: none;
+}
+
+.rrss{
+    width: 40px;
+    height: 40px;
 }
