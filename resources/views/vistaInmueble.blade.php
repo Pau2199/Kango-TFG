@@ -15,11 +15,11 @@
 <div class="text-center w-100 font-weight-bold" id="mensajeInfo">
     <p id="texto"> Modificación realizada correctamente! - La página se recargara en 3 segundos.</p>
 </div>
-<div class="container-fluid">
-    <div class="row">
+<div class="container-fluid p-0">
+    <div class="row m-5">
         <div id="vistaInmueble" class="col-lg-6 col-12">
             <div class="row">
-                <div id="" class="col-12">
+                <div class="col-12">
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
                             @foreach($datos[0]->img as $key => $valor)
@@ -44,22 +44,6 @@
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="sr-only">Next</span>
                         </a>
-                        <!--
-<ol class="carousel-indicators">
-<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
-<img src="https://pbs.twimg.com/profile_images/905183271046193153/q_P1KBUJ_400x400.jpg" class="img-fluid"/>
-</li>
-<li data-target="#carouselExampleIndicators" data-slide-to="1">
-<img src="https://pbs.twimg.com/profile_images/905183271046193153/q_P1KBUJ_400x400.jpg" class="img-fluid"/>
-</li>
-<li data-target="#carouselExampleIndicators" data-slide-to="2">
-<img src="https://pbs.twimg.com/profile_images/905183271046193153/q_P1KBUJ_400x400.jpg" class="img-fluid"/>
-</li>
-<li data-target="#carouselExampleIndicators" data-slide-to="2">
-<img src="https://pbs.twimg.com/profile_images/905183271046193153/q_P1KBUJ_400x400.jpg" class="img-fluid"/>
-</li>
-</ol>
--->
                     </div> 
                 </div>
             </div>
@@ -89,7 +73,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="col-lg-6 col-12" id="datosInm">
+        <div class="col-lg-6 col-12 mt-lg-0 mt-3" id="datosInm">
             <h2 id="titulo">
                 @if($datos[0]->alquiler == true)
                 Alquiler
@@ -300,24 +284,36 @@
             <p class="font-weight-bold">Descripción</p>
             <span id="desc">{{$datos[0]->descripcion}}</span>
             <hr>
-            <div class="d-flex justify-content-center row my-4" id="agregarForm">
+            <div id="agregarForm">
                 @if(Auth::user() != null and Auth::user()->id == $datos[0]->idUsuario)
-                <div class="col-6 text-center">
-                    <span id="botonModificacion" class="btn btn-info">Activar Edición</span>
-                </div>
-                <div class="col-6 text-center">
-                    <span id="I-{{$datos[0]->id}}" class="desc btn btn-info">@if($datos[0]->disponible == true)Desactivar @else Activar @endif</span>
+                <div class="form-row justify-content-center">
+                    <div class="col-6 text-center">
+                        <span id="botonModificacion" class="btn btn-warning font-weight-bold">Activar Edición</span>
+                    </div>
+                    <div class="col-6 text-center">
+                        <span id="I-{{$datos[0]->id}}" class="desc btn btn-warning font-weight-bold">@if($datos[0]->disponible == true)Desactivar @else Activar @endif</span>
+                    </div>
                 </div>
                 @else
                 @if(Auth::user() != null)
                 <div id="botones">
-                    @if($datos[0]->alquiler == true)
-                    <span class="btn btn-info">Alquilar Inmueble</span>
-                    @endif
-                    <span class="btn btn-info" id="solicitar">Solicitar una Visita</span>
-                    <span class="favoritos btn btn-info">@if($datos[0]->favorito == true) Quitar de Favoritos @else Añadir a Favoritos @endif</span>
+                    <div class="form-row">
+                        @if($datos[0]->alquiler == true)
+                        <div class="col-xl-4 mt-xl-0 col-lg-12 mt-lg-3 col-md-4 mt-md-0 col-12 mt-3">
+                            <span class="btn btn-warning font-weight-bold">Alquilar Inmueble</span>
+                        </div>
+                        @endif
+                        <div class="col-xl-4 mt-xl-0 col-lg-12 mt-lg-3 col-md-4 mt-md-0 col-12 mt-3">
+                            <span class="btn btn-warning font-weight-bold" id="solicitar">Solicitar Visita</span>
+                        </div>
+                        <div class="col-xl-4 mt-xl-0 col-lg-12 mt-lg-3 col-md-4 mt-md-0 col-12 mt-3">
+                            <span class="favoritos btn btn-warning font-weight-bold">@if($datos[0]->favorito == true) Quitar Favorito @else Añadir Favorito @endif</span>
+                        </div>
+                    </div>
                     @else
-                    <span class="favoritos btn btn-info">@if($datos[0]->favorito == true) Quitar de Favoritos @else Añadir a Favoritos @endif</span>
+                    <div class="col-12">
+                        <span class="favoritos btn btn-warning font-weight-bold">@if($datos[0]->favorito == true) Quitar Favorito @else Añadir Favorito @endif</span>
+                    </div>
                 </div>
                 @endif
                 @endif
@@ -589,7 +585,7 @@
                             <textarea class="form-control" id="descripcion"name="descripcion" id="descripcion"rows="5"></textarea>
                         </div>
                         <div class="text-center">
-                            <button type="submit" id='botonRegistro' class="btn btn-info">Guardar Modificaciones</button>
+                            <button type="submit" id='botonRegistro' class="btn btn-warning font-weight-bold">Guardar Modificaciones</button>
                         </div>
                     </form>
                 </div>

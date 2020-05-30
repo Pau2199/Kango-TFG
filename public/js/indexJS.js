@@ -154,7 +154,7 @@ $(function(){
             }
         }
         console.log($('.botonPulsado').html());
-        var arrayTipoPiso = {P: 'Piso', D: 'Duplex', A: 'Adosado', C: 'Chalet'};
+        var arrayTipoPiso = {P: 'Piso', D: 'Duplex', A: 'Adosado', C: 'Chalet', B: 'Bajo'};
         var arrayDireccion = {C: 'Calle', A: 'Avenida', P: 'Plaza'}
         $.ajax({
             url: '/index/filtrosBusqueda/'+orden,
@@ -177,10 +177,10 @@ $(function(){
                         //creamos el div que engloba a toda la tarjeta
                         var divCard = $('<div>').attr({
                             class: 'card mt-3',
-                            id: id
                         });
                         //creamos el titulo del div
-                        var divTitulo = $('<div>').attr('class', 'd-flex justify-content-between card-header');
+                        var divTitulo = $('<div>').attr({class: 'd-flex justify-content-between card-header',
+                                                         id: id});
                         //Creamos la etiqueta h5  que es donde estara el titulo dle inmueble
                         var h5 = $('<h5>');
                         if(data[i]['alquiler'] == true){
@@ -197,7 +197,7 @@ $(function(){
                         h5.append('- Barrio de ' + data[i]['barrio'])
 
                         //creamos el span que es donde estara el nombre del usuario
-                        var span = $('<span>').html(data[i]['nombre'] + ' ' + data[i]['primer_apellido'] + ' ' + data[i]['segundo_apellido']);
+                        var span = $('<span>').html(data[i]['userNombre'] + ' ' + data[i]['primer_apellido'] + ' ' + data[i]['segundo_apellido']);
                         //metemos el h5 y el span creados al contenedor de este apartado
                         divTitulo.append(h5);
                         divTitulo.append(span);

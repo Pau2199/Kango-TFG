@@ -51,10 +51,10 @@
                             </div>
                             <div id="A{{$valor->id}}" class="row text-center my-3">
                                 <div class="col-6">
-                                    <a href="/inmuebles/vistaInmueble/A-{{$valor->id}}"><span class="detalles btn btn-info">Detalles</span></a>                                
+                                    <a href="/inmuebles/vistaInmueble/A-{{$valor->id}}"><span class="detalles btn btn-warning font-weight-bold">Detalles</span></a>                                
                                 </div>
                                 <div class="col-6">
-                                    <span id="I-{{$valor->id}}" class="desc btn btn-info">@if($valor->disponible == true)Desactivar @else Activar @endif</span>
+                                    <span id="I-{{$valor->id}}" class="desc btn btn-danger font-weight-bold">@if($valor->disponible == true)Desactivar @else Activar @endif</span>
                                 </div>
                             </div>
                         </div>

@@ -55,7 +55,7 @@ $(function(){
         var form = $('<form>').attr('id', 'formHorarioVisita');
         var divRow = $('<div>').attr('class', 'form-row');
         var divGroupDate = $('<div>').attr({
-            class: 'form-group col-md-12',
+            class: 'form-group col-md-6',
             id: 'groupDate'});
         var label = $('<label>').attr({
             class: 'font-weight-bold',
@@ -90,14 +90,14 @@ $(function(){
         divGroupSelect.append(strong);
         divRow.append(divGroupSelect);
         form.append(divRow);
-
+        var divButton = $('<div>').attr('class', 'text-center');
         var button = $('<span>').attr({
-            class: 'btn bg-success',
+            class: 'btn btn-warning font-weight-bold',
             id: 'solVisita'
         }).html('Solicitar Visita');
-        form.append(button);
+        divButton.append(button);
+        form.append(divButton);
         $('#agregarForm').append(form);
-        $('#divSelect').hide();
     });
     $('#agregarForm').on('change', 'input#datapicker', function(){
         $('#selectHoras').children().remove();
@@ -117,10 +117,6 @@ $(function(){
                     option = $('<option>').attr('value', data[i]['inicio'] + '-' + data[i]['final']).html(data[i]['inicio'] + '-' + data[i]['final']);
                     $('#selectHoras').append(option);
                 }
-                $('#groupDate').removeClass('col-md-12');
-                $('#groupDate').addClass('col-md-6');
-                $('#divSelect').show();
-
             }
         });
     });

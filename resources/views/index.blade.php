@@ -9,44 +9,34 @@
 <script src="{{asset('js/indexJS.js')}}"></script>
 @stop
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid colorBody">
     <div class="row">
         <div id="panelFiltros"class="col-lg-2 d-none d-lg-block mr-5">
             <aside class="colorFondo my-3">
-                <h4>Filtros de Busqueda</h4>
+                <h5 class="mx-1 pt-3 text-center">Filtros de Busqueda</h5>
                 <form id="filtroBusqueda">
                     @csrf
-                    <div class="form-group m-3">
-                        <span class="font-weight-bold">Tipo de busqueda</span>
+                    <div class="form-group m-3 text-center">
+                        <span class="">Tipo de busqueda</span>
                         <div class="checkbox mt-1">
-                            <label class="mr-2"><input class="tipoBusqueda" name="tipoBusqueda" value="alquiler" type="radio">Alquiler</label>
-                            <label class="ml-2"><input class="tipoBusqueda" name="tipoBusqueda" value="comprar" type="radio">Compra</label>
+                            <label class="mr-2"><input class="tipoBusqueda" name="tipoBusqueda" value="alquiler" type="radio"> Alquiler</label>
+                            <label class="ml-2"><input class="tipoBusqueda" name="tipoBusqueda" value="comprar" type="radio"> Compra</label>
                         </div>
                     </div>
-                    <!-- Desde aquí-->
-                    <!-- Sera tratado con javascript dependiendo de la opción que elija en tipo de Busqueda.-->
-                    <div id="eleccionTipoBusqueda" class="form-group m-3">
-                        <span id="elegidoEnTipoDeBusqueda" class="font-weight-bold"></span>
-                        <div class="checkbox mt-1">
-                            <label class="mr-2"><input id="Si" name="opcionAlquiler" value="alquiler" type="radio">Si</label> 
-                            <label class="ml-2"><input id="No" name="opcionAlquiler" value="compra" type="radio">No</label>
-                        </div>
-                    </div>
-                    <!-- Hasta aquí-->
                     <div class="form-group m-3">
-                        <span class="font-weight-bold">Seleciona una Provincia</span>
+                        <span class="">Seleciona una Provincia</span>
                         <select name="provincia" id="provincia" class="form-control w-100">
                             <option selected>-</option>
                         </select>
                     </div>
                     <div class="form-group m-3">
-                        <span class="font-weight-bold">Seleciona una Localidad</span>
+                        <span class="">Seleciona una Localidad</span>
                         <select name="localidad" id="localidad" class="form-control w-100">
                             <option selected>-</option>
                         </select>
                     </div>
                     <div class="form-group m-3">
-                        <span class="font-weight-bold">Tipo de Vivienda</span>
+                        <span class="">Tipo de Vivienda</span>
                         <select name="tipoInmueble" id="tipoVivienda" class="form-control w-100">
                             <option selected>-</option>
                             <option value="P">Piso</option>
@@ -57,51 +47,51 @@
                         </select>
                     </div>
                     <div class="form-group m-3">
-                        <span class="font-weight-bold">Nº de Habitaciones</span>
-                        <input class="w-100" type="number" name="nHabitaciones" min="1" max="10">
+                        <span class="">Nº de Habitaciones</span>
+                        <input class="w-100 form-control" type="number" name="nHabitaciones" min="1" max="10">
                     </div>
                     <div class="form-group m-3">
-                        <span class="font-weight-bold">Nº de Cuartos de Baño</span>
-                        <input class="w-100" type="number" name="nBanyos" min="1" max="10">
+                        <span class="">Nº de Cuartos de Baño</span>
+                        <input class="w-100 form-control" type="number" name="nBanyos" min="1" max="10">
                     </div>
                     <div class="form-group m-3">
-                        <span class="font-weight-bold">Opciones de la Vivienda</span>
-                        <div class="form-check">
+                        <span class="">Opciones de la Vivienda</span>
+                        <div class="ml-1 mt-1 form-check">
                             <input class="form-check-input" type="checkbox" name="garage" id="garage" value="garage">
                             <label class="form-check-label" for="garage">Garage</label>
                         </div>
-                        <div class="form-check">
+                        <div class="ml-1 form-check">
                             <input class="form-check-input" type="checkbox" name="piscina" id="piscina" value="piscina">
                             <label class="form-check-label" for="piscina">Piscina</label>
                         </div>
-                        <div class="form-check">
+                        <div class="ml-1 form-check">
                             <input class="form-check-input" type="checkbox" name="ascensor" id="Ascensor" value="Ascensor">
                             <label class="form-check-label" for="Ascensor">Ascensor</label>
                         </div>
                         <div id="opcionesAlquiler">
-                            <div class="form-check">
+                            <div class="ml-1 form-check">
                                 <input class="form-check-input" type="checkbox" name="internet" id="internet" value="internet">
                                 <label class="form-check-label" for="internet">Internet</label>
                             </div>
-                            <div class="form-check">
+                            <div class="ml-1 form-check">
                                 <input class="form-check-input" type="checkbox" name="aireAcondicionado" id="aireAcondicionado" value="amueblado">
                                 <label class="form-check-label" for="aireAcondicionado">Aire Acondicionado</label>
                             </div>
-                            <div class="form-check">
+                            <div class="ml-1 form-check">
                                 <input class="form-check-input" type="checkbox" name="calefaccion" id="calefaccion" value="calefaccion">
                                 <label class="form-check-label" for="calefaccion">Calefacion</label>
                             </div>
-                            <div class="form-check">
+                            <div class="ml-1 form-check">
                                 <input class="form-check-input" type="checkbox" name="animales" id="animales" value="animales">
                                 <label class="form-check-label" for="animales">Admite Animales</label>
                             </div>
-                            <div class="form-check">
+                            <div class="ml-1 form-check">
                                 <input class="form-check-input" type="checkbox" name="reformas" id="reformas" value="reformas">
                                 <label class="form-check-label" for="reformas">Admite Reformas</label>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group m-3 text-center">
+                    <div class="form-group py-4 m-3 text-center">
                         <span type="button" class="btn btn-light d-lg-none botonesOrden">Menor a Mayor</span>
                         <span type="button" class="btn btn-light d-lg-none botonesOrden">Mayor a Menor</span>
                         <span type="button" class="btn btn-danger">Reiniciar Filtros</span>

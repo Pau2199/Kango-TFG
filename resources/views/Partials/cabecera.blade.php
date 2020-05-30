@@ -11,15 +11,15 @@
         </div>
         <div class="col-md-3 col-8 my-5 my-md-4 text-center">
             <div class="btn-group mr-5 mr-md-4">
-                <a href="#" data-toggle="dropdown"><img id="login" class="svgTamanyo" class="mt-4" src="{{asset('img/user.svg')}}" alt="Usuario"></a>
+                <a href="#" data-toggle="dropdown"><img id="login" class="svgTamanyo" src="{{asset('img/user.svg')}}" alt="Usuario"></a>
                 @if(!Auth::user())
-                <div class="container dropdown-menu login dropdown-menu-right">
+                <div class="container dropdown-menu login mr-3 dropdown-menu-right">
                     <div class="row justify-content-center">
                         <div class="col-md-12 text-center">
                             <form class="px-4 py-3" method="POST" action="{{ route('login') }}">
                                 @csrf
-                                <div class="form-group">
-                                    <label for="email" class="font-weight-bold col-form-label text-md-right">{{ __('Correo Electronico') }}</label>
+                                <div class="form-group text-left">
+                                    <label for="email" class="font-weight-bold col-form-label">{{ __('Correo Electronico') }}</label>
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -27,8 +27,8 @@
                                     </span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="password" class="font-weight-bold col-form-label text-md-right">{{ __('Contraseña') }}</label>
+                                <div class="form-group text-left">
+                                    <label for="password" class="font-weight-bold col-form-label">{{ __('Contraseña') }}</label>
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -42,16 +42,16 @@
                                         {{ __('Recordar Datos') }}
                                     </label>
                                 </div>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="mt-3 btn btn-warning">
                                     {{ __('Entrar') }}
                                 </button>
                             </form>
                             <div class="dropdown-divider"></div>
                             @if (Route::has('password.request'))
-                            <a class="btn btn-link" href="{{ route('password.request') }}">
-                                {{ __('¿Has olvidado tu contraseña?') }}
-                            </a>
-                            <a class="btn btn-link" href="{{ route('register') }}">
+                            <!--                            <a class="btn btn-link" href="{{ route('password.request') }}">
+{{ __('¿Has olvidado tu contraseña?') }}
+</a>-->
+                            <a class="btn colorTexto" href="{{ route('register') }}">
                                 {{ __('¿Nuevo en Kangoo Home? Registrarte aquí!') }}
                             </a>
                             @endif
@@ -59,11 +59,10 @@
                     </div>
                 </div>
                 @else
-                <div class="dropdown-menu dropdown-menu-right menuUser">
+                <div class="dropdown-menu dropdown-menu-right bg-light menuUser">
                     <a class="dropdown-item" href="/inmuebles/anunciosActivos">Inmuebles</a>
                     <a class="dropdown-item" href="/perfil/datosPersonales">Perfil</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="btn btn-link" href="{{ route('logout') }}"
+                    <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
                         {{ __('Cerrar Session') }}
@@ -83,9 +82,9 @@
         </div>
     </div>
 </header>
-<nav id="navbar" class="navbar navbar-expand filtro footerPequenyo">
+<nav id="navbar" class="navbar navbar-expand footerPequenyo">
     <div class="collapse navbar-collapse" id="navbarNav">
-        @if(Request::is('inmuebles/anunciosActivos', 'inmuebles/publicarNuevo', 'inmuebles/allAnuncios'))
+        @if(Request::is('inmuebles/anunciosActivos', 'inmuebles/publicarNuevo'))
         @include('Partials.Navs.inmuebleNav')
         @elseif(Request::is('perfil/horarioVisita', 'perfil/datosPersonales', 'perfil/solicitudesVisita', 'notificaciones', 'favoritos/mostrarFavoritos'))
         @include('Partials.Navs.perfilNav')
