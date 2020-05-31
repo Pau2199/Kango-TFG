@@ -1,5 +1,8 @@
 aside{
-    background-color: rgb(173, 254, 0, 0.7);
+/*
+    background-color: rgb(173, 254, 0, 0.5);
+*/
+    background-color: #B5DCCA;
 }
 .botonPulsado{
     background-color: #FEC3A6;
@@ -19,8 +22,4 @@ aside{
 
 .iconoCorazon{
     font-size: 30px;
-}
-
-.colorBody{
-    background-color: rgb(227, 251, 249);
 }

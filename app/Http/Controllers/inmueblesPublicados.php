@@ -119,6 +119,10 @@ class inmueblesPublicados extends Controller
     public function borrarImagen ($imagen){
         //        DB::table('image')->where('nombre', '=', $imagen)->delete();
     }
+    
+    public function pagar(){
+        return view('pago');
+    }
     /**
      * Show the form for creating a new resource.
      *

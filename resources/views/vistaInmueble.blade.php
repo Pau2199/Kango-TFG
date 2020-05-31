@@ -300,7 +300,7 @@
                     <div class="form-row">
                         @if($datos[0]->alquiler == true)
                         <div class="col-xl-4 mt-xl-0 col-lg-12 mt-lg-3 col-md-4 mt-md-0 col-12 mt-3">
-                            <span class="btn btn-warning font-weight-bold">Alquilar Inmueble</span>
+                            <a href="/inmueble/pagar/{{$datos[0]->id}}" class="btn btn-warning font-weight-bold">Alquilar Inmueble</a>
                         </div>
                         @endif
                         <div class="col-xl-4 mt-xl-0 col-lg-12 mt-lg-3 col-md-4 mt-md-0 col-12 mt-3">

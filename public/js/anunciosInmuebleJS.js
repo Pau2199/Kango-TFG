@@ -6,7 +6,7 @@ $(function(){
     $('#modificarInm').hide();
     $('#vertical').hide();
     $('#mensajeInfo').hide();
-
+    
     $('.favoritos').click(function(){
         var idInmueble = window.location.href.split('/')[5];
         var eliminar = 0;
@@ -48,7 +48,7 @@ $(function(){
                 }
             }
         });
-    })
+    });
 
     $('#solicitar').click(function(){
         $('#botones').hide();

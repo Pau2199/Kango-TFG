@@ -2,20 +2,21 @@
     width: 130px;
     height: 120px;
 }
-#colorCabecera{
-    background-color: rgb(173, 254, 0, 0.7);
-}
 .svgTamanyo{
     width: 35px;
     height: 35px;
 }
 
 .footerGrande{
-    background-color: rgb(173, 254, 0, 0.7);
+    /*background-color: rgb(173, 254, 0, 0.5);*/
+    background-color: #37A794;
 }
 
 .footerPequenyo{
-    background-color: rgb(149,254,159);
+/*
+    background-color: rgb(149,254,159, 0.7);
+*/
+    background-color: #63BD9A
 }
 
 .login{
@@ -85,8 +86,4 @@
 }
 .colorTexto:hover{
     color: #B1033A; 
-}
-
-.btn:hover{
-    background-color: #09C588;
 }

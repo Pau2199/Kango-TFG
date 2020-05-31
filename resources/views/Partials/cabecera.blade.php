@@ -1,4 +1,4 @@
-<header class="container-fluid" id="colorCabecera">
+<header class="container-fluid footerGrande">
     <div class="row justify-content-between">
         <div class="col-md-3 col-4">
             <a href="{{url('/')}}"><img id="imgLogo" src="{{asset('img/Logo.png')}}" alt="Logo Página"></a>
