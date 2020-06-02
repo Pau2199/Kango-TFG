@@ -58,9 +58,10 @@ class horarioVisitaController extends Controller
      */
     public function store(Request $request)
     {
-        $agregados = Visiting_hour::where('dia', '=', $request->dia)->get();
+        $agregados = Visiting_hour::where('dia', '=', $request->dia)->where('idUsuario', '=', Auth::user()->id)->get();
         $existe = false;
-        if(count($agregados) != 0){
+        $vnueva = "";
+        if(count($agregados) > 0){
             for($i = 0 ; $i<count($agregados); $i++){
                 if($request->horaInicio == $agregados[$i]->hora_inicio){
                     $existe = true;
@@ -68,15 +69,19 @@ class horarioVisitaController extends Controller
                 }
             }
         }
-        if($existe == false){
+        if($existe == false){;
             $vnueva = new Visiting_hour;
-            $vnueva->hora_inicio = $request->horaInicio;
-            $vnueva->hora_final = $request->horaFinal;
+            $vnueva->inicio = $request->horaInicio;
+            $vnueva->final = $request->horaFinal;
             $vnueva->dia = $request->dia;
             $vnueva->idUsuario = Auth::user()->id;
             $vnueva->save();
         }
-        return array('error' => $existe, 'id'=>$vnueva->id);
+        if($existe == true){
+            return array('error' => $existe);
+        }else{
+            return array('error' => $existe, 'id' => $vnueva->id);
+        }
     }
 
     /**

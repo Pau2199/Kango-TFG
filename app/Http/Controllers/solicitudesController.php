@@ -81,7 +81,7 @@ class solicitudesController extends Controller
             }
         }else{
             $error = true;
-            $mensaje = 'Esta solicitud ya ha sido enviada';
+            $mensaje = 'Ya has enviado una solicitud de visita para este propietario';
         }
         return json_encode(array('error' => $error, 'mensaje' => $mensaje));
     }
@@ -124,20 +124,20 @@ class solicitudesController extends Controller
         $tipoNotificacion = explode('-', $notificacion->titulo);
         $solicitudes = Solicitude::select('fecha_solicitada', 'hora', 'solicitadaDeIdUser','solicitadaAIdUser', 'idInmueble')->find($notificacion->idRequest);
         if(count($tipoNotificacion) > 1){
-            if($tipoNotificacion[1] == 'Recibida'){
+            if(trim($tipoNotificacion[1]) == 'Recibida'){
                 $user = User::select('nombre', 'primer_apellido', 'segundo_apellido')->find($solicitudes->solicitadaDeIdUser);
             }else{
                 $user = User::select('nombre', 'primer_apellido', 'segundo_apellido')->find($solicitudes->solicitadaAIdUser);
             }
         }else{
             $tipoNotificacion = explode(' ', $tipoNotificacion[0]);
-            if($tipoNotificacion[0] == 'Petición'){
+            if(trim($tipoNotificacion[0]) == 'Petición'){
                 $tipoNotificacion = 'Petición';
                 $user = User::select('nombre', 'primer_apellido', 'segundo_apellido')->find($solicitudes->solicitadaDeIdUser);
                 $alquiler = Is_rented::select('fecha_final', 'fecha_inicio')->where('idUsuario', '=', $solicitudes->solicitadaDeIdUser)->get();
                 $fianza = Rental::select('fianza')->where('idInmueble', '=', $solicitudes->idInmueble)->get();
                 $precio = Property::select('precio')->find($solicitudes->idInmueble);   
-            }else if($tipoNotificacion[0] == 'Admitida'){
+            }else if(trim($tipoNotificacion[0]) == 'Admitida'){
                 $tipoNotificacion = 'Admitida';
                 $user = User::select('nombre', 'primer_apellido', 'segundo_apellido', 'email')->find($solicitudes->solicitadaAIdUser);
                 $alquiler = Is_rented::select('fecha_final', 'fecha_inicio', 'numero_de_cuenta')->where('idUsuario', '=', $solicitudes->solicitadaDeIdUser)->get();

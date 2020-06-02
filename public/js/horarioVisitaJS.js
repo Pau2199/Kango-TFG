@@ -6,7 +6,7 @@ $(function(){
         success: function(data){
             for(var i = 0 ; i<diasSemana.length ; i++){
                 for(var j = 0 ; j<data[diasSemana[i]].length ; j++){
-                    var id = 'H' + data[diasSemana[i]][j]['hora_inicio'].split(':')[0]
+                    var id = 'H' + data[diasSemana[i]][j]['inicio'].split(':')[0]
                     var dia = data[diasSemana[i]][j]['dia'];
                     var idBD = data[diasSemana[i]][j]['id'];
                     $('#'+id).siblings('td.'+dia).attr('id', dia+'-'+idBD).addClass('bg-info');
@@ -60,12 +60,17 @@ $(function(){
 
     $('td').click(function(){
         if($(this).hasClass('bg-info')){
+            var elemento = $(this);
             var id = $(this).attr('id').split('-')[1];
             $.ajax({
                 url: '/perfil/borrarFranjaHoraria/'+id,
                 method: 'GET',
-                success: function(data){
-
+                success: function(){
+                    elemento.removeClass('bg-info');
+                    $('#texto').html('Franja Horaria eliminada correctamente');
+                    $('#mensajeInfo').removeClass('bg-danger');
+                    $('html, body').animate({scrollTop: 0},1000)
+                    $('#mensajeInfo').addClass('bg-success').show();
                 }
             }) 
         }

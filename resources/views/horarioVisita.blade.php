@@ -9,14 +9,13 @@
 <link rel="stylesheet" href="{{asset('css/estiloHorarioVisita.css')}}">
 @stop
 @section('content')
-
+<div class="text-center w-100 font-weight-bold" id="mensajeInfo">
+    <p id="texto"></p>
+</div>
 <ul>
     <li>Haz doble click sobre un recuadro para agregar una franja horaria</li>
     <li>Para eliminar una franja horaria simplemente haz click sobre el recuadro coloreado</li>
 </ul>
-<div class="text-center w-100 font-weight-bold" id="mensajeInfo">
-    <p id="texto"></p>
-</div>
 <div class="table-responsive">
     <table class="table table-bordered w-75 ml-auto mr-auto">
         <thead>

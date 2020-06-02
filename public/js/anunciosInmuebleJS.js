@@ -163,14 +163,16 @@ $(function(){
                 success: function(data){
                     console.log(data);
                     data = JSON.parse(data);
-                    if(error = true){
+                    if(data.error == true){
                         $('#texto').html(data.mensaje);
                         $('#mensajeInfo').removeClass('bg-success');
                         $('#mensajeInfo').addClass('bg-danger');
                         $('#mensajeInfo').show();
                     }else{
                         $('#mensajeInfo').removeClass('bg-danger');
+                        $('#mensajeInfo').addClass('bg-success');
                         $('#texto').html('Solicitud de visita enviada correctamente!');
+                        $('#mensajeInfo').show();
                     }
                     $('html, body').animate({scrollTop: 0},1000);
                     $('#formHorarioVisita').remove();
