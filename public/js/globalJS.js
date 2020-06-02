@@ -1,10 +1,11 @@
 $(function(){
+    var cocokie = '';
     $('.textoLogin').each(function(){
         if($(this).html() != ""){
             $('#login').trigger('click');
         }
     });
-    
+
     $.ajax({
         url: '/obtenerNotificaciones',
         method: 'GET',
@@ -13,6 +14,19 @@ $(function(){
                 var sup = $('<sup>').addClass('font-weight-bold colorNoti tamanyoTexto').html(data.length);
                 $('#notificacion').append(sup);
             }
+        }
+    });
+
+    $('#alquilarInmueble').click(function(){
+        setCookie('alquila', true, 1);
+    });
+    $(window).bind("beforeunload", function() {
+        var url = window.location.href.split('/')[4];
+        console.log(url)
+        if(url != 'vistaInmueble'){
+            if(getCookie('alquila')!=""){
+                deleteCookie('alquila');
+            }   
         }
     });
 });
@@ -175,4 +189,9 @@ function clickFavoritosCookie(eliminar, idInmueble){
 
         } 
     }
+}
+
+function escribirFechaFormato(fecha){
+    var arrayFecha = fecha.split('-');
+    return arrayFecha[2] + '/' + arrayFecha[1] + '/' + arrayFecha[0]
 }

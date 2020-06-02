@@ -6,7 +6,7 @@ $(function(){
     $('#modificarInm').hide();
     $('#vertical').hide();
     $('#mensajeInfo').hide();
-    
+
     $('.favoritos').click(function(){
         var idInmueble = window.location.href.split('/')[5];
         var eliminar = 0;
@@ -110,6 +110,7 @@ $(function(){
             method: 'POST',
             data: {idUser: idInmuebleUser, nombreDia: dia, "_token": $('#token').val()},
             success: function(data){
+                console.log(data);
                 var option = $('<option>').attr({value: '-',
                                                  selected: true}).html('-');
                 $('#selectHoras').append(option);

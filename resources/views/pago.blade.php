@@ -9,9 +9,12 @@
 <script src="{{asset('js/pagoJS.js')}}"></script>
 @stop
 @section('content')
+<div class="text-center w-100 font-weight-bold" id="mensajeInfo">
+    <p id="texto"></p>
+</div>
 <div class="container-fluid py-5">
-    <div class="row">
-        <div class="col-lg-7 mx-auto">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
             <ul class="nav bg-light rounded-pill nav-fill mb-3">
                 <li class="nav-item rounded-pill nav-tab-datosPer font-weight-bold">
                     Paso 1
@@ -23,28 +26,20 @@
                     Paso 3
                 </li>
             </ul>
-            <form role="form">
+            <form id="formDatos" role="form">
+                <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
                 <div class="tab-content">
                     <div id="nav-tab-datosPer" class="tab-pane fade show active">
-                        <div class="form-group">
-                            <label for="cardNumber">Número de Cuenta</label>
-                            <input type="text" id="numeroCuenta" name="numeroCuenta" placeholder="ESXX XXXX XXXX XXXX XXXX XXXX" class="form-control" required>
-                            <strong id="mensajenumeroCuenta"></strong>
-                        </div>
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label for="duracion">Duración del Alquiler</label>
-                                <select id="duracion" name="duracion" class="form-control">
-                                    <option value="-" selected>-</option>
-                                    <option value="Indefinido">Indefinido</option>
-                                    <option value="FechaConcreta">Fecha Concreta</option>
-                                </select>
-                                <strong id="mensajeduracion"></strong>
+                                <label for="cardNumber">Número de Cuenta</label>
+                                <input type="text" id="numeroCuenta" name="numeroCuenta" placeholder="ESXX XXXX XXXX XXXX XXXX XXXX" class="form-control" required>
+                                <strong id="mensajenumeroCuenta"></strong>
                             </div>
                             <div class="form-group col-md-6">
-                                <label><span class="hidden-xs">Tiempo Alquiler</span></label>
-                                <input type="date" id="fechaDuracion" name="fechaDuracion" class="form-control" required>
-                                <strong id="mensajefechaDuracion"></strong>
+                                <label><span class="hidden-xs">Fecha deseada de incoporporación al inmueble</span></label>
+                                <input type="date" id="fechaInicio" name="fechaInicio" class="form-control">
+                                <strong id="mensajefechaInicio"></strong>
                             </div>
                         </div>
                         <div class="text-center">
@@ -102,18 +97,18 @@
                                 <h6>Detalles del Contrato</h6>
                                 <p id="cuenta"></p>
                                 <p id="tiempo"></p>
-                                <p>Mensualidad: 500 €</p>  
+                                <p id="mensualidad"></p>  
                             </div>
                             <div class="col-6">
                                 <h6>Detalles del Pago</h6>
                                 <p id="titular"></p>
                                 <p id="tarjeta"></p>
-                                <p>Importe a Pagar: 1500 €</p>
+                                <p id="fianza"></p>
                                 <p>Concepto: Pago de fianza</p>
                             </div>
                         </div>
                         <div class="text-center">
-                            <span class="btn btn-warning">Pagar</span>
+                            <span id="pagar" class="btn btn-warning shadow-sm rounded-pill">Pagar</span>
                         </div>
                     </div>
                 </div>

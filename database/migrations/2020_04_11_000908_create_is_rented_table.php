@@ -15,10 +15,12 @@ class CreateIsRentedTable extends Migration
     {
         Schema::create('is_rented', function (Blueprint $table) {
             $table->Date('fecha_inicio');
-            $table->Date('fecha_final');
-            $table->bigInteger('numero_de_cuenta');
-            $table->string('idUsuario');
+            $table->String('fecha_final');
+            $table->string('numero_de_cuenta');
+            $table->string('estado');
             $table->bigInteger('idAlquiler')->unsigned();
+            $table->bigInteger('idUsuario')->unsigned();
+            $table->primary(array('idAlquiler', 'idUsuario'));
             $table->timestamps();
         });
     }

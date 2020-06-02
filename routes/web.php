@@ -27,7 +27,10 @@ Route::post('inmuebles/agregarInmueble', 'publicarNuevoInmuebleController@store'
 Route::post('/inmuebles/mostrarInmuebles', 'publicarNuevoInmuebleController@store');
 Route::get('/inmuebles/anunciosActivos', 'publicarNuevoInmuebleController@mostrarInmuebles');
 Route::post('/inmueble/desactivar', 'inmueblesPublicados@actualizarEstado');
+
 Route::get('/inmueble/pagar/{id}', 'inmueblesPublicados@pagar');
+Route::post('/inmueble/obtenerDatos', 'pagoAlquilerController@show');
+Route::post('/inmueble/realizarPago/{id}', 'pagoAlquilerController@store');
 
 Route::get('/perfil/horarioVisita', 'horarioVisitaController@index');
 Route::get('/perfil/modificarHorario', 'horarioVisitaController@store');
@@ -37,6 +40,8 @@ Route::post('/obtenerHorarioPropietario', 'horarioVisitaController@obtenerHorari
 Route::post('/enviarSolicitudVisita', 'solicitudesController@enviarSolicitudVisita');
 Route::get('/perfil/solicitudesVisita', 'solicitudesController@index');
 Route::post('/perfil/accionSol', 'solicitudesController@update');
+Route::get('/perfil/solicitudesAlquiler', 'pagoAlquilerController@index');
+Route::get('/perfil/misalquileres', 'pagoAlquilerController@cargarAlquiler');
 
 
 Route::get('/perfil/datosPersonales', 'datosPersonalesController@index');

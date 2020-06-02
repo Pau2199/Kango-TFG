@@ -16,32 +16,50 @@ $(function(){
     });
 
     $('.btn-danger').click(function(){
+        var url = window.location.href.split('/')[4];
         var idSolicitud = $(this).parent().parent().attr('id');
-        var idUsuarioSolicitante = $(this).parent().siblings(':nth-child(3)').attr('class');
+        var idUsuarioSolicitante = "";
+        if(url == 'solicitudesAlquiler'){
+            idUsuarioSolicitante = $(this).parent().siblings(':nth-child(4)').attr('class');   
+        }else{
+            idUsuarioSolicitante = $(this).parent().siblings(':nth-child(3)').attr('class');   
+        }
+        console.log(idUsuarioSolicitante);
         $.ajax({
             url: '/perfil/accionSol',
             method: 'POST',
             data: {accion: 'danger', idSolicitud: idSolicitud, idUsuarioSolicitante: idUsuarioSolicitante, _token: $('#token').val()},
             success: function(data){
-                $('#'+idSolicitud).children(':nth-child(6)').children().remove();
+                if(url == 'solicitudesAlquiler'){
+                    $('#'+idSolicitud).children(':nth-child(6)').children().remove();
+                }else{
+                    $('#'+idSolicitud).children(':nth-child(5)').children().remove();
+                }
             }
         });
     });
     $('.btn-success').click(function(){
+        var url = window.location.href.split('/')[4];
         var idSolicitud = $(this).parent().parent().attr('id');
-        var idUsuarioSolicitante = $(this).parent().siblings(':nth-child(3)').attr('class');
+        var idUsuarioSolicitante = "";
+        if(url == 'solicitudesAlquiler'){
+            idUsuarioSolicitante = $(this).parent().siblings(':nth-child(4)').attr('class');   
+        }else{
+            idUsuarioSolicitante = $(this).parent().siblings(':nth-child(3)').attr('class');   
+        }
+        console.log(idUsuarioSolicitante);
         $.ajax({
             url: '/perfil/accionSol',
             method: 'POST',
             data: {accion: 'success', idSolicitud: idSolicitud, idUsuarioSolicitante: idUsuarioSolicitante, _token: $('#token').val()},
             success: function(data){
-                $('#'+idSolicitud).children(':nth-child(6)').children().remove();YY
+                console.log(data);
+                if(url == 'solicitudesAlquiler'){
+                    $('#'+idSolicitud).children(':nth-child(6)').children().remove();
+                }else{
+                    $('#'+idSolicitud).children(':nth-child(5)').children().remove();
+                }
             }
         });
     });
 });
-
-function escribirFechaFormato(fecha){
-    var arrayFecha = fecha.split('-');
-    return arrayFecha[2] + '/' + arrayFecha[1] + '/' + arrayFecha[0]
-}

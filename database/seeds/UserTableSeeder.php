@@ -27,15 +27,15 @@ class UserTableSeeder extends Seeder
 
         DB::table('users')->insert([
             [    
-                'nombre' => $nombres_hombre[0],
+                'nombre' => 'Paquito',
                 'id' => 1,
                 'sexo' => $sexos[0],
                 'primer_apellido' => $apellidos[rand(0,7)],
                 'segundo_apellido' => $apellidos[rand(0,7)],
                 'rol' => $roles[rand(0,1)],
                 'fecha_nacimiento' => $fechas_nacimiento[0],
-                'email' => Str::random(10).'@gmail.com',
-                'password' => $contraseñas[0],
+                'email' => 'pruebas@gmail.com',
+                'password' => Hash::make('prueba'),
                 'nif_nie' => Str::random(9),
             ],
             [
