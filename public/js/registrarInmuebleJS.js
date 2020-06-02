@@ -9,13 +9,44 @@ $(function(){
         $('#labelmasImagenes').html($('#masImagenes')[0].files.length + ' Elementos Selecionados'); 
     })
 
+    $.ajax({
+        url: '/inmueble/cargarProvinciasInm',
+        method: 'GET',
+        success: function(data){
+            for (var i = 0 ; i<data.length ; i++){
+                var option = $('<option>').attr('value', data[i]['nombre']).html(data[i]['nombre']);
+                $('#provincia').append(option);   
+            }
+        }
+    });
 
+    $('#provincia').change(function(){
+        if($(this).val() != '-'){
+            var selecionada = $(this).val().trim();
+            $.ajax({
+                url: '/inmueble/cargarLocalidadesInm/'+selecionada,
+                method: 'GET',
+                success: function(data){
+                    $('#localidad option').remove();
+                    var option = $('<option>').attr({
+                        value: '-',
+                        selected: true
+                    });
+                    option.html('-');
+                    $('#localidad').append(option);
+                    for(var i = 0 ; i<data.length ; i++){
+                        option = $('<option>').attr('value', data[i].nombre);
+                        option.html(data[i].nombre);
+                        $('#localidad').append(option);
+                    }
+                }
+            })
+        }
+    });
 
 
     $('#tipoCompra').change(function(){
-        console.log($('#opcionAlquiler option:selected').text());
-
-        if($('#tipoCompra').val() == 'A' || $('#tipoCompra').val() == 'AQ'){
+        if($('#tipoCompra').val() == 'A'){
             $('#fianza').show();
             $('#extraAlquiler').show();
         }else{
@@ -26,15 +57,12 @@ $(function(){
 
     $('input').blur(function(){
         $('#mensaje'+$(this).attr('id')).html('');
-        if($(this).val() == "" && $(this).attr('id') != 'nPiso' && $(this).attr('id') != 'nPatio'){
+        if($(this).val() == "" && $(this).attr('id') != 'nPiso' && $(this).attr('id') != 'nPatio' && $(this).attr('id') != 'masImagenes'){
             $('#mensaje'+$(this).attr('id')).html('Este campo es obligatorio');
         }else{
             if($(this).attr('id') == 'provincia' || $(this).attr('id') == 'localidad' || $(this).attr('id') == 'nombreDir'){
                 validarProvinciaLocalidadNombre($(this).attr('id'), $(this).val());
             }
-            /*if($(this).attr('id') == 'nPatio'){
-                validarPatioPiso($(this).attr('id'), $(this).val());
-            }*/
             if($(this).attr('id') == 'nHabitaciones'){
                 validarHabitaciones($(this).attr('id'), $(this).val());
             }
@@ -46,6 +74,13 @@ $(function(){
             }
             if($(this).attr('id') == 'nMetrosCuadrados'){
                 validarMetrosCuadrados($(this).attr('id'), $(this).val());
+            }
+            if($(this).attr('id') == 'masImagenes'){
+                var array = $('#masImagenes')[0].files;
+                validarArchivos($(this).attr('id'), array);
+            }
+            if($(this).attr('id') == 'perfil'){
+                validarArchivos($(this).attr('id'), $(this).val());
             }
         }
 
@@ -75,16 +110,21 @@ $(function(){
             if($(this).attr('id') == 'nMetrosCuadrados'){
                 validarMetrosCuadrados($(this).attr('id'), $(this).val());
             }
-
-
+            if($(this).attr('id') == 'masImagenes'){
+                var array = $('#masImagenes')[0].files;
+                validarArchivos($(this).attr('id'), array);
+            }
+            if($(this).attr('id') == 'perfil'){
+                validarArchivos($(this).attr('id'), $(this).val());
+            }
         })
 
         $('select').each(function(){
             validarSelect($(this).attr('id'), $(this).val());
         })
 
-        if($('#tipoCompra').val() == 'A' ||  $('#tipoCompra').val() == 'AQ'){
-            validarFianza('fianza', $('#fianza').val());
+        if($('#tipoCompra').val() == 'A'){
+            validarFianza('fianza', $('#fianzaInput').val());
         }
 
         $('#mensajeperfil').html('');

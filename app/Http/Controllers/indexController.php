@@ -155,7 +155,7 @@ class indexController extends Controller
                 $consultaVenta .= $where;
             }
             if($orden != 'nada'){
-                $consultaAlquiler .= 'ORDER BY p.precio '.$orden; 
+                $consultaVenta .= 'ORDER BY p.precio '.$orden; 
             }
             $datos = DB::select($consultaVenta);
         }else if($es_alquiler == true){

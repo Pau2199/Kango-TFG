@@ -15,7 +15,7 @@
             <aside class="colorFondo my-3">
                 <h5 class="mx-1 pt-3 text-center">Filtros de Busqueda</h5>
                 <form id="filtroBusqueda">
-                    @csrf
+                   @csrf
                     <div class="form-group m-3 text-center">
                         <span class="">Tipo de busqueda</span>
                         <div class="checkbox mt-1">
@@ -26,19 +26,19 @@
                     <div class="form-group m-3">
                         <span class="">Seleciona una Provincia</span>
                         <select name="provincia" id="provincia" class="form-control w-100">
-                            <option selected>-</option>
+                            <option id="guionPro" selected>-</option>
                         </select>
                     </div>
                     <div class="form-group m-3">
                         <span class="">Seleciona una Localidad</span>
                         <select name="localidad" id="localidad" class="form-control w-100">
-                            <option selected>-</option>
+                            <option id="guionLocal" selected>-</option>
                         </select>
                     </div>
                     <div class="form-group m-3">
                         <span class="">Tipo de Vivienda</span>
                         <select name="tipoInmueble" id="tipoVivienda" class="form-control w-100">
-                            <option selected>-</option>
+                            <option id="guionInm" selected>-</option>
                             <option value="P">Piso</option>
                             <option value="D">Duplex</option>
                             <option value="A">Adosado</option>
@@ -86,7 +86,7 @@
                                 <label class="form-check-label" for="animales">Admite Animales</label>
                             </div>
                             <div class="ml-1 form-check">
-                                <input class="form-check-input" type="checkbox" name="reformas" id="reformas" value="reformas">
+                                <input id="reformas" class="form-check-input" type="checkbox" name="reformas" id="reformas" value="reformas">
                                 <label class="form-check-label" for="reformas">Admite Reformas</label>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                     <div class="form-group py-4 m-3 text-center">
                         <span type="button" class="btn btn-light d-lg-none botonesOrden">Menor a Mayor</span>
                         <span type="button" class="btn btn-light d-lg-none botonesOrden">Mayor a Menor</span>
-                        <span type="button" class="btn btn-danger">Reiniciar Filtros</span>
+                        <span id="reiniciarFiltro" class="btn btn-danger">Reiniciar Filtros</span>
                     </div>
                 </form>
             </aside>
@@ -105,10 +105,11 @@
             <section id="anuncios">
                 @foreach($datos as $key => $valor)
                 <?php if($valor->alquiler == true){
-    $id = 'A-'.$valor->id;    
-}else{
-    $id = 'V-'.$valor->id;    
-}
+                    $id = 'A-'.$valor->id;    
+                    }else{
+                    $id = 'V-'.$valor->id;    
+                    }
+                    $img = $valor->img[0]->nombre
                 ?>
                 <div class="card mt-3">
                     <div id="{{$id}}" class="d-flex justify-content-between card-header">
@@ -138,7 +139,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-xl-6 col-lg-12">
-                                <img class="img-fluid" src="{{asset('uploads/perfil6.jpg')}}" alt="">
+                                <img class="img-fluid" src='{{asset("uploads/$img")}}' alt="">
                             </div>
                             <div class="col-xl-6">
                                 <div class="row mb-3">

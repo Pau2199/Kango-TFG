@@ -24,7 +24,6 @@
                         <select id="tipoCompra" name="tipoCompra" class="form-control  @error('tipoCompra') is-invalid @enderror">
                             <option value="-">-</option>
                             <option value="A">Alquiler</option>
-                            <option value="AQ">Alquiler Vacacional</option>
                             <option value="C">Compra</option>
                         </select>
                         <strong id="mensajetipoCompra" class="comprobaciones" ></strong>
@@ -65,7 +64,9 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label class="font-weight-bold" for="provincia">Provincia</label>
-                        <input type="text" class="form-control  @error('provincia') is-invalid @enderror" value=""name="provincia" id="provincia" placeholder="Provincia">
+                        <select id="provincia" name="provincia" class="form-control @error('provincia') is-invalid @enderror">
+                            <option value="-">-</option>
+                        </select>
                         <strong id="mensajeprovincia" class="comprobaciones" ></strong>
                         @error('provincia')
                         <span class="invalid-feedback" role="alert">
@@ -75,9 +76,11 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label class="font-weight-bold" for="localidad">Localidad</label>
-                        <input type="text" class="form-control  @error('localidad') is-invalid @enderror" name="localidad" id="localidad" placeholder="Localidad">
+                        <select id="localidad" name="localidad" class="form-control @error('localidad') is-invalid @enderror">
+                            <option value="-">-</option>
+                        </select>
                         <strong id="mensajelocalidad" class="comprobaciones" ></strong>
-                        @error('localidad')
+                        @error('provincia')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -124,11 +127,11 @@
                         <label class="font-weight-bold" for="nPatio">Patio</label>
                         <input type="number" class="form-control @error('nPatio') is-invalid @enderror" name="nPatio" id="nPatio" placeholder="NºPatio">
                         <strong id="mensajenPatio" class="comprobaciones" ></strong>
-<!--                        @error('nPatio')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror-->
+                        <!--                        @error('nPatio')
+<span class="invalid-feedback" role="alert">
+<strong>{{ $message }}</strong>
+</span>
+@enderror-->
                     </div>
                 </div>
                 <div class="form-row">
@@ -243,7 +246,7 @@
                         </div>
                         <div id="fianza" class="form-group col-md-6">
                             <label class="font-weight-bold" for="fianza">Fianza que se debe abonar</label>
-                            <input type="number" class="form-control @error('fianza') is-invalid @enderror" name="fianza" id="fianza" placeholder="Fianza que se debe abonar">
+                            <input type="number" class="form-control @error('fianza') is-invalid @enderror" name="fianza" id="fianzaInput" placeholder="Fianza que se debe abonar">
                             <strong id="mensajefianza" class="comprobaciones" ></strong>
                             @error('fianza')
                             <span class="invalid-feedback" role="alert">
@@ -273,6 +276,7 @@
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="masImagenes[]" multiple="" id="masImagenes">
                                 <label id="labelmasImagenes" class="custom-file-label" for="masImagenes">Selecionar más Imagenes</label>
+                                <strong id="mensajemasImagenes" class="comprobaciones"></strong>
                             </div>
                         </div>
                     </div>
@@ -281,8 +285,8 @@
                     <label class="font-weight-bold" for="descripcion">Descripción</label>
                     <textarea name="descripcion" id="descripcion" cols="90" rows="5"></textarea>
                 </div>
-                <div class="justify-content-center">
-                    <button type="submit" id='botonRegistro' class="btn btn-primary">Registrar Inmueble!</button>
+                <div class="text-center">
+                    <button type="submit" id='botonRegistro' class="font-weight-bold btn btn-warning shadow-sm rounded-pill">Registrar Inmueble!</button>
                 </div>
                 <input type="hidden" class="form-control" name="usuario" value="{{auth()->id()}}"id="usuario">
             </form>

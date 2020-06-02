@@ -14,12 +14,29 @@ $(function(){
         }
     }
 
+    $('#reiniciarFiltro').click(function(){
+        $('select').prop('selectedIndex',0);
+        $('#reformas').prop('checked', 'false');
+        $('input[name="tipoBusqueda"]').each(function(){
+			this.checked = false;
+        });
+        $('input[type="checkbox"]').each(function(){
+            this.checked = false;
+        })
+        $('input').each(function(){
+            $(this).val('');
+        });
+        
+        $('.botonesOrden').each(function(){
+            $(this).removeClass('botonPulsado');
+        })
+        peticionFiltros();
+    });
+
     if(document.referrer){
         var url = document.referrer;
         url = url.split('8000/');
-        console.log(url);
         if(url[1] == 'register'){
-            console.log('entra')
             $('#login').trigger('click');
         }
     }
@@ -96,7 +113,6 @@ $(function(){
     $('#provincia').change(function(){
         if($(this).val() != '-'){
             var selecionada = $(this).val().trim();
-            console.log(selecionada);
             $.ajax({
                 url: '/index/cargarLocalidades/'+selecionada,
                 method: 'GET',
@@ -117,7 +133,6 @@ $(function(){
             })
         }else{
             $('#localidad option').remove();
-
             var option = $('<option>').attr({
                 value: '-',
                 selected: true
@@ -153,15 +168,14 @@ $(function(){
                 orden = "DESC"
             }
         }
-        console.log($('.botonPulsado').html());
         var arrayTipoPiso = {P: 'Piso', D: 'Duplex', A: 'Adosado', C: 'Chalet', B: 'Bajo'};
         var arrayDireccion = {C: 'Calle', A: 'Avenida', P: 'Plaza'}
+        
         $.ajax({
             url: '/index/filtrosBusqueda/'+orden,
-            method: 'POST',
+            method: 'GET',
             data: $('#filtroBusqueda').serialize(),
             success: function(data){
-                console.log(data);
                 $('#carga').hide();
                 if(data.length == 0){
                     $('#sinDatos').show();
@@ -436,32 +450,4 @@ $(function(){
             }
         })
     }
-
-})
-
-function setCookie(cname, cvalue, exdays){
-    var d = new Date(); d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
-function deleteCookie(cname) {
-    var valor = cname+'=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
-    document.cookie = valor; 
-}
-
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' '){
-            c = c.substring(1); 
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length); 
-        }
-    } return "";
-}
+});

@@ -82,16 +82,12 @@ function validarSelect(campo, mensaje){
     $('#mensaje'+campo).html('');
     if(mensaje == '-'){
         $('#mensaje'+campo).html('Debes selecionar una opción');
-    }else{
-        if(mensaje != 'A' && mensaje != 'AQ' && mensaje != 'C' && mensaje != 'P' && mensaje != 'D' && mensaje != 'C' && mensaje != 'B'){
-            $('#mensaje'+campo).html('Opción elegida incorrecta');
-        }
     }
 }
 
 function validarPrecio(campo, mensaje){
     $('#mensaje'+campo).html('');
-    if(mensaje <= 200){
+    if(mensaje < 300){
         $('#mensaje'+campo).html('El número de este campo debe ser superior a 200.');
     }
 }
@@ -103,12 +99,37 @@ function validarMetrosCuadrados(campo , mensaje){
     }
 }
 
+function validarArchivos(campo, archivos){
+    if(campo == 'masImagenes'){
+        if(archivos.length > 3){
+            $('#mensaje'+campo).html('Como máximo puedes selecionar tres imagenes');
+        }else{
+            for(var i = 0 ; i<archivos.length ; i++){
+                var nombre = archivos[i]['name'];
+                nombre = nombre.split('.');
+                if(nombre[nombre.length-1] != 'jpg' && nombre[nombre.length-1] != 'png'){
+                    $('#mensaje'+campo).html('La extensión del archivo debe ser .jpg o .png');
+                    break;
+                }
+            }
+        }
+
+    }else{
+        var extension = archivos.split('.');
+        if(extension[extension.length-1] != 'jpg' && extension[extension.length-1] != 'png'){
+            $('#mensaje'+campo).html('La extensión del archivo debe ser .jpg o .png');
+        }
+    }
+}
+
 function validarFianza(campo, mensaje){
     $('#mensaje'+campo).html('');
-    var minimo = $('#precio').val()*2;
-    var maximo =$('#precio').val()*4;
-    if(mensaje < minimo && mensaje > maximo){
-        $('#mensaje'+campo).html('La fianza debe ser como mínimo 2 meses y como máximo 4 meses.');
+    var minimo = parseInt($('#precio').val())*2;
+    var maximo = parseInt($('#precio').val())*4;
+    if(parseInt(mensaje) < minimo){
+        $('#mensaje'+campo).html('La fianza debe ser como mínimo 2 meses');
+    }else if(parseInt(mensaje) > maximo){
+        $('#mensaje'+campo).html('La fianza debe ser como máximo 4 meses');
     }
 }
 

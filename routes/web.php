@@ -27,8 +27,10 @@ Route::post('inmuebles/agregarInmueble', 'publicarNuevoInmuebleController@store'
 Route::post('/inmuebles/mostrarInmuebles', 'publicarNuevoInmuebleController@store');
 Route::get('/inmuebles/anunciosActivos', 'publicarNuevoInmuebleController@mostrarInmuebles');
 Route::post('/inmueble/desactivar', 'inmueblesPublicados@actualizarEstado');
+Route::get('/inmueble/cargarProvinciasInm', 'publicarNuevoInmuebleController@cargarProvincias');
+Route::get('/inmueble/cargarLocalidadesInm/{selecionada}', 'publicarNuevoInmuebleController@cargarLocalidades');
 
-Route::get('/inmueble/pagar/{id}', 'inmueblesPublicados@pagar');
+Route::get('/inmueble/pagar/{id}', 'inmueblesPublicados@pagar')->middleware('Pago');
 Route::post('/inmueble/obtenerDatos', 'pagoAlquilerController@show');
 Route::post('/inmueble/realizarPago/{id}', 'pagoAlquilerController@store');
 
@@ -61,5 +63,5 @@ Route::get('/favoritos/mostrarFavoritos', 'favoritosController@index');
 Route::get('/index/cargarProvincia', 'indexController@cargarProvincias');
 //cargar datos localidades de la provincia elegia
 Route::get('/index/cargarLocalidades/{provincia}', 'indexController@cargarLocalidades');
-Route::post('/index/filtrosBusqueda/{orden}', 'indexController@filtrosBusqueda');
+Route::get('/index/filtrosBusqueda/{orden}', 'indexController@filtrosBusqueda');
 

@@ -196,9 +196,9 @@ class publicarNuevoInmuebleController extends Controller
 
         $direccion = new Address;
         $direccion->tipo_de_via = $request->tipoVia;
-        $id = Location::select('id')->where('nombre', $request->provincia)->get();
+        $id = Location::select('id')->where('nombre', $request->localidad)->get();
         $direccion->idLocalidad = $id[0]->id;
-        $id = Province::select('id')->where('nombre', $request->localidad)->get();
+        $id = Province::select('id')->where('nombre', $request->provincia)->get();
         $direccion->idProvincia = $id[0]->id;
         $direccion->nombre_de_la_direccion = $request->nombreDir;
         $direccion->codigo_postal = $request->cp;
@@ -271,6 +271,17 @@ class publicarNuevoInmuebleController extends Controller
         return redirect('inmuebles/anunciosActivos');
 
 
+    }
+
+    public function cargarProvincias(){
+
+        return Province::select('nombre')->get();
+    }
+
+    public function cargarLocalidades($selecionada){
+        $id = Province::select('id')->where('nombre', $selecionada)->get();
+        $localidades = Location::select('nombre')->where('idProvincia', $id[0]->id)->get();
+        return $localidades;
     }
 
     /**
