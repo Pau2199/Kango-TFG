@@ -37,6 +37,7 @@ class UserTableSeeder extends Seeder
                 'email' => 'pruebas@gmail.com',
                 'password' => Hash::make('prueba'),
                 'nif_nie' => Str::random(9),
+                'telefono' => 691234213,
             ],
             [
                 'nombre' => $nombres_mujer[0],
@@ -49,6 +50,7 @@ class UserTableSeeder extends Seeder
                 'email' => Str::random(10).'@gmail.com',
                 'password' => $contraseñas[1],
                 'nif_nie' => Str::random(9),
+                'telefono' => 721254213,
             ],
             [
                 'nombre' => $nombres_hombre[1],
@@ -61,6 +63,7 @@ class UserTableSeeder extends Seeder
                 'email' => Str::random(10).'@gmail.com',
                 'password' => $contraseñas[2],
                 'nif_nie' => Str::random(9),
+                'telefono' => 671034111,
             ],
             [
                 'nombre' => $nombres_mujer[1],
@@ -73,6 +76,7 @@ class UserTableSeeder extends Seeder
                 'email' => Str::random(10).'@gmail.com',
                 'password' => $contraseñas[3],
                 'nif_nie' => Str::random(9),
+                'telefono' => 602425812,
             ],
             [
                 'nombre' => $nombres_hombre[2],
@@ -85,6 +89,7 @@ class UserTableSeeder extends Seeder
                 'email' => Str::random(10).'@gmail.com',
                 'password' => $contraseñas[4],
                 'nif_nie' => Str::random(9),
+                'telefono' => 654321231,
             ], 
             [
                 'nombre' => 'Pau',
@@ -97,6 +102,7 @@ class UserTableSeeder extends Seeder
                 'email' => 'pau_ll_m@hotmail.com',
                 'password' => Hash::make('pau1234'),
                 'nif_nie' => Str::random(9),
+                'telefono' => 765231432,
             ],
             [
                 'nombre' => $nombres_hombre[2],
@@ -109,6 +115,7 @@ class UserTableSeeder extends Seeder
                 'email' => Str::random(10).'@gmail.com',
                 'password' => $contraseñas[4],
                 'nif_nie' => Str::random(9),
+                'telefono' => 685456271,
             ], 
         ]);
     }

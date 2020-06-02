@@ -19,9 +19,9 @@
                             <form class="px-4 py-3" method="POST" action="{{ route('login') }}">
                                 @csrf
                                 <div class="form-group text-left">
-                                    <label for="email" class="font-weight-bold col-form-label">{{ __('Correo Electronico') }}</label>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                    @error('email')
+                                    <label for="emailLogin" class="font-weight-bold col-form-label">{{ __('Correo Electronico') }}</label>
+                                    <input id="emailLogin" type="email" class="form-control @error('emailLogin') is-invalid @enderror" name="email" value="{{ old('emailLogin') }}" required autocomplete="email" autofocus>
+                                    @error('emailLogin')
                                     <span class="invalid-feedback" role="alert">
                                         <strong class="textoLogin">{{ $message }}</strong>
                                     </span>

@@ -52,16 +52,17 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:50', 'min:3'],
+            'name' => ['required', 'string', 'max:40', 'min:3'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', new comprobarContrasenya, 'confirmed'],
-            'primerApellido' => ['required', 'string', 'max:50', 'min:3'],
-            'segundoApellido' => ['required','string', 'max:50', 'min:3'],
+            'passwordRegister' => ['required', new comprobarContrasenya],
+            'primerApellido' => ['required', 'string', 'max:40', 'min:3'],
+            'segundoApellido' => ['required','string', 'max:40', 'min:3'],
             'sexo' => ['in:hombre,mujer','required'],
             'fechaNacimiento' => ['required', new esMayorDeEdad],
             'nif_nie' => ['required', new verificarNieNif, 'unique:users'],
             'terminosYCondiciones' => ['required'],
             'rol' => ['required'],
+            'telefono' => ['required'],
         ]);
     }
 
@@ -82,7 +83,8 @@ class RegisterController extends Controller
             'fecha_nacimiento' => $data['fechaNacimiento'],
             'email' => $data['email'],
             'nif_nie' => $data['nif_nie'],
-            'password' => Hash::make($data['password']),
+            'password' => Hash::make($data['passwordRegister']),
+            'telefono' => $data['telefono'],
         ]);
     }
 }

@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('nif_nie');
             $table->string('nombre');
             $table->string('sexo');
+            $table->bigInteger('telefono');
             $table->string('primer_apellido');
             $table->string('segundo_apellido');
             $table->string('rol');
