@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Intervention\Image\ImageManagerStatic as Imagen;
 use Illuminate\Http\Request;
 use App\Property;
 use App\Image;
@@ -119,7 +120,7 @@ class inmueblesPublicados extends Controller
     public function borrarImagen ($imagen){
         //        DB::table('image')->where('nombre', '=', $imagen)->delete();
     }
-    
+
     public function pagar(){
         return view('pago');
     }
@@ -175,7 +176,6 @@ class inmueblesPublicados extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $numeroid = explode('-', $id);
 
         $inmueble = Property::find($numeroid[1]);
@@ -198,7 +198,6 @@ class inmueblesPublicados extends Controller
         }else{
             $inmueble->garage = false;
         }
-
         //comprobar Piscina
         if($request->piscina != null){
             $inmueble->piscina = true;
@@ -206,6 +205,27 @@ class inmueblesPublicados extends Controller
             $inmueble->piscina = false;
         }
         $inmueble->save();
+        if($request->perfil != null){
+            $imagen = $request->file('perfil');
+            $image_resize = Imagen::make($imagen->getRealPath()); 
+            $image_resize->resize(1920 , 1080);
+            $image_resize->save('uploads/perfil'.$numeroid[1].'.'.$imagen->getClientOriginalExtension());            
+        }
+
+        if($request->masImagenes != null){
+            unlink()
+            $imagen = $request->file('masImagenes');
+            $data = Image::latest('id')->first();
+            $data = $data->id;
+            foreach($imagen as $key =>$valor){
+                $data = intval($data)+1;
+                $input = 'imagen'.$key;
+                $image_resize = Imagen::make($valor->getRealPath()); 
+                $image_resize->resize(1920 , 1080);
+                $image_resize->save('uploads/'.$data.'.'.$valor->getClientOriginalExtension());  
+            }
+        }
+
         $idInm = $numeroid[1];
         $idAddress = DB::select('SELECT id FROM address WHERE idInmueble = "'. $idInm .'"');
 

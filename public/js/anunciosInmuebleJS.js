@@ -6,6 +6,8 @@ $(function(){
     $('#modificarInm').hide();
     $('#vertical').hide();
     $('#mensajeInfo').hide();
+    
+    var arrayImagenes = [];
 
     $('.favoritos').click(function(){
         var idInmueble = window.location.href.split('/')[5];
@@ -36,6 +38,9 @@ $(function(){
             $('#divButton').show();
             $('#perf').show();
         }else{
+            var nombre = $(this).attr('id').split('.')[0];
+            arrayImagenes.push(nombre);
+            console.log(arrayImagenes);
             $('#divButton').show();
             $('#masImg').show();
         }
@@ -364,11 +369,16 @@ $(function(){
                 }
             });
             if(errorEncontrado == false){
+                setCookie('nombreImg', arrayImagenes, 1);
                 var id = window.location.href.split('/')[5];
+                var data = $('#formEditar').serialize();
+                var data = new FormData($('#formEditar')[0]);
                 $.ajax({
                     url: '/inmuebles/vistaInmueble/modificar/'+id,
+                    processData: false,
+                    contentType: false,
                     method: 'POST',
-                    data: $('#formEditar').serialize(),
+                    data: data,
                     success: function(data){
                         $('html, body').animate({scrollTop: 0},1000)
                         $('#mensajeInfo').show();
