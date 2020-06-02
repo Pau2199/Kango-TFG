@@ -65,9 +65,9 @@
                 @foreach($valor as $clave => $value)
                 <div>
                     <img src='{{asset("uploads/$value")}}' class="{{$value}} img-fluid mt-3 vertical" data-target="#carouselExampleIndicators" data-slide-to="{{$key}}"/>
-                    <!--                    <div class="text-center">
-<span class="btn btn-info mt-2 botonesImagenes" id="{{$value}}">Borrar Imagen</span>
-</div>-->
+                    <div class="text-center">
+                        <span class="btn btn-danger mt-2 botonesImagenes" id="{{$value}}">Borrar Imagen</span>
+                    </div>
                 </div>
                 @endforeach
                 @endforeach

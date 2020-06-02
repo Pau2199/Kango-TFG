@@ -31,7 +31,16 @@ $(function(){
             }
         }
     });
-
+    $('.botonesImagenes').click(function(){
+        if($(this).attr('id').substring(0,6) == 'perfil'){
+            $('#divButton').show();
+            $('#perf').show();
+        }else{
+            $('#divButton').show();
+            $('#masImg').show();
+        }
+        console.log($(this).attr('id').substring(0,6));
+    });
     $('.desc').click(function(){
         var inm = $(this);
         var id = $(this).attr('id').split('-')[1];
@@ -367,8 +376,12 @@ $(function(){
                             window.location.reload();
                         }, 3000)
                     }
-                })
+                });
             }
         }
     });
+
+
+
+
 });
