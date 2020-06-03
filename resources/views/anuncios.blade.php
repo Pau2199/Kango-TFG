@@ -98,7 +98,7 @@
                                     <a href="/inmuebles/vistaInmueble/V-{{$value->id}}"><span class="detalles btn btn-warning font-weight-bold">Detalles</span></a>                                
                                 </div>
                                 <div class="col-6">
-                                    <span id="I-{{$value->id}}" class="desc btn btn-danger font-weight-bold">@if($valor->disponible == true)Desactivar @else Activar @endif</span>
+                                    <span id="I-{{$value->id}}" class="desc btn btn-danger font-weight-bold">@if($value->disponible == true)Desactivar @else Activar @endif</span>
                                 </div>
                             </div>
                         </div>

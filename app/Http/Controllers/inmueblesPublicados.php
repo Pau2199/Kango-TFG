@@ -209,11 +209,10 @@ class inmueblesPublicados extends Controller
             $imagen = $request->file('perfil');
             $image_resize = Imagen::make($imagen->getRealPath()); 
             $image_resize->resize(1920 , 1080);
-            $image_resize->save('uploads/perfil'.$numeroid[1].'.'.$imagen->getClientOriginalExtension());            
+            $image_resize->save('uploads/perfil'.$numeroid[1].'.'.$imagen->getClientOriginalExtension());
         }
 
         if($request->masImagenes != null){
-            unlink()
             $imagen = $request->file('masImagenes');
             $data = Image::latest('id')->first();
             $data = $data->id;
@@ -222,7 +221,12 @@ class inmueblesPublicados extends Controller
                 $input = 'imagen'.$key;
                 $image_resize = Imagen::make($valor->getRealPath()); 
                 $image_resize->resize(1920 , 1080);
-                $image_resize->save('uploads/'.$data.'.'.$valor->getClientOriginalExtension());  
+                $image_resize->save('uploads/'.$data.'.'.$valor->getClientOriginalExtension());
+
+                $img = new Image;
+                $img->nombre = $data.'.'.$valor->getClientOriginalExtension();
+                $img->idInmueble = $numeroid[1];
+                $img->save();
             }
         }
 
@@ -231,8 +235,10 @@ class inmueblesPublicados extends Controller
 
         $address = Address::find($idAddress[0]->id);
         $address->tipo_de_via = $request->tipoVia;
-        $address->localidad = $request->localidad;
-        $address->provincia = $request->provincia;
+        $id = Location::select('id')->where('nombre', $request->localidad)->get();
+        $address->idLocalidad = $id[0]->id;
+        $id = Province::select('id')->where('nombre', $request->provincia)->get();
+        $address->idProvincia = $id[0]->id;
         $address->nombre_de_la_direccion = $request->nombreDir;
         $address->codigo_postal = $request->cp;
         $address->nPuerta = $request->nPuerta;
@@ -326,8 +332,11 @@ class inmueblesPublicados extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $imagen = Image::where('nombre', '=', $request->nombreImg)->first();
+        unlink('uploads/'.$imagen->nombre);
+        $imagen->delete();
+        return $request;
     }
 }

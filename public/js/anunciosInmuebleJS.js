@@ -6,7 +6,7 @@ $(function(){
     $('#modificarInm').hide();
     $('#vertical').hide();
     $('#mensajeInfo').hide();
-    
+
     var arrayImagenes = [];
 
     $('.favoritos').click(function(){
@@ -35,12 +35,22 @@ $(function(){
     });
     $('.botonesImagenes').click(function(){
         if($(this).attr('id').substring(0,6) == 'perfil'){
+            var elemento = $(this).parent().parent();
+            elemento.remove();
             $('#divButton').show();
             $('#perf').show();
         }else{
-            var nombre = $(this).attr('id').split('.')[0];
-            arrayImagenes.push(nombre);
-            console.log(arrayImagenes);
+            var nombre = $(this).attr('id');
+            console.log(nombre);
+            var elemento = $(this).parent().parent();
+            $.ajax({
+                url: '/inmuebles/vistaInmueble/borrarImagen',
+                method: 'POST',
+                data: {nombreImg: nombre, "_token": $('#token').val()},
+                success: function(data){
+                    elemento.remove();
+                }
+            });
             $('#divButton').show();
             $('#masImg').show();
         }
@@ -213,6 +223,13 @@ $(function(){
                 $('#masImg').hide();
                 $('#perf').hide();
                 $('#divButton').hide();
+                var imagenes = $('#vertical').children();
+                imagenes = imagenes.children().length;
+
+                if(imagenes < 4 ){
+                    $('#divButton').show();
+                    $('#masImg').show();
+                }
 
                 var direccion = $('#direccion').html().split(' ');
                 for(var i = 0; i<direccion.length ; i++){
@@ -264,6 +281,73 @@ $(function(){
                     }else if(direccion[96].trim() == 'Bajo'){
                         $('#Ba').attr('selected', 'true');
                     }
+                }else if(direccion[i] == 'en'){
+                    console.log(direccion[i+2]);
+                    var proComa = direccion[i+1];
+                    var provincia = "";
+                    var localidad = direccion[i+2] + ' ';
+                    for(var k = 0 ; k < proComa.length; k++){
+                        if(proComa[k].trim() != ','){
+                            if(k == 0){
+                                provincia = proComa[k];
+                            }else{
+                                provincia += proComa[k];
+                            }
+                        }
+                    }
+                    
+                    for(var u = i+3 ; u < direccion.length ; u++){
+                        if(direccion[u] == '-'){
+                            break;
+                        }else{
+                            localidad += direccion[u] + ' ';
+                        }
+                    }
+
+                    $.ajax({
+                        url: '/inmueble/cargarProvinciasInm',
+                        method: 'GET',
+                        success: function(data){
+                            for (var j = 0 ; j<data.length ; j++){
+                                if(data[j]['nombre'] == provincia.trim()){
+                                    var option = $('<option>').attr({
+                                        value: data[j]['nombre'],
+                                        selected: true
+                                    }).html(data[j]['nombre']);
+                                    $('#provincia').append(option);     
+                                }else{
+                                    var option = $('<option>').attr({
+                                        value: data[j]['nombre'],
+                                    }).html(data[j]['nombre']);
+                                    $('#provincia').append(option);  
+                                } 
+                            }
+                        }
+                    });
+                    provincia = provincia.trim();
+                    if(localidad.trim() == ""){
+                        localidad = provincia.trim();
+                    }
+                    $.ajax({
+                        url: '/inmueble/cargarLocalidadesInm/'+provincia,
+                        method: 'GET',
+                        success: function(data){
+                            for (var j = 0 ; j<data.length ; j++){
+                                if(data[j]['nombre'] == localidad.trim()){
+                                    var option = $('<option>').attr({
+                                        value: data[j]['nombre'],
+                                        selected: true
+                                    }).html(data[j]['nombre']);
+                                    $('#localidad').append(option);     
+                                }else{
+                                    var option = $('<option>').attr({
+                                        value: data[j]['nombre'],
+                                    }).html(data[j]['nombre']);
+                                    $('#localidad').append(option);  
+                                } 
+                            }
+                        }
+                    });
                 }
             }
 
@@ -322,6 +406,13 @@ $(function(){
             if($(this).attr('id') == 'nMetrosCuadrados'){
                 validarMetrosCuadrados($(this).attr('id'), $(this).val());
             }
+            if($(this).attr('id') == 'masImagenes'){
+                var array = $('#masImagenes')[0].files;
+                validarArchivos($(this).attr('id'), array);
+            }
+            if($(this).attr('id') == 'perfil'){
+                validarArchivos($(this).attr('id'), $(this).val());
+            }
         }
     })
     $('select').blur(function(){
@@ -353,7 +444,27 @@ $(function(){
                 if($(this).attr('id') == 'nMetrosCuadrados'){
                     validarMetrosCuadrados($(this).attr('id'), $(this).val());
                 }
+                if($(this).attr('id') == 'masImagenes'){
+                    var array = $('#masImagenes')[0].files;
+                    validarArchivos($(this).attr('id'), array);
+                }
+                if($(this).attr('id') == 'perfil'){
+                    if(!$('#perfil').is(':hidden')){
+                        validarArchivos($(this).attr('id'), $(this).val());
+                    }
+                }
             });
+
+            var imagenes = $('#vertical').children();
+            imagenes = imagenes.children().length;
+            var selecionadas = $('#masImagenes')[0].files.length
+            console.log(selecionadas);
+            console.log(imagenes);
+            if(selecionadas != 0){
+                if(imagenes + selecionadas > 4){
+                    $('#mensajemasImagenes').html('Has selecionado demasiadas imagenes');
+                }   
+            }
 
             $('select').each(function(){
                 validarSelect($(this).attr('id'), $(this).val());
@@ -364,12 +475,12 @@ $(function(){
             }
 
             $('strong').each(function(){
+                console.log($(this).html());
                 if($(this).html() != ""){
                     errorEncontrado = true;
                 }
             });
             if(errorEncontrado == false){
-                setCookie('nombreImg', arrayImagenes, 1);
                 var id = window.location.href.split('/')[5];
                 var data = $('#formEditar').serialize();
                 var data = new FormData($('#formEditar')[0]);
@@ -381,6 +492,7 @@ $(function(){
                     data: data,
                     success: function(data){
                         $('html, body').animate({scrollTop: 0},1000)
+                        $('#mensajeInfo').addClass('bg-success')
                         $('#mensajeInfo').show();
                         setTimeout(function(){
                             window.location.reload();

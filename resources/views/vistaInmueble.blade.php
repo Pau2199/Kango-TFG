@@ -60,7 +60,7 @@
             </div>
         </div>
         <div id="vertical" class=" col-lg-2 col-12">
-            <div id="vertical">
+            <div>
                 @foreach($datos[0]->img as $key => $valor)
                 @foreach($valor as $clave => $value)
                 <div>
@@ -423,7 +423,9 @@
                             </div>
                             <div class="form-group col-md-4 col-sm-6 col-12">
                                 <label class="font-weight-bold" for="provincia">Provincia</label>
-                                <input id="provincia" value="{{$datos[0]->idProvincia[0]->nombre}}" type="text" class="form-control  @error('provincia') is-invalid @enderror" value=""name="provincia" id="provincia" placeholder="Provincia">
+                                <select id="provincia" name="provincia" class="form-control @error('provincia') is-invalid @enderror">
+                                    <option value="-">-</option>
+                                </select>
                                 <strong id="mensajeprovincia" class="comprobaciones" ></strong>
                                 @error('provincia')
                                 <span class="invalid-feedback" role="alert">
@@ -433,9 +435,11 @@
                             </div>
                             <div class="form-group col-md-4 col-sm-6 col-12">
                                 <label class="font-weight-bold" for="localidad">Localidad</label>
-                                <input id="localidad" type="text" value="{{$datos[0]->idLocalidad[0]->nombre}}" class="form-control  @error('localidad') is-invalid @enderror" name="localidad" id="localidad" placeholder="Localidad">
+                                <select id="localidad" name="localidad" class="form-control @error('localidad') is-invalid @enderror">
+                                    <option value="-">-</option>
+                                </select>
                                 <strong id="mensajelocalidad" class="comprobaciones" ></strong>
-                                @error('localidad')
+                                @error('provincia')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
