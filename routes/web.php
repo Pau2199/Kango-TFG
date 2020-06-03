@@ -17,6 +17,15 @@ Route::get('/', 'indexController@index');
 
 Auth::routes();
 
+//Gestion de la web
+
+Route::get('/admin/usuarios', 'gestionAdminController@index');
+Route::get('/admin/inmuebles', 'gestionAdminController@indexInm');
+Route::get('/admin/inmuebles/obtenerDescripcion/{inmueble}', 'gestionAdminController@show');
+Route::get('/admin/inmuebles/borrarInm/{inmueble}', 'gestionAdminController@destroy');
+
+
+
 Route::get('/inmuebles/vistaInmueble/{id}', 'inmueblesPublicados@index');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('inmuebles/publicarNuevo', 'publicarNuevoInmuebleController@index');

@@ -6,16 +6,19 @@
     width: 35px;
     height: 35px;
 }
-
+.lupa{
+    width: 20px;
+    height: 20px;
+}
 .footerGrande{
     /*background-color: rgb(173, 254, 0, 0.5);*/
     background-color: #37A794;
 }
 
 .footerPequenyo{
-/*
+    /*
     background-color: rgb(149,254,159, 0.7);
-*/
+    */
     background-color: #63BD9A
 }
 

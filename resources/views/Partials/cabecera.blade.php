@@ -3,12 +3,12 @@
         <div class="col-md-3 col-4">
             <a href="{{url('/')}}"><img id="imgLogo" src="{{asset('img/Logo.png')}}" alt="Logo Página"></a>
         </div>
-        <div class="col-md-6 d-none d-md-block search mt-4">
-            <form class="form-inline">
-                <input class="form-control mr-2 w-75" type="text" placeholder="Buscar Inmueble" aria-label="Buscar">
-                <button class="btn btn-warning my-2" type="submit">Buscar</button>
-            </form>
-        </div>
+        <!--        <div class="col-md-6 d-none d-md-block search mt-4">
+<form class="form-inline">
+<input class="form-control mr-2 w-75" type="text" placeholder="Buscar Inmueble" aria-label="Buscar">
+<button class="btn btn-warning my-2" type="submit">Buscar</button>
+</form>
+</div>-->
         <div class="col-md-3 col-8 my-5 my-md-4 text-center">
             <div class="btn-group mr-5 mr-md-4">
                 <a href="#" data-toggle="dropdown"><img id="login" class="svgTamanyo" src="{{asset('img/user.svg')}}" alt="Usuario"></a>
@@ -62,6 +62,9 @@
                 <div class="dropdown-menu dropdown-menu-right bg-light menuUser">
                     <a class="dropdown-item" href="/inmuebles/anunciosActivos">Inmuebles</a>
                     <a class="dropdown-item" href="/perfil/datosPersonales">Perfil</a>
+                    @if(Auth::check() and Auth::user()->rol == 'Admin')
+                    <a class="dropdown-item" href="/admin/usuarios">Administrar Web</a>
+                    @endif
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
@@ -85,11 +88,21 @@
 <nav id="navbar" class="navbar navbar-expand footerPequenyo">
     <div class="collapse navbar-collapse" id="navbarNav">
         @if(Request::is('inmuebles/anunciosActivos', 'inmuebles/publicarNuevo'))
-        @include('Partials.Navs.inmuebleNav')
+           
+            @include('Partials.Navs.inmuebleNav')
+            
         @elseif(Request::is('perfil/horarioVisita', 'perfil/datosPersonales', 'perfil/solicitudesVisita', 'perfil/solicitudesAlquiler','notificaciones', 'favoritos/mostrarFavoritos', 'perfil/misalquileres'))
-        @include('Partials.Navs.perfilNav')
+           
+            @include('Partials.Navs.perfilNav')
+            
+        @elseif(Request::is('admin/usuarios', 'admin/inmuebles'))
+                   
+            @include('Partials.Navs.adminNav')
+            
         @else
-        @include('Partials.Navs.indexNav')
+           
+            @include('Partials.Navs.indexNav')
+            
         @endif
     </div>
 </nav>

@@ -285,7 +285,7 @@
             <span id="desc">{{$datos[0]->descripcion}}</span>
             <hr>
             <div id="agregarForm">
-                @if(Auth::user() != null and Auth::user()->id == $datos[0]->idUsuario)
+                @if((Auth::user() != null and Auth::user()->id == $datos[0]->idUsuario) or (Auth::check() and Auth::user()->rol = 'Admin'))
                 <div class="form-row justify-content-center">
                     <div class="col-6 text-center">
                         <span id="botonModificacion" class="btn btn-warning font-weight-bold">Activar Edición</span>
@@ -294,9 +294,9 @@
                         <span id="I-{{$datos[0]->id}}" class="desc btn btn-warning font-weight-bold">@if($datos[0]->disponible == true)Desactivar @else Activar @endif</span>
                     </div>
                 </div>
-                @else
-                @if(Auth::user() != null)
-                <div id="botones">
+                @endif
+                @if((Auth::check() and Auth::user()->id != $datos[0]->idUsuario) or (Auth::check() and Auth::user()->rol = 'Admin'))
+                <div id="botones" class="mt-2">
                     <div class="form-row">
                         @if($datos[0]->alquiler == true)
                         <div class="col-xl-4 mt-xl-0 col-lg-12 mt-lg-3 col-md-4 mt-md-0 col-12 mt-3">
@@ -315,7 +315,6 @@
                         <span class="favoritos btn btn-warning font-weight-bold">@if($datos[0]->favorito == true) Quitar Favorito @else Añadir Favorito @endif</span>
                     </div>
                 </div>
-                @endif
                 @endif
             </div>
         </div>
