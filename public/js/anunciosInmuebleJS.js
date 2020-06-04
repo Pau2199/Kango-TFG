@@ -1,8 +1,10 @@
 $(function(){
     var idInmuebleUser = $('#idInmuebleUser').val();
     var idUser = $('#idUser').val();
+    var rol = $('#rol').val();
     $('#idInmuebleUser').remove();
     $('#idUser').remove();
+    $('#rol').remove();
     $('#modificarInm').hide();
     $('#vertical').hide();
     $('#mensajeInfo').hide();
@@ -211,7 +213,7 @@ $(function(){
 
     $('#botonModificacion').click(function(){
         if($(this).html() == 'Activar Edición'){
-            if(idInmuebleUser != idUser){
+            if(idInmuebleUser != idUser && rol != 'Admin'){
                 alert('No eres el propietario de este inmueble, se va a recargar la página.')
                 location.reload();
             }else{
@@ -422,7 +424,7 @@ $(function(){
 
     $('#botonRegistro').click(function(){
         event.preventDefault();
-        if(idInmuebleUser != idUser){
+        if(idInmuebleUser != idUser && rol != 'Admin'){
             alert('No eres el propietario de este inmueble, se va a recargar la página.')
             location.reload();
         }else{

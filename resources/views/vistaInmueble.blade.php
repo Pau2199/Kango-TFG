@@ -285,18 +285,37 @@
             <span id="desc">{{$datos[0]->descripcion}}</span>
             <hr>
             <div id="agregarForm">
-                @if((Auth::user() != null and Auth::user()->id == $datos[0]->idUsuario) or (Auth::check() and Auth::user()->rol = 'Admin'))
-                <div class="form-row justify-content-center">
-                    <div class="col-6 text-center">
-                        <span id="botonModificacion" class="btn btn-warning font-weight-bold">Activar Edición</span>
-                    </div>
-                    <div class="col-6 text-center">
-                        <span id="I-{{$datos[0]->id}}" class="desc btn btn-warning font-weight-bold">@if($datos[0]->disponible == true)Desactivar @else Activar @endif</span>
-                    </div>
-                </div>
-                @endif
-                @if((Auth::check() and Auth::user()->id != $datos[0]->idUsuario) or (Auth::check() and Auth::user()->rol = 'Admin'))
                 <div id="botones" class="mt-2">
+                    @if(Auth::check() and Auth::user()->id == $datos[0]->idUsuario)
+                    <div class="form-row justify-content-center">
+                        <div class="col-6 text-center">
+                            <span id="botonModificacion" class="btn btn-warning font-weight-bold">Activar Edición</span>
+                        </div>
+                        <div class="col-6 text-center">
+                            <span id="I-{{$datos[0]->id}}" class="desc btn btn-warning font-weight-bold">@if($datos[0]->disponible == true)Desactivar @else Activar @endif</span>
+                        </div>
+                    </div>
+                    @elseif(Auth::check() and Auth::user()->id != $datos[0]->idUsuario and Auth::user()->rol = 'Admin')
+                    <div class="form-row">
+                        <div class="text-center col-xl-3 mt-xl-2 col-lg-12 mt-lg-3 col-md-3 mt-md-2 col-12 mt-3">
+                            <span id="botonModificacion" class="btn btn-warning font-weight-bold">Activar Edición</span>
+                        </div>
+                        <div class="text-center col-xl-3 mt-xl-2 col-lg-12 mt-lg-3 col-md-3 mt-md-2 col-12 mt-3">
+                            <span id="I-{{$datos[0]->id}}" class="desc btn btn-warning font-weight-bold">@if($datos[0]->disponible == true)Desactivar @else Activar @endif</span>
+                        </div>
+                        @if($datos[0]->alquiler == true)
+                        <div class="text-center col-xl-3 mt-xl-2 col-lg-12 mt-lg-3 col-md-3 mt-md-2 col-12 mt-3">
+                            <a href="/inmueble/pagar/{{$datos[0]->id}}" id="alquilarInmueble" class="btn btn-warning font-weight-bold">Alquilar</a>
+                        </div>
+                        @endif
+                        <div class="text-center col-xl-3 mt-xl-2 col-lg-12 mt-lg-3 col-md-3 mt-md-2 col-12 mt-3">
+                            <span class="btn btn-warning font-weight-bold" id="solicitar">Solicitar Visita</span>
+                        </div>
+                        <div class="text-center col-xl-3 mt-xl-2 col-lg-12 mt-lg-3 col-md-3 mt-md-2 col-12 mt-3">
+                            <span class="favoritos btn btn-warning font-weight-bold">@if($datos[0]->favorito == true) Quitar Favorito @else Añadir Favorito @endif</span>
+                        </div>
+                    </div>
+                    @elseif(Auth::check() and Auth::user()->id != $datos[0]->idUsuario)
                     <div class="form-row">
                         @if($datos[0]->alquiler == true)
                         <div class="col-xl-4 mt-xl-0 col-lg-12 mt-lg-3 col-md-4 mt-md-0 col-12 mt-3">
@@ -314,14 +333,15 @@
                     <div class="col-12">
                         <span class="favoritos btn btn-warning font-weight-bold">@if($datos[0]->favorito == true) Quitar Favorito @else Añadir Favorito @endif</span>
                     </div>
+                    @endif
                 </div>
-                @endif
             </div>
         </div>
         <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-        <input type="hidde" id="idInmuebleUser" value="{{$datos[0]->idUsuario}}">
+        <input type="hidden" id="idInmuebleUser" value="{{$datos[0]->idUsuario}}">
+        <input type="hidden" id="rol" value="{{Auth::user()->rol}}">
         @if(Auth::user())
-        <input type="hidde" id="idUser" value="{{Auth::user()->id}}">
+        <input type="hidden" id="idUser" value="{{Auth::user()->id}}">
         @endif
         <div class="col-lg-10 col-md-12" id="modificarInm">
             <div class="row justify-content-center">
