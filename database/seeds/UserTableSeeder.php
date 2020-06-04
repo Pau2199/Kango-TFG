@@ -27,16 +27,16 @@ class UserTableSeeder extends Seeder
 
         DB::table('users')->insert([
             [    
-                'nombre' => 'Paquito',
+                'nombre' => 'Mariano',
                 'id' => 1,
                 'sexo' => $sexos[0],
                 'primer_apellido' => $apellidos[rand(0,7)],
                 'segundo_apellido' => $apellidos[rand(0,7)],
                 'rol' => $roles[rand(0,1)],
                 'fecha_nacimiento' => $fechas_nacimiento[0],
-                'email' => 'pruebas@gmail.com',
-                'password' => Hash::make('prueba'),
-                'nif_nie' => Str::random(9),
+                'email' => 'mariano@gmail.com',
+                'password' => Hash::make('mariano1234'),
+                'nif_nie' => '63901431W',
                 'telefono' => 691234213,
             ],
             [
@@ -49,7 +49,7 @@ class UserTableSeeder extends Seeder
                 'fecha_nacimiento' => $fechas_nacimiento[1],
                 'email' => Str::random(10).'@gmail.com',
                 'password' => $contraseñas[1],
-                'nif_nie' => Str::random(9),
+                'nif_nie' =>'81509328L',
                 'telefono' => 721254213,
             ],
             [
@@ -62,7 +62,7 @@ class UserTableSeeder extends Seeder
                 'fecha_nacimiento' => $fechas_nacimiento[2],
                 'email' => Str::random(10).'@gmail.com',
                 'password' => $contraseñas[2],
-                'nif_nie' => Str::random(9),
+                'nif_nie' => '88884473F',
                 'telefono' => 671034111,
             ],
             [
@@ -75,7 +75,7 @@ class UserTableSeeder extends Seeder
                 'fecha_nacimiento' => $fechas_nacimiento[3],
                 'email' => Str::random(10).'@gmail.com',
                 'password' => $contraseñas[3],
-                'nif_nie' => Str::random(9),
+                'nif_nie' => '15734930D',
                 'telefono' => 602425812,
             ],
             [
@@ -88,7 +88,7 @@ class UserTableSeeder extends Seeder
                 'fecha_nacimiento' => $fechas_nacimiento[4],
                 'email' => Str::random(10).'@gmail.com',
                 'password' => $contraseñas[4],
-                'nif_nie' => Str::random(9),
+                'nif_nie' => '47148794J',
                 'telefono' => 654321231,
             ], 
             [
@@ -101,7 +101,7 @@ class UserTableSeeder extends Seeder
                 'fecha_nacimiento' => $fechas_nacimiento[4],
                 'email' => 'pau_ll_m@hotmail.com',
                 'password' => Hash::make('pau1234'),
-                'nif_nie' => Str::random(9),
+                'nif_nie' => '36694693X',
                 'telefono' => 765231432,
             ],
             [
@@ -114,7 +114,7 @@ class UserTableSeeder extends Seeder
                 'fecha_nacimiento' => $fechas_nacimiento[4],
                 'email' => Str::random(10).'@gmail.com',
                 'password' => $contraseñas[4],
-                'nif_nie' => Str::random(9),
+                'nif_nie' => '58695828N',
                 'telefono' => 685456271,
             ], 
         ]);

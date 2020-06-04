@@ -6,9 +6,9 @@
                     <h6 class="mb-0 ml-5">Siguenos en nuestras Redes Sociales!</h6>
                 </div>
                 <div class="col-md-6 col-lg-7 text-center text-md-right">
-                    <a href="https://www.facebook.com/"><img class="rrss mr-5" src="http://localhost:8000/img/facebook.png" alt="Facebook"></a>
-                    <a href="https://twitter.com/home"><img class="rrss mr-5" src="http://localhost:8000/img/twitter.png" alt="Twitter"></a>
-                    <a href="https://www.instagram.com/"><img class="rrss mr-5" src="http://localhost:8000/img/instagram.png" alt="Instagram"></a>
+                    <a href="https://www.facebook.com/"><img class="rrss mr-5" src="{{asset('img/facebook.png')}}" alt="Facebook"></a>
+                    <a href="https://twitter.com/home"><img class="rrss mr-5" src="{{asset('img/twitter.png')}}" alt="Twitter"></a>
+                    <a href="https://www.instagram.com/"><img class="rrss mr-5" src="{{asset('img/instagram.png')}}" alt="Instagram"></a>
                 </div>
             </div>
         </div>

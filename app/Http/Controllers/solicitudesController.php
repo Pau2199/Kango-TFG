@@ -25,7 +25,7 @@ class solicitudesController extends Controller
     public function index()
     {
 
-        $solicitud = Solicitude::where('solicitadaAIdUser', '=', Auth::user()->id)->get();
+        $solicitud = Solicitude::where('solicitadaAIdUser', '=', Auth::user()->id)->where('hora','<>', 'no aplica')->get();
         for($i = 0 ; $i<count($solicitud) ; $i++){
             $direccion = Address::select('id','idLocalidad', 'idProvincia', 'nombre_de_la_direccion','tipo_de_via')->where('id', '=',$solicitud[$i]->idInmueble)->get();
             $direccion->idLocalidad = Location::select('nombre')->where('id', $direccion[0]->idLocalidad)->get();

@@ -78,8 +78,8 @@
         @if(Request::is('inmuebles/anunciosActivos', 'inmuebles/publicarNuevo'))
            
             @include('Partials.Navs.inmuebleNav')
-            
-        @elseif(Request::is('perfil/horarioVisita', 'perfil/datosPersonales', 'perfil/solicitudesVisita', 'perfil/solicitudesAlquiler','notificaciones', 'favoritos/mostrarFavoritos', 'perfil/misalquileres'))
+        
+        @elseif(Auth::check() and Request::is('perfil/horarioVisita', 'perfil/datosPersonales', 'perfil/solicitudesVisita', 'perfil/solicitudesAlquiler','notificaciones', 'favoritos/mostrarFavoritos', 'perfil/misalquileres'))
            
             @include('Partials.Navs.perfilNav')
             
@@ -87,8 +87,7 @@
                    
             @include('Partials.Navs.adminNav')
             
-        @else
-           
+        @elseif(Request::is('/'))
             @include('Partials.Navs.indexNav')
             
         @endif

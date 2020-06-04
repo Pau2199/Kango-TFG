@@ -8,7 +8,7 @@
 <script src="{{asset('js/solicitudesJS.js')}}"></script>
 @stop
 @section('content')
-<table class="table table-striped text-center">
+<table class="table my-3 table-hover table-striped text-center">
     <thead class="table-warning">
         <tr>
             <th>Fecha Inicio Alquiler</th>
@@ -21,7 +21,6 @@
     </thead>
     <tbody>
         @foreach($alquiler as $key => $datos)
-        <span>{{$datos}}</span>
         <td>{{$datos->fecha_inicio}}</td>
         <td>{{$datos->fecha_final}}</td>
         <td>{{$datos->direccion[0]->tipo_de_via}} {{$datos->direccion[0]->nombre_de_la_direccion}} {{$datos->direccion->idProvincia[0]->nombre}}, {{$datos->direccion->idLocalidad[0]->nombre}}</td>

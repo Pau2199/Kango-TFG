@@ -1,10 +1,4 @@
-$(function(){
-    
-    if($('#contenedor').children().length == 0){
-        var h1 = $('<h1>').html('No tienes ninguna solicitud :(');
-        $('#noticias').append(h1);
-    }
-    
+$(function(){   
     var direccion = {A: 'Avenida', P: 'Plaza', C: 'Calle'}
     $('.direccion').each(function(){
         var split = $(this).html().split(' ');

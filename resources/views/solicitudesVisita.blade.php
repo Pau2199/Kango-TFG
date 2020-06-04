@@ -38,7 +38,6 @@
         @endforeach     
     </tbody>
 </table>
-<div id="noticias" class="text-center my-3"></div>
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
 @stop

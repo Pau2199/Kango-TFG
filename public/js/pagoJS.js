@@ -203,7 +203,7 @@ $(function(){
             console.log('entra');
             console.log('Elegida ' + (fechaElegida.getMonth()+1))
             console.log('Sis ' + (fechaSis.getMonth()+1))
-            if((fechaElegida.getMonth()+1) < (fechaSis.getMonth()+1) || (fechaElegida.getMonth()+1) > (fechaSis.getMonth()+1)){
+            if((fechaElegida.getMonth()+1) < (fechaSis.getMonth()+1)){
                 $('#mensaje'+campo).html('El mes introducido es incorrecto');                
             }
         }else{
