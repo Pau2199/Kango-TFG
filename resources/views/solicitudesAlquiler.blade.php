@@ -9,7 +9,7 @@
 <script src="{{asset('js/solicitudesJS.js')}}"></script>
 @stop
 @section('content')
-<table class="table table-striped text-center">
+<table class="my-2 table table-striped text-center">
     <thead class="table-warning">
         <tr>
             <th>Fecha de Solicitud</th>
@@ -45,5 +45,6 @@
         @endforeach     
     </tbody>
 </table>
+<div id="noticias" class="text-center my-3"></div>
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 @stop

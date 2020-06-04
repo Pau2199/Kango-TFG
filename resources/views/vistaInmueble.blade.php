@@ -2,9 +2,6 @@
 @section('titulo')
 <title>Inmueble | Kangoo Home</title>    
 @stop
-@section('letra')
-<link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
-@stop
 @section('css')
 <link rel="stylesheet" href="{{asset('css/estiloAnuncios.css')}}">
 @stop

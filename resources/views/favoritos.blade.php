@@ -7,7 +7,7 @@
 @stop
 @section('content')
 <div class="table-responsive">
-    <table class="table table-bordered w-75 ml-auto mr-auto">
+    <table class="table table-hover table-bordered w-75 my-3 ml-auto mr-auto">
         <thead>
             <tr class="text-center">
                 <th></th>
@@ -20,8 +20,8 @@
                 <th scope="col"></th>
             </tr>
         </thead>
-        @foreach($datos as $key => $valor)
-        <tbody>
+        <tbody id="contenido">
+            @foreach($datos as $key => $valor)
             <tr>
                 <td>
                     <?php 
@@ -35,7 +35,7 @@
                     $id .= '-'.$valor->id
                     ?>
                     @if($valor->disponible == true)
-                    <a href="/inmuebles/vistaInmueble/{{$id}}" class="btn btn-info">Visualizar</a>
+                    <a href="/inmuebles/vistaInmueble/{{$id}}" class="btn btn-warning">Visualizar</a>
                     @endif
                 </td>
                 <td id="{{$id}}">
@@ -86,10 +86,12 @@
                     <span class="btn btn-danger">Eliminar</span>
                 </td>
             </tr>
+            @endforeach
         </tbody>
-        @endforeach
     </table>
+    <div id="noticia"class="text-center"></div>
 </div>
+
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
 

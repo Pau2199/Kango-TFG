@@ -6,7 +6,7 @@
 <script src="{{asset('js/gestionInmJS.js')}}"></script>
 @stop
 @section('content')
-<table class="table my-3">
+<table class="table table-hover my-3">
     <thead class="thead-light">
         <tr class="text-center">
             <th scope="col"></th>

@@ -8,3 +8,8 @@ th {
 table, td, th{
     border: 2px solid !important;
 }
+
+.question{
+    width: 30px;
+    height: 30px;
+}

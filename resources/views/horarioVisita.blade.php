@@ -12,15 +12,13 @@
 <div class="text-center w-100 font-weight-bold" id="mensajeInfo">
     <p id="texto"></p>
 </div>
-<ul>
-    <li>Haz doble click sobre un recuadro para agregar una franja horaria</li>
-    <li>Para eliminar una franja horaria simplemente haz click sobre el recuadro coloreado</li>
-</ul>
 <div class="table-responsive">
     <table class="table table-bordered w-75 ml-auto mr-auto">
         <thead>
             <tr class="text-center">
-                <th scope="col"></th>
+                <th scope="col">
+                <a type="button" data-toggle="modal" data-target="#ventanaModal"><img title="Click para obtener mas información"class="question" src="{{asset('img/question.svg')}}" alt="Ventana Modal"></a>
+                </th>
                 <th scope="col">Lunes</th>
                 <th scope="col">Martes</th>
                 <th scope="col">Miercoles</th>
@@ -154,60 +152,23 @@
         </tbody>
     </table>
 </div>
-
-
-<!--<div class="container-fluid">
-<div class="row">
-<div class="col-3">
-<h3 class="text-center">Lunes</h3>
-<ul>
-<li>Prueba</li>
-</ul>
-<div class="text-center">
-<span class="btn bg-info">Agregar Hora</span>
+<div class="modal fade" id="ventanaModal" tabindex="-1" role="dialog" aria-labelledby="titulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Instrucciones de Uso</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li>Debes realizar doble click sobre un recuadro que no este colerado para agregar una franja Horaria</li>
+                    <li>Para eliminar una franja horaria, simplemente haz click sobre un recuadro coloreado</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-<div class="col-3">
-<h3 class="text-center">Martes</h3>
-<div class="text-center">
-<span class="btn bg-info">Agregar Hora</span>
-</div>
-</div>
-<div class="col-3">
-<h3 class="text-center">Miercoles</h3>
-<div class="text-center">
-<span class="btn bg-info">Agregar Hora</span>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-3">
-<h3 class="text-center">Jueves</h3>
-<div class="text-center">
-<span class="btn bg-info">Agregar Hora</span>
-</div>
-</div>
-<div class="col-3">
-<h3 class="text-center">Viernes</h3>
-<div class="text-center">
-<span class="btn bg-info">Agregar Hora</span>
-</div>
-</div>
-<div class="col-3">
-<h3 class="text-center">Sabado</h3>
-<div class="text-center">
-<span class="btn bg-info">Agregar Hora</span>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-3">
-<h3 class="text-center">Domingo</h3>
-<div class="text-center">
-<span class="btn bg-info">Agregar Hora</span>
-</div>
-</div>
-</div>
-</div>-->
 
 @stop

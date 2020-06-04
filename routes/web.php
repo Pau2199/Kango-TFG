@@ -19,10 +19,10 @@ Auth::routes();
 
 //Gestion de la web
 
-Route::get('/admin/usuarios', 'gestionAdminController@index');
-Route::get('/admin/inmuebles', 'gestionAdminController@indexInm');
-Route::get('/admin/inmuebles/obtenerDescripcion/{inmueble}', 'gestionAdminController@show');
-Route::get('/admin/inmuebles/borrarInm/{inmueble}', 'gestionAdminController@destroy');
+Route::get('/admin/usuarios', 'gestionAdminController@index')->middleware('admin');;
+Route::get('/admin/inmuebles', 'gestionAdminController@indexInm')->middleware('admin');
+Route::get('/admin/inmuebles/obtenerDescripcion/{inmueble}', 'gestionAdminController@show')->middleware('admin');
+Route::get('/admin/inmuebles/borrarInm/{inmueble}', 'gestionAdminController@destroy')->middleware('admin');
 
 
 
@@ -39,7 +39,7 @@ Route::post('/inmueble/desactivar', 'inmueblesPublicados@actualizarEstado');
 Route::get('/inmueble/cargarProvinciasInm', 'publicarNuevoInmuebleController@cargarProvincias');
 Route::get('/inmueble/cargarLocalidadesInm/{selecionada}', 'publicarNuevoInmuebleController@cargarLocalidades');
 
-Route::get('/inmueble/pagar/{id}', 'inmueblesPublicados@pagar')->middleware('Pago');
+Route::get('/inmueble/pagar/{id}', 'inmueblesPublicados@pagar')->middleware('pago');
 Route::post('/inmueble/obtenerDatos', 'pagoAlquilerController@show');
 Route::post('/inmueble/realizarPago/{id}', 'pagoAlquilerController@store');
 
@@ -56,9 +56,9 @@ Route::get('/perfil/misalquileres', 'pagoAlquilerController@cargarAlquiler');
 
 
 Route::get('/perfil/datosPersonales', 'datosPersonalesController@index');
-Route::get('/perfil/editarPerfil/{id}', 'datosPersonalesController@editarDatosPersonales');
+Route::get('/perfil/editarPerfil/{id}', 'datosPersonalesController@editarDatosPersonales')->middleware('modificacionDatos');
 Route::post('/perfil/modificarDatos', 'datosPersonalesController@update');
-Route::get('/perfil/eliminarCuenta/{id}', 'datosPersonalesController@destroy');
+Route::get('/perfil/eliminarCuenta/{id}', 'datosPersonalesController@destroy')->middleware('admin');
 
 
 Route::get('/obtenerNotificaciones', 'notificacionesController@index');

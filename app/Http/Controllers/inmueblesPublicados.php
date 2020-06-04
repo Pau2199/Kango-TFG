@@ -20,12 +20,6 @@ use DB;
 class inmueblesPublicados extends Controller
 {
 
-    //    public function updateImagenes(Request $request){
-    //        $inmueble = Property::find(3);
-    //        $inmueble->descripcion = $requests->perfil;
-    //        $inmueble->save();
-    //    }
-
     /**
      * Display a listing of the resource.
      *
@@ -123,48 +117,6 @@ class inmueblesPublicados extends Controller
 
     public function pagar(){
         return view('pago');
-    }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return $id;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -309,7 +261,7 @@ class inmueblesPublicados extends Controller
     public function actualizarEstado(Request $request){
         $inmueble = Property::find($request->idInmueble);
         $info;
-        if(Auth::Check() && Auth::User()->id == $inmueble->idUsuario){
+        if(Auth::Check() && (Auth::User()->id == $inmueble->idUsuario || Auth::User()->rol == 'Admin')){
             if($inmueble->disponible == 1){
                 $inmueble->disponible = 0;
                 $info = "act";

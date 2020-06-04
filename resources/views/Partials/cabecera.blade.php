@@ -3,12 +3,6 @@
         <div class="col-md-3 col-4">
             <a href="{{url('/')}}"><img id="imgLogo" src="{{asset('img/Logo.png')}}" alt="Logo Página"></a>
         </div>
-        <!--        <div class="col-md-6 d-none d-md-block search mt-4">
-<form class="form-inline">
-<input class="form-control mr-2 w-75" type="text" placeholder="Buscar Inmueble" aria-label="Buscar">
-<button class="btn btn-warning my-2" type="submit">Buscar</button>
-</form>
-</div>-->
         <div class="col-md-3 col-8 my-5 my-md-4 text-center">
             <div class="btn-group mr-5 mr-md-4">
                 <a href="#" data-toggle="dropdown"><img id="login" class="svgTamanyo" src="{{asset('img/user.svg')}}" alt="Usuario"></a>
@@ -19,9 +13,9 @@
                             <form class="px-4 py-3" method="POST" action="{{ route('login') }}">
                                 @csrf
                                 <div class="form-group text-left">
-                                    <label for="emailLogin" class="font-weight-bold col-form-label">{{ __('Correo Electronico') }}</label>
-                                    <input id="emailLogin" type="email" class="form-control @error('emailLogin') is-invalid @enderror" name="email" value="{{ old('emailLogin') }}" required autocomplete="email" autofocus>
-                                    @error('emailLogin')
+                                    <label for="email" class="font-weight-bold col-form-label">{{ __('Correo Electronico') }}</label>
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong class="textoLogin">{{ $message }}</strong>
                                     </span>
@@ -35,12 +29,6 @@
                                         <strong class="textoLogin">{{ $message }}</strong>
                                     </span>
                                     @enderror
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Recordar Datos') }}
-                                    </label>
                                 </div>
                                 <button type="submit" class="mt-3 btn btn-warning">
                                     {{ __('Entrar') }}

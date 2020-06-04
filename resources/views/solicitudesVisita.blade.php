@@ -9,7 +9,7 @@
 <script src="{{asset('js/solicitudesJS.js')}}"></script>
 @stop
 @section('content')
-<table class="table table-striped text-center">
+<table class="my-2 table table-striped text-center">
     <thead class="table-warning">
         <tr>
             <th>Fecha Solicitada</th>
@@ -20,7 +20,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="contenedor">
         @foreach($soli as $key => $datos) 
         <tr id="SV-{{$datos->id}}">
             <td class="fecha">{{$datos->fecha_solicitada}}</td>
@@ -38,6 +38,7 @@
         @endforeach     
     </tbody>
 </table>
+<div id="noticias" class="text-center my-3"></div>
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
 @stop

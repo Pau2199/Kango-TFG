@@ -6,7 +6,7 @@
 <script src="{{asset('js/modificarDatosPerfilJS.js')}}"></script>
 @stop
 @section('content')
-<table class="table my-3">
+<table class="table table-hover my-3">
     <thead class="thead-light">
         <tr>
             <th scope="col"></th>
@@ -29,7 +29,13 @@
             <td>{{$user->nombre}}</td>
             <td>{{$user->primer_apellido}}</td>
             <td>{{$user->segundo_apellido}}</td>
-            <td>{{$user->sexo}}</td>
+            <td>
+            @if($user->sexo == 'H')
+            Hombre
+            @else
+            Mujer
+            @endif
+            </td>
             <td>{{$user->fecha_nacimiento}}</td>
             <td>{{$user->email}}</td>
             <td>{{$user->telefono}}</td>

@@ -1,4 +1,5 @@
 $(function(){
+    $('#navbar').hide();
     var idInmuebleUser = $('#idInmuebleUser').val();
     var idUser = $('#idUser').val();
     var rol = $('#rol').val();

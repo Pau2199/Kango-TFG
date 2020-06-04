@@ -16,7 +16,7 @@
                     <label for="name" class="font-weight-bold col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-                        <strong class="js" id="mensajename"></strong>
+                        <strong class="js comprobaciones" id="mensajename"></strong>
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -28,7 +28,7 @@
                     <label for="primerApellido" class="font-weight-bold col-md-4 col-form-label text-md-right">{{ __('Primer Apellido') }}</label>
                     <div class="col-md-6">
                         <input id="primerApellido" type="text" class="form-control @error('primerApellido') is-invalid @enderror" name="primerApellido" value="{{ old('primerApellido') }}" required autocomplete="primerApellido">
-                        <strong class="js" id="mensajeprimerApellido"></strong>
+                        <strong class="js comprobaciones" id="mensajeprimerApellido"></strong>
                         @error('primerApellido')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -40,7 +40,7 @@
                     <label for="segundoApellido" class="font-weight-bold col-md-4 col-form-label text-md-right">{{ __('Segundo Apellido') }}</label>
                     <div class="col-md-6">
                         <input id="segundoApellido" type="text" class="form-control @error('primerApellido') is-invalid @enderror" name="segundoApellido" value="{{ old('segundoApellido') }}" required autocomplete="segundoApellido">
-                        <strong class="js" id="mensajesegundoApellido"></strong>
+                        <strong class="js comprobaciones" id="mensajesegundoApellido"></strong>
                         @error('segundoApellido')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -52,7 +52,7 @@
                     <label for="nif_nie" class="font-weight-bold col-md-4 col-form-label text-md-right">{{ __('DNI o NIE') }}</label>
                     <div class="col-md-6">
                         <input id="nif_nie" type="text" class="form-control @error('nif_nie') is-invalid @enderror" name="nif_nie" value="{{ old('nif_nie') }}" required autocomplete="nif_nie">
-                        <strong class="js" id="mensajenif_nie"></strong>
+                        <strong class="js comprobaciones" id="mensajenif_nie"></strong>
                         @error('nif_nie')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -65,7 +65,7 @@
                     <div class="col-md-6 checkbox">
                         <input class="ml-5 mr-3 @error('sexo') is-invalid @enderror" name="sexo" value="hombre" type="radio">Hombre
                         <input class="mr-3 ml-5 @error('sexo') is-invalid @enderror" name="sexo" value="mujer" type="radio">Mujer
-                        <br><strong class="js" id="mensajesexo"></strong>
+                        <br><strong class="js comprobaciones" id="mensajesexo"></strong>
 
                         @error('sexo')
                         <span class="invalid-feedback" role="alert">
@@ -78,7 +78,7 @@
                     <label for="fechaNacimiento" class="font-weight-bold col-md-4 col-form-label text-md-right">{{ __('Fecha de Nacimiento') }}</label>
                     <div class="col-md-6">
                         <input id="fechaNacimiento" type="date" class="form-control @error('fechaNacimiento') is-invalid @enderror" name="fechaNacimiento" value="{{ old('fechaNacimiento') }}" required autocomplete="fechaNacimiento">
-                        <strong class="js" id="mensajefechaNacimiento"></strong>
+                        <strong class="js comprobaciones" id="mensajefechaNacimiento"></strong>
                         @error('fechaNacimiento')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -90,7 +90,7 @@
                     <label for="emailRegis" class="font-weight-bold col-md-4 col-form-label text-md-right">{{ __('Correo Electronico') }}</label>
                     <div class="col-md-6">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-                        <strong class="js" id="mensajeemail"></strong>
+                        <strong class="js comprobaciones" id="mensajeemail"></strong>
                         @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -102,7 +102,7 @@
                     <label for="telefono" class="font-weight-bold col-md-4 col-form-label text-md-right">{{ __('Teléfono') }}</label>
                     <div class="col-md-6">
                         <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono">
-                        <strong class="js" id="mensajetelefono"></strong>
+                        <strong class="js comprobaciones" id="mensajetelefono"></strong>
                         @error('telefono')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -114,7 +114,7 @@
                     <label for="passwordRegister" class="font-weight-bold col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
                     <div class="col-md-6">
                         <input id="passwordRegister" type="password" class="form-control @error('passwordRegister') is-invalid @enderror" name="passwordRegister" required autocomplete="new-password">
-                        <strong class="js" id="mensajepasswordRegister"></strong>
+                        <strong class="js comprobaciones" id="mensajepasswordRegister"></strong>
                         @error('passwordRegister')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -126,7 +126,7 @@
                     <label for="password-confirm" class="font-weight-bold col-md-4 col-form-label text-md-right">{{ __('Repite la Contraseña') }}</label>
                     <div class="col-md-6">
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                        <strong class="js" id="mensajepassword-confirm"></strong>
+                        <strong class="js comprobaciones" id="mensajepassword-confirm"></strong>
 
                     </div>
                 </div>
@@ -134,7 +134,7 @@
                     <label for="terminosYCondiciones" class="col-md-4 col-form-label text-md-right"></label>
                     <div class="col-md-6">
                         <input id="terminosYCondiciones" type="checkbox" name="terminosYCondiciones" required autocomplete="terminosYCondiciones"> Acepto los terminos y condiciones de la web.
-                        <br><strong class="js" id="mensajeterminosYCondiciones"></strong>
+                        <br><strong class="js comprobaciones" id="mensajeterminosYCondiciones"></strong>
 
                         @error('terminosYCondiciones')
                         <span class="invalid-feedback" role="alert">

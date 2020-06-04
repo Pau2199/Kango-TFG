@@ -1,5 +1,14 @@
 $(function(){
     $('#mensajeInfo').hide();
+    $('#mensajeNotis').hide();
+    $('#mensajeTexto').hide();
+
+
+    if($('#notificaciones').children().length == 0){
+        $('#mensajeNotis').show();
+    }else{
+        $('#mensajeTexto').show();
+    }
     var fecha = $('.fecha').each(function(){
         $(this).html(escribirFechaFormato($(this).html()));
     });
@@ -81,8 +90,8 @@ $(function(){
                 $('#mensaje').html('Haz click sobre una notificación');
 
             }
-        })
-    })
+        });
+    });
 });
 
 function escribirFechaFormato(fecha){
