@@ -4,6 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Image;
+use App\Address;
+use App\Property;
+use App\Is_Rented;
+use App\Sale;
+use App\Rental;
+use App\Solicitude;
+use App\Favorite;
+use App\Visiting_hour;
+use App\Notification;
+use DB;
 
 class datosPersonalesController extends Controller
 {
@@ -22,9 +33,9 @@ class datosPersonalesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function editarDatosPersonales()
+    public function editarDatosPersonales($id)
     {
-        return view('editarPerfil');
+        return view('editarPerfil')->with('user', User::where('id', '=', $id)->first());
     }
 
     /**
@@ -33,11 +44,6 @@ class datosPersonalesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
-    public function traerDatos(){
-        $user = User::find(Auth::User()->id);
-        return $user;
-    }
 
     public function store(Request $request)
     {
@@ -88,7 +94,7 @@ class datosPersonalesController extends Controller
         $user->email = $request->email;
         $user->fecha_nacimiento = $request->fechaNacimiento;
         $user->save();
-        
+
         return redirect('/perfil/datosPersonales');
 
     }
@@ -101,6 +107,4 @@ class datosPersonalesController extends Controller
      */
     public function destroy($id)
     {
-        //
     }
-}

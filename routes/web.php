@@ -58,6 +58,7 @@ Route::get('/perfil/misalquileres', 'pagoAlquilerController@cargarAlquiler');
 Route::get('/perfil/datosPersonales', 'datosPersonalesController@index');
 Route::get('/perfil/editarPerfil/{id}', 'datosPersonalesController@editarDatosPersonales');
 Route::post('/perfil/modificarDatos', 'datosPersonalesController@update');
+Route::get('/perfil/eliminarCuenta/{id}', 'datosPersonalesController@destroy');
 
 
 Route::get('/obtenerNotificaciones', 'notificacionesController@index');

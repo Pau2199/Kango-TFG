@@ -48,7 +48,21 @@ $(function(){
         if(error == false){
             $('#formModificar').submit();
         }
-    })
+    });
+
+
+    $('.eliminar').click(function(){
+        var elemento = $(this).parent().parent();
+        var id = $(this).attr('id');
+        $.ajax({
+            url: '/perfil/eliminarCuenta/'+id,
+            methos: 'GET',
+            success: function(){
+                elemento.remove();
+            }
+        }); 
+    });
+
 
 
 })
